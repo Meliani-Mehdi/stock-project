@@ -1,7 +1,10 @@
 .Login-Button{
--fx-background-color:linear-gradient(to bottom right, #05b074, #28b6f6);
+-fx-background-color:linear-gradient(to bottom left, #05b074 50%, #28b6f6);
 -fx-text-fill:#FFFFFF;
 -fx-background-radius:10;
+}
+.Login-Button:hover{
+-fx-background-color:linear-gradient(to bottom left, #068155 50%, #188CC1);
 }
 .login-text-field{
 -fx-background-color:transparent;
@@ -18,4 +21,7 @@
 .Button-icon:hover{
 -fx-background-radius:50;
 -fx-background-color:#85CFB6;
+}
+.Description-label{
+-fx-font-family:'Quicksand',sans-serif;
 }
