@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92d429cf-b467-4a6f-bb2a-3e242ec1a2d3" name="Changes" comment="the login page">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Fonts/Quicksand-VariableFont_wght.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Icons/Shitty logo (2).png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Org/Main/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Org/Main/Controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Org/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Org/Main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/FXML/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/FXML/Login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Style/Login_Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Style/Login_Styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/FXML/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/FXML/Login.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Org/Main/Controllers/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Org/Main/Controllers/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Org/Main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Org/Main/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Style/Login_Styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Style/Login_Styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,23 +51,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Gl_Project [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Gl_Project [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/OneDrive/Documents/GitHub/stock-project/Gl_Project/src/main/resources/Icons&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2575897&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Maven.Gl_Project [clean].executor": "Run",
+    "Maven.Gl_Project [install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/user/OneDrive/Documents/GitHub/stock-project/Gl_Project/src/main/resources/Icons",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2575897",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\user\OneDrive\Documents\GitHub\stock-project\Gl_Project\src\main\resources\Icons" />
@@ -110,23 +116,7 @@
       <option name="project" value="LOCAL" />
       <updated>1704206524782</updated>
     </task>
-    <task id="LOCAL-00003" summary="the login page">
-      <option name="closed" value="true" />
-      <created>1704211690004</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1704211690004</updated>
-    </task>
-    <task id="LOCAL-00004" summary="the login page">
-      <option name="closed" value="true" />
-      <created>1704211750557</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1704211750557</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
