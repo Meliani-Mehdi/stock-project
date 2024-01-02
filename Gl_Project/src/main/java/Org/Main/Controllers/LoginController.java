@@ -1,10 +1,6 @@
 package Org.Main.Controllers;
-
-import javafx.animation.ScaleTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

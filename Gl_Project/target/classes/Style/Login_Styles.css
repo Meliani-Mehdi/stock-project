@@ -1,0 +1,21 @@
+.Login-Button{
+-fx-background-color:linear-gradient(to bottom right, #05b074, #28b6f6);
+-fx-text-fill:#FFFFFF;
+-fx-background-radius:10;
+}
+.login-text-field{
+-fx-background-color:transparent;
+-fx-border-color:#05b074;
+-fx-border-width:0px 0px 2px 0px;
+}
+.Button-icon{
+-fx-background-radius:50;
+-fx-background-color:transparent;
+-fx-border-radius:50;
+-fx-border-color:#05b074;
+-fx-border-width:2px;
+}
+.Button-icon:hover{
+-fx-background-radius:50;
+-fx-background-color:#85CFB6;
+}
