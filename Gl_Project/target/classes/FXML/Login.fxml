@@ -2,6 +2,7 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -99,6 +100,9 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#Exit" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css">
                            <graphic>
@@ -108,6 +112,9 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                      <VBox.margin>
@@ -159,7 +166,18 @@
                      <font>
                         <Font name="SansSerif Regular" size="24.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
+                  <Label fx:id="Need_An_Account_Button" alignment="CENTER" prefHeight="41.0" prefWidth="188.0" text="Need an account ?" textFill="#05b074" underline="true">
+                     <font>
+                        <Font name="SansSerif Regular" size="21.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
                </children>
                <padding>
                   <Insets left="30.0" right="30.0" />
