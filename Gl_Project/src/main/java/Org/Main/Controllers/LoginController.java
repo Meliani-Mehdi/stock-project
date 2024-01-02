@@ -20,12 +20,6 @@ public class LoginController implements Initializable {
     @FXML
     private AnchorPane Main_Pane;
     private Stage stage;
-
-    @FXML
-    private TextField SignIn_Username_Textfield;
-
-    @FXML
-    private PasswordField SignIn_Password_TextField;
     public void Exit(){
         stage = (Stage) Main_Pane.getScene().getWindow();
         System.exit(0);
@@ -39,27 +33,23 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Main_Pane.requestFocus();
-
         Main_Pane.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 Sign_in_Button.fire();
             }
         });
     }
-
     public static void createDatabase() {
         String url = "jdbc:sqlite:your-database-name.db";
 
         try (Connection conn = DriverManager.getConnection(url);
              Statement statement = conn.createStatement()) {
-
             // Create a sample table
             String createTableSQL = "CREATE TABLE IF NOT EXISTS users (\n"
                     + "	id integer PRIMARY KEY,\n"
                     + "	username text NOT NULL,\n"
                     + "	password text NOT NULL\n"
                     + ");";
-
             statement.execute(createTableSQL);
 
             System.out.println("Database and table created successfully.");
@@ -76,5 +66,8 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private Label Need_An_Account_Button;
+    private TextField SignIn_Username_Textfield;
+
+    @FXML
+    private PasswordField SignIn_Password_TextField;
 }

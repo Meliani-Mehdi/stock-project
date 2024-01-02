@@ -22,8 +22,10 @@ public class Main extends Application {
             yOffset = e.getSceneY();
         });
         root.setOnMouseDragged(e -> {
-            stage.setX(e.getScreenX() - xOffset);
-            stage.setY(e.getScreenY() - yOffset);
+            if(yOffset<=37){
+                stage.setX(e.getScreenX() - xOffset);
+                stage.setY(e.getScreenY() - yOffset);
+            }
         });
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);

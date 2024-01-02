@@ -43,7 +43,7 @@
                         </LinearGradient>
                      </fill>
                   </Rectangle>
-                  <CubicCurve controlX1="180.0" controlX2="-366.0" controlY1="-14.183135986328125" controlY2="36.0" endX="-423.0" endY="170.99996948242188" layoutX="694.0" layoutY="329.0" startX="-423.0" startY="-329.0" stroke="TRANSPARENT">
+                  <CubicCurve controlX1="180.0" controlX2="-366.0" controlY1="4.0" controlY2="36.0" endX="-423.0" endY="170.99996948242188" layoutX="694.0" layoutY="329.0" startX="-423.0" startY="-329.0" stroke="TRANSPARENT">
                      <fill>
                         <LinearGradient endX="0.7203791469194313" endY="0.6919431279620853" startX="0.4170616113744076" startY="0.7345971563981043">
                            <stops>
@@ -81,7 +81,7 @@
                         <Font name="Candara Light" size="22.0" />
                      </font>
                   </Label>
-                  <Label layoutX="225.0" layoutY="292.0" styleClass="Description-label" stylesheets="@../Style/Login_Styles.css" text="your stock" textFill="WHITE">
+                  <Label layoutX="297.0" layoutY="292.0" styleClass="Description-label" stylesheets="@../Style/Login_Styles.css" text="your stock" textFill="WHITE">
                      <font>
                         <Font name="Candara Light" size="22.0" />
                      </font>
