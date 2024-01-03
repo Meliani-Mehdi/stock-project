@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+
+<StackPane fx:id="Main_Pane" maxHeight="1080.0" maxWidth="1920.0" minHeight="720.0" minWidth="1366.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Org.Main.Controllers.DashboardController">
+   <children>
+      <BorderPane>
+         <top>
+            <HBox alignment="CENTER_RIGHT" maxWidth="1920.0" prefHeight="54.0" prefWidth="1366.0" spacing="10.0" style="-fx-border-width: 0px 0px 1px 0px; -fx-border-color: #b4e7d5;" BorderPane.alignment="TOP_RIGHT">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#Minimize" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                           <image>
+                              <Image url="@../Icons/minimize.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#Set_Full_Screen" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                           <image>
+                              <Image url="@../Icons/SetToFullScreen.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#Exit" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                           <image>
+                              <Image url="@../Icons/Exit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </HBox>
+         </top>
+         <left>
+            <VBox alignment="TOP_CENTER" prefHeight="666.0" prefWidth="263.0" BorderPane.alignment="TOP_CENTER">
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+               </padding>
+               <children>
+                  <AnchorPane prefHeight="121.0" prefWidth="223.0" style="-fx-border-color: #b4e7d5; -fx-border-width: 0px 0px 2px 0px;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="11.0" prefHeight="121.0" prefWidth="223.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <StackPane prefHeight="118.0" prefWidth="111.0">
+                                 <children>
+                                    <Circle fill="DODGERBLUE" radius="33.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Label alignment="CENTER" prefHeight="24.0" prefWidth="128.0" text="A">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                              <VBox prefHeight="119.0" prefWidth="103.0">
+                                 <children>
+                                    <Label prefHeight="24.0" prefWidth="128.0" text="Admin">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Admin" textFill="#00000096">
+                                       <font>
+                                          <Font name="Segoe UI" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets top="40.0" />
+                                 </padding>
+                              </VBox>
+                              <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Dashboard.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Dashboard.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0">
+                                       <image>
+                                          <Image url="@../Icons/edit.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <VBox alignment="TOP_CENTER" prefHeight="449.0" prefWidth="233.0" spacing="10.0" VBox.vgrow="ALWAYS">
+                     <padding>
+                        <Insets left="5.0" right="5.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-first" stylesheets="@../Style/Dashboard.css" text="Make order" textFill="#05b074">
+                           <font>
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                                 <image>
+                                    <Image url="@../Icons/add.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Sell" textFill="#05b074">
+                           <font>
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                                 <image>
+                                    <Image url="@../Icons/cart-neutral.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-Active" stylesheets="@../Style/Dashboard.css" text="Inventory" textFill="#05b074">
+                           <font>
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                                 <image>
+                                    <Image url="@../Icons/Inventory-active.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Settings" textFill="#05b074">
+                           <font>
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                                 <image>
+                                    <Image url="@../Icons/settings-neutral.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Administration" textFill="#05b074">
+                           <font>
+                              <Font name="Segoe UI Bold" size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                                 <image>
+                                    <Image url="@../Icons/administration-neutral.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Log out" textFill="#05b074" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Segoe UI Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0">
+                           <image>
+                              <Image url="@../Icons/logout-neutral.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </VBox>
+         </left>
+      </BorderPane>
+   </children>
+</StackPane>
