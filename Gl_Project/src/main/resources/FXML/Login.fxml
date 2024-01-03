@@ -76,12 +76,12 @@
                         <Image url="@../Icons/Shitty%20logo%20(2).png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="221.0" layoutY="260.0" styleClass="Description-label" stylesheets="@../Style/Login_Styles.css" text="your best app for managing" textFill="WHITE">
+                  <Label layoutX="221.0" layoutY="260.0" styleClass="Description-label" stylesheets="@../Style/Login_Styles.css" text="your favorite app for managing" textFill="WHITE">
                      <font>
                         <Font name="Candara Light" size="22.0" />
                      </font>
                   </Label>
-                  <Label layoutX="297.0" layoutY="292.0" styleClass="Description-label" stylesheets="@../Style/Login_Styles.css" text="your stock" textFill="WHITE">
+                  <Label layoutX="310.0" layoutY="292.0" styleClass="Description-label" stylesheets="@../Style/Login_Styles.css" text="your stock" textFill="WHITE">
                      <font>
                         <Font name="Candara Light" size="22.0" />
                      </font>
@@ -170,14 +170,6 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Label fx:id="Need_An_Account_Button" alignment="CENTER" prefHeight="41.0" prefWidth="188.0" text="Need an account ?" textFill="#05b074" underline="true">
-                     <font>
-                        <Font name="SansSerif Regular" size="21.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
                </children>
                <padding>
                   <Insets left="30.0" right="30.0" />

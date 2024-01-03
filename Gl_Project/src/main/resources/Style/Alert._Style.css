@@ -1,0 +1,17 @@
+
+.Button{
+-fx-background-color:linear-gradient(to bottom, #F6344366, #F20013);
+-fx-text-fill:#FFFFFF;
+-fx-background-radius:10;
+}
+.Button:hover{
+-fx-background-color:linear-gradient(to bottom, #F20013, #F20013);
+}
+.Button-Green{
+-fx-background-color:linear-gradient(to bottom left, #05b074 50%, #28b6f6);
+-fx-text-fill:#FFFFFF;
+-fx-background-radius:10;
+}
+.Button-Green:hover{
+-fx-background-color:linear-gradient(to bottom left, #068155 50%, #188CC1);
+}

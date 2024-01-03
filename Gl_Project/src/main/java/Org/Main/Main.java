@@ -144,12 +144,8 @@ public class Main extends Application {
                                 password TEXT NOT NULL,
                                 'last' INTEGER NOT NULL
                             );""");
-
-            System.out.println("Database and tables created successfully.");
             conn.close();
-            System.out.println(conn.isClosed());
-
-
+            conn.isClosed();
         } catch (SQLException e) {
             System.out.println("error");
         }

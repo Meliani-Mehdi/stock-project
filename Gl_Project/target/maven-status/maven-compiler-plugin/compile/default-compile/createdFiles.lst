@@ -1,3 +1,4 @@
-Org\Main\Controllers\LoginController.class
 Org\Main\Main.class
+Org\Main\Controllers\DashboardController.class
 module-info.class
+Org\Main\Controllers\LoginController.class
