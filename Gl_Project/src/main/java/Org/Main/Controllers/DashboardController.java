@@ -1,6 +1,5 @@
 package Org.Main.Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -61,7 +60,7 @@ public class DashboardController implements Initializable {
         showCustomConfirmationAlert("You are about to exit the application");
     }
     @FXML
-    void Set_Full_Screen(ActionEvent event) {
+    void Set_Full_Screen() {
         stage = (Stage) Main_Pane.getScene().getWindow();
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
