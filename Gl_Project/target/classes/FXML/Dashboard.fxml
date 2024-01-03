@@ -21,7 +21,7 @@
          <top>
             <HBox alignment="CENTER_RIGHT" maxWidth="1920.0" prefHeight="54.0" prefWidth="1366.0" spacing="10.0" style="-fx-border-width: 0px 0px 1px 0px; -fx-border-color: #b4e7d5;" BorderPane.alignment="TOP_RIGHT">
                <children>
-                  <Button mnemonicParsing="false" onAction="#Minimize" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css">
+                  <Button mnemonicParsing="false" onAction="#Minimize" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
@@ -33,7 +33,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#Set_Full_Screen" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css">
+                  <Button mnemonicParsing="false" onAction="#Set_Full_Screen" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
@@ -45,7 +45,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#Exit" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css">
+                  <Button mnemonicParsing="false" onAction="#Exit" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0">
                            <image>
@@ -75,7 +75,7 @@
                            <children>
                               <StackPane prefHeight="118.0" prefWidth="111.0">
                                  <children>
-                                    <Circle fill="DODGERBLUE" radius="33.0" stroke="BLACK" strokeType="INSIDE" />
+                                    <Circle fx:id="User_Icon" fill="DODGERBLUE" radius="33.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
                                     <Label alignment="CENTER" prefHeight="24.0" prefWidth="128.0" text="A">
                                        <font>
                                           <Font name="Segoe UI Bold" size="20.0" />
@@ -129,12 +129,12 @@
                         <Insets left="5.0" right="5.0" top="20.0" />
                      </padding>
                      <children>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-first" stylesheets="@../Style/Dashboard.css" text="Make order" textFill="#05b074">
+                        <Button fx:id="Make_Order_Button" alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" onAction="#Make_Order_click" onMouseEntered="#Make_Order_On_Mouse_Enter" onMouseExited="#Make_Order_On_Mouse_Exit" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-first" stylesheets="@../Style/Dashboard.css" text="Make order" textFill="#05b074">
                            <font>
                               <Font name="Segoe UI Bold" size="18.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                              <ImageView fx:id="Make_Order_Icon" fitHeight="32.0" fitWidth="32.0">
                                  <image>
                                     <Image url="@../Icons/add.png" />
                                  </image>
@@ -144,12 +144,12 @@
                               <Insets left="20.0" />
                            </padding>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Sell" textFill="#05b074">
+                        <Button fx:id="Sell_Button" alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" onAction="#Sell_click" onMouseEntered="#Sell_On_Mouse_Enter" onMouseExited="#Sell_On_Mouse_Exit" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Sell" textFill="#05b074">
                            <font>
                               <Font name="Segoe UI Bold" size="18.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                              <ImageView fx:id="Sell_Icon" fitHeight="32.0" fitWidth="32.0">
                                  <image>
                                     <Image url="@../Icons/cart-neutral.png" />
                                  </image>
@@ -159,14 +159,14 @@
                               <Insets left="20.0" />
                            </padding>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-Active" stylesheets="@../Style/Dashboard.css" text="Inventory" textFill="#05b074">
+                        <Button fx:id="Inventory_Button" alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" onAction="#Inventory_click" onMouseEntered="#Inventory_On_Mouse_Enter" onMouseExited="#Inventory_On_Mouse_Exit" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Inventory" textFill="#05b074">
                            <font>
                               <Font name="Segoe UI Bold" size="18.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                              <ImageView fx:id="Inventory_Icon" fitHeight="32.0" fitWidth="32.0">
                                  <image>
-                                    <Image url="@../Icons/Inventory-active.png" />
+                                    <Image url="@../Icons/Inventory-neutral.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -174,12 +174,12 @@
                               <Insets left="20.0" />
                            </padding>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Settings" textFill="#05b074">
+                        <Button fx:id="Settings_button" alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" onAction="#Settings_click" onMouseEntered="#Settings_On_Mouse_Enter" onMouseExited="#Settings_On_Mouse_Exit" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Settings" textFill="#05b074">
                            <font>
                               <Font name="Segoe UI Bold" size="18.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                              <ImageView fx:id="Settings_Icon" fitHeight="32.0" fitWidth="32.0">
                                  <image>
                                     <Image url="@../Icons/settings-neutral.png" />
                                  </image>
@@ -189,12 +189,12 @@
                               <Insets left="20.0" />
                            </padding>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Administration" textFill="#05b074">
+                        <Button fx:id="Administration_button" alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" onAction="#administration_click" onMouseEntered="#administration_On_Mouse_Enter" onMouseExited="#administration_On_Mouse_Exit" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Administration" textFill="#05b074">
                            <font>
                               <Font name="Segoe UI Bold" size="18.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                              <ImageView fx:id="Administration_Icon" fitHeight="32.0" fitWidth="32.0">
                                  <image>
                                     <Image url="@../Icons/administration-neutral.png" />
                                  </image>
@@ -206,12 +206,12 @@
                         </Button>
                      </children>
                   </VBox>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Log out" textFill="#05b074" VBox.vgrow="ALWAYS">
+                  <Button fx:id="Log_Out_Button" alignment="BASELINE_LEFT" graphicTextGap="25.0" mnemonicParsing="false" onAction="#Log_Out_click" onMouseEntered="#Log_Out_On_Mouse_Enter" onMouseExited="#Log_Out_On_Mouse_Exit" prefHeight="57.0" prefWidth="221.0" styleClass="side-Bar-navigation-neutral" stylesheets="@../Style/Dashboard.css" text="Log out" textFill="#05b074" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="Segoe UI Bold" size="18.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0">
+                        <ImageView fx:id="Log_Out_Icon" fitHeight="32.0" fitWidth="32.0">
                            <image>
                               <Image url="@../Icons/logout-neutral.png" />
                            </image>
