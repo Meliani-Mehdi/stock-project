@@ -58,6 +58,8 @@ public class LoginController implements Initializable {
                 }
             }
 
+            conn.close();
+            System.out.println(conn.isClosed());
         } catch (SQLException e) {
             System.out.println("error");
         }
