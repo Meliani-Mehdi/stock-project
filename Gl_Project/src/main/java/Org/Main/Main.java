@@ -145,7 +145,6 @@ public class Main extends Application {
                                 'last' INTEGER NOT NULL
                             );""");
             conn.close();
-            conn.isClosed();
         } catch (SQLException e) {
             System.out.println("error");
         }

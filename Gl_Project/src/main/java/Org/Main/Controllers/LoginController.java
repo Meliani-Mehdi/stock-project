@@ -76,7 +76,6 @@ public class LoginController implements Initializable {
                 }
             }
             conn.close();
-            conn.isClosed();
         } catch (SQLException e) {
             showCustomErrorAlert("Error");
         }
