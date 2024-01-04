@@ -10,6 +10,7 @@
 .Tab-Button-Active{
     -fx-background-color:#05b074;
     -fx-text-fill:White;
+    -fx-font-size:20px;
 }
 .Tab-Plus-Button{
     -fx-background-color:#28B6F6;
@@ -115,4 +116,9 @@
 -fx-font-size:40px;
 -fx-prompt-text-fill:#FFCA25;
 }
-
+.Exit-Facture-Button{
+-fx-background-radius:10;
+    -fx-background-color:#C54242;
+    -fx-text-fill:White;
+    -fx-font-weight:bold;
+}

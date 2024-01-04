@@ -218,7 +218,7 @@ public class DashboardController implements Initializable {
     }
 
     ////////////////////////////////////////////// Make_Order_Button  //////////////////////////////////////////////////
-    public void Make_Order_click() throws IOException {
+    public void Make_Order_click() {
         adm_active=false;
         Make_active=true;
         Sell_active=false;
@@ -269,8 +269,8 @@ public class DashboardController implements Initializable {
             throw new RuntimeException(e);
         }
         content.setPrefSize(App_Center_Pane.getWidth(),App_Center_Pane.getHeight());
+        App_Center_Pane.getChildren().clear();
         App_Center_Pane.getChildren().addFirst(content);
-
     }
     ////////////////////////////////////////////// Sell_Button  //////////////////////////////////////////////////
     public void Sell_click() {
@@ -408,8 +408,8 @@ public class DashboardController implements Initializable {
     public void administration_On_Mouse_Enter() {
             if (!Objects.equals(Administration_button.getStyleClass().getFirst(), "side-Bar-navigation-Active")){
                 Administration_button.getStyleClass().clear();
-                Administration_button.getStyleClass().add("side-Bar-navigation-Active");
-                Image AdministrationActive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/administration-active.png")));
+                Administration_button.getStyleClass().add("side-Bar-navigation-first");
+                Image AdministrationActive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/administration-Hover.png")));
                 Administration_Icon.setImage(AdministrationActive);
             }
     }
@@ -432,24 +432,24 @@ public class DashboardController implements Initializable {
     public void Sell_On_Mouse_Enter() {
         if (!Objects.equals(Sell_Button.getStyleClass().getFirst(), "side-Bar-navigation-Active")){
             Sell_Button.getStyleClass().clear();
-            Sell_Button.getStyleClass().add("side-Bar-navigation-Active");
-            Image SellActive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/cart-active.png")));
+            Sell_Button.getStyleClass().add("side-Bar-navigation-first");
+            Image SellActive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/Sell-Hover.png")));
             Sell_Icon.setImage(SellActive);
         }
     }
     public void Inventory_On_Mouse_Enter() {
         if (!Objects.equals(Inventory_Button.getStyleClass().getFirst(), "side-Bar-navigation-Active")){
             Inventory_Button.getStyleClass().clear();
-            Inventory_Button.getStyleClass().add("side-Bar-navigation-Active");
-            Image InventoryActive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/Inventory-active.png")));
+            Inventory_Button.getStyleClass().add("side-Bar-navigation-first");
+            Image InventoryActive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/Inventory-Hover.png")));
             Inventory_Icon.setImage(InventoryActive);
         }
     }
     public void Settings_On_Mouse_Enter() {
         if (!Objects.equals(Settings_button.getStyleClass().getFirst(), "side-Bar-navigation-Active")){
             Settings_button.getStyleClass().clear();
-            Settings_button.getStyleClass().add("side-Bar-navigation-Active");
-            Image SettingsActive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/settings-active.png")));
+            Settings_button.getStyleClass().add("side-Bar-navigation-first");
+            Image SettingsActive = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/Settings-Hover.png")));
             Settings_Icon.setImage(SettingsActive);
         }
     }

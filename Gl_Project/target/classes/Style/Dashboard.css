@@ -4,6 +4,7 @@
 .side-Bar-navigation-first{
 -fx-background-radius:10;
 -fx-background-color:#CDEDE2;
+-fx-font-weight:normal;
 }
 .side-Bar-navigation-Active{
 -fx-background-radius:10;

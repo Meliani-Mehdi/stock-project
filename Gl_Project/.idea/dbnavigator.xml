@@ -48,7 +48,7 @@
           <tns-folder value="" />
           <tns-profile value="" />
           <files>
-            <file path="C:\Users\user\OneDrive\Documents\GitHub\stock-project\Gl_Project\your-database-name.db" schema="your-database-name" />
+            <file path="C:\Users\user\OneDrive\Documents\GitHub\stock-project\Gl_Project\main.db" schema="your-database-name" />
           </files>
           <type value="NONE" />
           <user value="" />
