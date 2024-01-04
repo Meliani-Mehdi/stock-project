@@ -7,8 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-
 public class Make_Invoice_Controler {
+
+
     @FXML
     private Button Add_Product_Button;
     @FXML
@@ -20,7 +21,7 @@ public class Make_Invoice_Controler {
         for (int col = 0; col < 11; col++) {
             ColumnConstraints cell=Products_Table.getColumnConstraints().get(col);
             Label emptyLabel = new Label(product[col]);
-            emptyLabel.setPadding(new Insets(0, 0, 0, 3));
+            emptyLabel.setPadding(new Insets(0, 0, 0, 5));
             emptyLabel.setPrefWidth(cell.getMaxWidth());
             emptyLabel.setPrefHeight(40);
             emptyLabel.setMinHeight(40);
@@ -32,5 +33,9 @@ public class Make_Invoice_Controler {
             Products_Table.add(emptyLabel, col, Products_Table.getRowConstraints().size() - 1);
         }
     }
+    @FXML
+    private Button Facture_Tab;
+    public void addFacture(){
 
+    }
 }
