@@ -13,10 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,29 +28,24 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Objects;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setColor(User_Icon);
+        Make_Order_Button.fire();
+    }
+
+    @FXML
+    Label Username_label = new Label();
+    @FXML
+    Label Username_Label_Circle = new Label();
+    public void display_name(String username) {
+        Username_label.setText(username);
+        Username_Label_Circle.setText(String.valueOf(username.charAt(0)).toUpperCase());
     }
     @FXML
-    private Circle User_Icon;
-    private Random random = new Random();
-    private void setColor(Circle circle) {
-        Color randomColor = generateRandomColor();
-        circle.setFill(randomColor);
-    }
-
-    private Color generateRandomColor() {
-        double red = random.nextDouble();
-        double green = random.nextDouble();
-        double blue = random.nextDouble();
-
-        return new Color(red, green, blue, 1.0);
-    }
+    private StackPane App_Center_Pane;
     @FXML
     private StackPane Main_Pane;
     private Stage stage;
@@ -176,6 +170,7 @@ public class DashboardController implements Initializable {
     public boolean Sell_active=false;
     public boolean Inv_active=false;
     public boolean sett_active=false;
+    ////////////////////////////////////////////// Administration Button //////////////////////////////////////////////////
     public void administration_click() {
         adm_active=true;
         Make_active=false;
@@ -221,144 +216,9 @@ public class DashboardController implements Initializable {
         Image SettingsNeutral = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/settings-neutral.png")));
         Settings_Icon.setImage(SettingsNeutral);
     }
-    public static void createDatabase() {
-        String url = "jdbc:sqlite:main.db";
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement statement = conn.createStatement()) {
 
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS clients (
-                                id INTEGER PRIMARY KEY,
-                                name TEXT NOT NULL,
-                                adresse TEXT,
-                                phone_num TEXT,
-                                sold_total REAL,
-                                reste REAL,
-                                paid REAL
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS deposits (
-                                id INTEGER PRIMARY KEY,
-                                name TEXT NOT NULL,
-                                solde REAL,
-                                reste REAL,
-                                payment REAL,
-                                id_provider INTEGER,
-                                id_client INTEGER,
-                                id_seller INTEGER,
-                                type TEXT,
-                                payment_status TEXT
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS factures (
-                                id INTEGER PRIMARY KEY,
-                                date DATE NOT NULL,
-                                update_date DATE,
-                                update_time TIMESTAMP,
-                                solde REAL,
-                                reste REAL,
-                                payment REAL,
-                                id_provider INTEGER,
-                                id_client INTEGER,
-                                id_seller INTEGER,
-                                type TEXT,
-                                payment_status TEXT
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS groupes (
-                                id INTEGER PRIMARY KEY,
-                                name TEXT NOT NULL,
-                                marge REAL
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS products (
-                                id INTEGER PRIMARY KEY,
-                                bar_code VARCHAR NOT NULL,
-                                reference VARCHAR,
-                                name VARCHAR NOT NULL,
-                                buying_price REAL,
-                                selling_price REAL,
-                                stock INTEGER,
-                                photo VARCHAR,
-                                id_groupe INTEGER
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS product_facts (
-                                id INTEGER PRIMARY KEY,
-                                id_fact INTEGER,
-                                id_prod INTEGER,
-                                product_price REAL,
-                                product_qte INTEGER,
-                                tva REAL
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS bon_de_livraisons (
-                                id INTEGER PRIMARY KEY,
-                                date DATE NOT NULL,
-                                old_reste REAL,
-                                reste REAL,
-                                payment REAL,
-                                id_client INTEGER,
-                                id_user INTEGER,
-                                id_provider INTEGER
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS providers (
-                                id INTEGER PRIMARY KEY,
-                                name TEXT NOT NULL,
-                                adresse TEXT,
-                                phone_num TEXT,
-                                sold_total REAL,
-                                reste REAL,
-                                paid REAL
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS users (
-                                id INTEGER PRIMARY KEY,
-                                username TEXT NOT NULL,
-                                password TEXT NOT NULL,
-                                'last' INTEGER NOT NULL
-                            );""");
-            conn.close();
-            conn.isClosed();
-        } catch (SQLException e) {
-            System.out.println("error");
-        }
-    }
-    public void Log_Out_click() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/Login.fxml")));
-        Scene scene=new Scene(root);
-        createDatabase();
-        root.setOnMousePressed(e -> {
-            xOffset = e.getSceneX();
-            yOffset = e.getSceneY();
-        });
-        root.setOnMouseDragged(e -> {
-            if(yOffset<=37){
-                stage.setX(e.getScreenX() - xOffset);
-                stage.setY(e.getScreenY() - yOffset);
-            }
-        });
-        stage=(Stage) Main_Pane.getScene().getWindow();
-        stage.close();
-        Stage primaryStage=new Stage();
-        primaryStage.setScene(scene);
-        primaryStage.setWidth(900);
-        primaryStage.setHeight(500);
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setFullScreen(false);
-        primaryStage.centerOnScreen();
-        primaryStage.show();
-    }
-    public void Make_Order_click() {
+    ////////////////////////////////////////////// Make_Order_Button  //////////////////////////////////////////////////
+    public void Make_Order_click() throws IOException {
         adm_active=false;
         Make_active=true;
         Sell_active=false;
@@ -400,7 +260,19 @@ public class DashboardController implements Initializable {
 
         Image SettingsNeutral = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/settings-neutral.png")));
         Settings_Icon.setImage(SettingsNeutral);
+        ////////////////////////////// center pane change ////////////////////////////////////
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML/Make_Invoice.fxml")));
+        BorderPane content;
+        try {
+            content = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        content.setPrefSize(App_Center_Pane.getWidth(),App_Center_Pane.getHeight());
+        App_Center_Pane.getChildren().addFirst(content);
+
     }
+    ////////////////////////////////////////////// Sell_Button  //////////////////////////////////////////////////
     public void Sell_click() {
         adm_active=false;
         Make_active=false;
@@ -444,6 +316,7 @@ public class DashboardController implements Initializable {
         Image SettingsNeutral = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/settings-neutral.png")));
         Settings_Icon.setImage(SettingsNeutral);
     }
+    ////////////////////////////////////////////// Inventory_Button  //////////////////////////////////////////////////
     public void Inventory_click() {
         adm_active=false;
         Make_active=false;
@@ -487,6 +360,7 @@ public class DashboardController implements Initializable {
         Image SettingsNeutral = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/settings-neutral.png")));
         Settings_Icon.setImage(SettingsNeutral);
     }
+    ////////////////////////////////////////////// Settings_button  //////////////////////////////////////////////////
     public void Settings_click() {
         adm_active=false;
         Make_active=false;
@@ -627,5 +501,141 @@ public class DashboardController implements Initializable {
         }
     }
 
+    public static void createDatabase() {
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement statement = conn.createStatement()) {
 
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS clients (
+                                id INTEGER PRIMARY KEY,
+                                name TEXT NOT NULL,
+                                adresse TEXT,
+                                phone_num TEXT,
+                                sold_total REAL,
+                                reste REAL,
+                                paid REAL
+                            );""");
+
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS deposits (
+                                id INTEGER PRIMARY KEY,
+                                name TEXT NOT NULL,
+                                solde REAL,
+                                reste REAL,
+                                payment REAL,
+                                id_provider INTEGER,
+                                id_client INTEGER,
+                                id_seller INTEGER,
+                                type TEXT,
+                                payment_status TEXT
+                            );""");
+
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS factures (
+                                id INTEGER PRIMARY KEY,
+                                date DATE NOT NULL,
+                                update_date DATE,
+                                update_time TIMESTAMP,
+                                solde REAL,
+                                reste REAL,
+                                payment REAL,
+                                id_provider INTEGER,
+                                id_client INTEGER,
+                                id_seller INTEGER,
+                                type TEXT,
+                                payment_status TEXT
+                            );""");
+
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS groupes (
+                                id INTEGER PRIMARY KEY,
+                                name TEXT NOT NULL,
+                                marge REAL
+                            );""");
+
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS products (
+                                id INTEGER PRIMARY KEY,
+                                bar_code VARCHAR NOT NULL,
+                                reference VARCHAR,
+                                name VARCHAR NOT NULL,
+                                buying_price REAL,
+                                selling_price REAL,
+                                stock INTEGER,
+                                photo VARCHAR,
+                                id_groupe INTEGER
+                            );""");
+
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS product_facts (
+                                id INTEGER PRIMARY KEY,
+                                id_fact INTEGER,
+                                id_prod INTEGER,
+                                product_price REAL,
+                                product_qte INTEGER,
+                                tva REAL
+                            );""");
+
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS bon_de_livraisons (
+                                id INTEGER PRIMARY KEY,
+                                date DATE NOT NULL,
+                                old_reste REAL,
+                                reste REAL,
+                                payment REAL,
+                                id_client INTEGER,
+                                id_user INTEGER,
+                                id_provider INTEGER
+                            );""");
+
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS providers (
+                                id INTEGER PRIMARY KEY,
+                                name TEXT NOT NULL,
+                                adresse TEXT,
+                                phone_num TEXT,
+                                sold_total REAL,
+                                reste REAL,
+                                paid REAL
+                            );""");
+
+            statement.execute("""
+                            CREATE TABLE IF NOT EXISTS users (
+                                id INTEGER PRIMARY KEY,
+                                username TEXT NOT NULL,
+                                password TEXT NOT NULL,
+                                'last' INTEGER NOT NULL
+                            );""");
+            conn.close();
+            conn.isClosed();
+        } catch (SQLException e) {
+            System.out.println("error");
+        }
+    }
+    public void Log_Out_click() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/Login.fxml")));
+        Scene scene=new Scene(root);
+        createDatabase();
+        root.setOnMousePressed(e -> {
+            xOffset = e.getSceneX();
+            yOffset = e.getSceneY();
+        });
+        root.setOnMouseDragged(e -> {
+            if(yOffset<=37){
+                stage.setX(e.getScreenX() - xOffset);
+                stage.setY(e.getScreenY() - yOffset);
+            }
+        });
+        stage=(Stage) Main_Pane.getScene().getWindow();
+        stage.close();
+        Stage primaryStage=new Stage();
+        primaryStage.setScene(scene);
+        primaryStage.setWidth(900);
+        primaryStage.setHeight(500);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setFullScreen(false);
+        primaryStage.centerOnScreen();
+        primaryStage.show();
+    }
 }

@@ -14,16 +14,15 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane fx:id="Main_Pane" maxHeight="1080.0" maxWidth="1920.0" minHeight="720.0" minWidth="1366.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Org.Main.Controllers.DashboardController">
    <children>
       <BorderPane>
          <top>
             <HBox alignment="CENTER_RIGHT" maxWidth="1920.0" prefHeight="54.0" prefWidth="1366.0" spacing="10.0" style="-fx-border-width: 0px 0px 1px 0px; -fx-border-color: #b4e7d5;" BorderPane.alignment="TOP_RIGHT">
                <children>
-                  <Button mnemonicParsing="false" onAction="#Minimize" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
+                  <Button mnemonicParsing="false" onAction="#Minimize" prefHeight="35.0" prefWidth="30.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                        <ImageView fitHeight="15.0" fitWidth="15.0">
                            <image>
                               <Image url="@../Icons/minimize.png" />
                            </image>
@@ -33,9 +32,9 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#Set_Full_Screen" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
+                  <Button mnemonicParsing="false" onAction="#Set_Full_Screen" prefHeight="35.0" prefWidth="30.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                        <ImageView fitHeight="15.0" fitWidth="15.0">
                            <image>
                               <Image url="@../Icons/SetToFullScreen.png" />
                            </image>
@@ -45,9 +44,9 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#Exit" prefHeight="40.0" prefWidth="40.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
+                  <Button mnemonicParsing="false" onAction="#Exit" prefHeight="35.0" prefWidth="30.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                        <ImageView fitHeight="15.0" fitWidth="15.0">
                            <image>
                               <Image url="@../Icons/Exit.png" />
                            </image>
@@ -64,9 +63,9 @@
             </HBox>
          </top>
          <left>
-            <VBox alignment="TOP_CENTER" prefHeight="666.0" prefWidth="263.0" BorderPane.alignment="TOP_CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="666.0" prefWidth="263.0" style="-fx-border-width: 0px 1px 0px 0px; -fx-border-color: #b4e7d5;" BorderPane.alignment="TOP_CENTER">
                <padding>
-                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+                  <Insets bottom="20.0" top="20.0" />
                </padding>
                <children>
                   <AnchorPane prefHeight="121.0" prefWidth="223.0" style="-fx-border-color: #b4e7d5; -fx-border-width: 0px 0px 2px 0px;">
@@ -75,8 +74,8 @@
                            <children>
                               <StackPane prefHeight="118.0" prefWidth="111.0">
                                  <children>
-                                    <Circle fx:id="User_Icon" fill="DODGERBLUE" radius="33.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                                    <Label alignment="CENTER" prefHeight="24.0" prefWidth="128.0" text="A">
+                                    <Circle fx:id="User_Icon" fill="#05b074" radius="33.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                                    <Label fx:id="Username_Label_Circle" alignment="CENTER" prefHeight="24.0" prefWidth="128.0" text="A">
                                        <font>
                                           <Font name="Segoe UI Bold" size="20.0" />
                                        </font>
@@ -85,7 +84,7 @@
                               </StackPane>
                               <VBox prefHeight="119.0" prefWidth="103.0">
                                  <children>
-                                    <Label prefHeight="24.0" prefWidth="128.0" text="Admin">
+                                    <Label fx:id="Username_label" prefHeight="24.0" prefWidth="128.0" text="Admin">
                                        <font>
                                           <Font name="Segoe UI Bold" size="20.0" />
                                        </font>
@@ -224,6 +223,9 @@
                </children>
             </VBox>
          </left>
+         <center>
+            <StackPane fx:id="App_Center_Pane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
       </BorderPane>
    </children>
 </StackPane>

@@ -1,0 +1,129 @@
+.root{
+    -fx-font-family: "Segoe UI";
+    -fx-font-size:18px;
+}
+.Tab-Button-neutral{
+    -fx-background-color:#28B6F655;
+    -fx-text-fill:Black;
+    -fx-font-size:20px;
+}
+.Tab-Button-Active{
+    -fx-background-color:#05b074;
+    -fx-text-fill:White;
+}
+.Tab-Plus-Button{
+    -fx-background-color:#28B6F6;
+    -fx-text-fill:#05b074;
+    -fx-background-radius:50;
+}
+.tab-HBox{
+-fx-border-width:0px 0px 1px 0px ;
+-fx-border-color: #b4e7d5;
+}
+.tools-HBox{
+-fx-border-width:1px;
+-fx-border-color:#05b074;
+-fx-background-color:#CDEDE2;
+-fx-background-radius:10;
+-fx-border-radius:10;
+}
+.tools-Button{
+    -fx-background-radius:10;
+    -fx-background-color:#05b074;
+    -fx-text-fill:White;
+}
+.Product-Table-Button{
+    -fx-background-radius:10;
+    -fx-background-color:#05b074;
+    -fx-text-fill:White;
+}
+.Product-Table-Text-Field{
+-fx-background-color:#FFCA2555;
+-fx-background-radius:10;
+-fx-border-color:#FFCA25;
+-fx-border-radius:10;
+-fx-border-width:1px;
+-fx-text-fill:Black;
+-fx-font-size:20px;
+-fx-prompt-text-fill:Black;
+}
+.Product-Table-HBox{
+-fx-background-color:White;
+-fx-background-radius:10 10 0 0;
+}
+.Product-Table-VBox{
+-fx-border-width:2px;
+-fx-border-color:#b4e7d5;
+-fx-border-radius:10;
+-fx-background-color:transparent;
+}
+.Product-Table{
+-fx-border-width:0px 0px 0px 0px;
+-fx-border-color:#05b074;
+}
+.Product-Table-First-Row-Label{
+-fx-border-width:1px 1px 1px 0px;
+-fx-border-color:#05b074;
+-fx-background-color:#E8FFF7;
+-fx-text-fill:#05b074;
+}
+.Product-Table-Label{
+-fx-border-width:0px 1px 1px 0px;
+-fx-border-color:#05b074;
+-fx-background-color:White;
+}
+.Product-Table-First-Label{
+-fx-border-width:1px 1px 1px 1px;
+-fx-border-color:#05b074;
+-fx-border-radius:10 0 0 0;
+-fx-background-color:#E8FFF7;
+-fx-background-radius:10 0 0 0;
+-fx-text-fill:#05b074;
+}
+.Product-Table-First-Row-Last-Col-Label{
+-fx-border-width:1px 1px 1px 0px;
+-fx-border-color:#05b074;
+-fx-border-radius:0 10 0 0;
+-fx-background-color:#E8FFF7;
+-fx-background-radius:0 10 0 0;
+-fx-text-fill:#05b074;
+}
+.Product-Table-Last-Col-Label{
+-fx-border-width:0px 1px 1px 1px;
+-fx-border-color:#05b074;
+-fx-background-color:White;
+}
+.Product-Table-First-Col-Label{
+-fx-border-width:0px 1px 1px 1px;
+-fx-border-color:#05b074;
+-fx-background-color:White;
+}
+.Total-Price-HBox{
+-fx-background-color:#E6E6E644;
+-fx-background-radius:0 0 10 10;
+-fx-border-color: derive(-fx-background, -10%);
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+
+}
+.Total-Price-Text-Field{
+-fx-background-color:#FFCA2555;
+-fx-background-radius:10;
+-fx-border-color:#FFCA25;
+-fx-border-radius:10;
+-fx-border-width:1px;
+-fx-text-fill:Black;
+-fx-font-size:20px;
+-fx-prompt-text-fill:#FFCA25;
+}
+.Total-Price-Text-Field_Tools{
+-fx-background-color:#FFCA2555;
+-fx-background-radius:10;
+-fx-border-color:#FFCA25;
+-fx-border-radius:10;
+-fx-border-width:1px;
+-fx-text-fill:Black;
+-fx-font-size:40px;
+-fx-prompt-text-fill:#FFCA25;
+}
+

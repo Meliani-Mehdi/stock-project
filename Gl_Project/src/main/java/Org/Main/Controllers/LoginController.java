@@ -295,6 +295,8 @@ public class LoginController implements Initializable {
         Rectangle2D bounds = screen.getVisualBounds();
         FXMLLoader loader =new FXMLLoader(getClass().getResource("/FXML/Dashboard.fxml"));
         Parent root = loader.load();
+        DashboardController controller =loader.getController();
+        controller.display_name(SignIn_Username_Textfield.getText());
         Stage primaryStage=new Stage();
         Scene scene = new Scene(root, bounds.getWidth(), bounds.getHeight());
         primaryStage.setScene(scene);
@@ -303,6 +305,7 @@ public class LoginController implements Initializable {
         primaryStage.setWidth(bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 }

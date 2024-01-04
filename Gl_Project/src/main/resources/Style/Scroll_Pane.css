@@ -1,0 +1,23 @@
+.scroll-pane {
+    -fx-background-color: #b4e7d5AA;
+    -fx-background-radius:10 10 0 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar {
+    -fx-background-color: White;
+    -fx-pref-width:10px;
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: #05b074;
+}
+.scroll-pane .scroll-bar .increment-arrow {
+    -fx-background-color: #05b074;
+}
+.scroll-pane .scroll-bar .decrement-arrow {
+    -fx-background-color: #05b074;
+}
