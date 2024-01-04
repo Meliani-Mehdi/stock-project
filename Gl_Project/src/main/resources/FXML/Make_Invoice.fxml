@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -22,37 +20,26 @@
 
 <BorderPane minHeight="666.0" minWidth="1103.0" stylesheets="@../Style/Make_Invoice_Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Org.Main.Controllers.Make_Invoice_Controler">
    <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1103.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="Tabs_HBox" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1103.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="186.0" styleClass="Tab-Button-neutral" text="Invoice (01)" textFill="#05b074">
+            <Button fx:id="Facture_Tab" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="186.0" styleClass="Tab-Button-neutral" text="Invoice (01)" textFill="#05b074">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font></Button>
+            <Button alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#addFacture" prefHeight="25.0" prefWidth="25.0" styleClass="Tab-Plus-Button" textAlignment="CENTER" textFill="#05b074">
                <font>
                   <Font name="Segoe UI" size="20.0" />
                </font>
-               <graphic>
-                  <FontAwesomeIcon fill="#000000cc" glyphName="PLUS" rotate="45.0" stroke="TRANSPARENT" />
-               </graphic></Button>
-            <Button fx:id="Facture_Tab" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="186.0" styleClass="Tab-Button-Active" text="Invoice (01)" textFill="#05b074">
-               <font>
-                  <Font name="Segoe UI" size="20.0" />
-               </font>
-               <graphic>
-                  <FontAwesomeIcon fill="WHITE" fontSmoothingType="LCD" glyphName="PLUS" rotate="45.0" stroke="#ffffff00" strokeLineCap="ROUND">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </FontAwesomeIcon>
-               </graphic>
-            </Button>
-            <Button alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="25.0" styleClass="Tab-Plus-Button" textAlignment="CENTER" textFill="#05b074">
-               <font>
-                  <Font name="Segoe UI" size="20.0" />
-               </font>
-               <graphic>
-                  <FontAwesomeIcon fill="#000000cc" fontSmoothingType="LCD" glyphName="PLUS" size="0.8em" stroke="TRANSPARENT" textAlignment="CENTER" />
-               </graphic>
                <HBox.margin>
                   <Insets bottom="5.0" top="5.0" />
                </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" rotate="45.0">
+                     <image>
+                        <Image url="@../Icons/Exit-Black.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
          <styleClass>
@@ -67,9 +54,9 @@
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="root" BorderPane.alignment="CENTER">
          <top>
-            <HBox alignment="CENTER" prefHeight="56.0" prefWidth="1103.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="56.0" prefWidth="1103.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <ToolBar prefHeight="40.0" prefWidth="1103.0" styleClass="tools-HBox" HBox.hgrow="ALWAYS">
+                  <ToolBar prefHeight="55.0" prefWidth="948.0" styleClass="tools-HBox" HBox.hgrow="ALWAYS">
                     <items>
                       <Button mnemonicParsing="false" styleClass="tools-Button" text="Save all">
                            <graphic>
@@ -117,6 +104,7 @@
                         </Button>
                     </items>
                   </ToolBar>
+                  <Button fx:id="Close_Tab_Button" alignment="CENTER" mnemonicParsing="false" onAction="#Close_Tab_Function" prefHeight="54.0" prefWidth="106.0" styleClass="Exit-Facture-Button" text="Close Tab" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" top="10.0" />

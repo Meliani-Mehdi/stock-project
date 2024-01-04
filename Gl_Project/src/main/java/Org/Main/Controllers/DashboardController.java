@@ -429,7 +429,6 @@ public class DashboardController implements Initializable {
             Make_Order_Icon.setImage(MakeOrderActive);
         }
     }
-
     public void Sell_On_Mouse_Enter() {
         if (!Objects.equals(Sell_Button.getStyleClass().getFirst(), "side-Bar-navigation-Active")){
             Sell_Button.getStyleClass().clear();
