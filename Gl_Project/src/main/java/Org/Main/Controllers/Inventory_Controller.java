@@ -146,6 +146,7 @@ public class Inventory_Controller implements Initializable {
             Deposits_Top_Button.getStyleClass().add("top-Button-neutral");
         }
     }
+    /////////////////////////////////////////////////////////////  Products  ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void Return_To_Products(){
         Inventory_Main.getChildren().clear();
         Inventory_Main.getChildren().add(Products);
