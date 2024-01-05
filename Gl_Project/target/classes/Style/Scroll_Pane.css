@@ -1,6 +1,6 @@
 .scroll-pane {
     -fx-background-color: White;
-    -fx-background-radius:10 10 0 0;
+    -fx-background-radius:10 10 10 10;
 }
 
 .scroll-pane .viewport {

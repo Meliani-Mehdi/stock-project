@@ -1,0 +1,22 @@
+* {
+	-fx-darkest-grey-color: #323232;
+}
+.check-box .box {
+	-fx-background-color: white;
+	-fx-border-color: #05b074;
+	-fx-border-radius: 5;
+	-fx-background-radius: 5;
+	-fx-font-size: 14px;
+    -fx-min-width: 15px;
+    -fx-min-height: 15px;
+}
+.check-box .mark {
+ 	-fx-shape: "M1.73,12.91 8.1,19.28 22.79,4.59 22.79,1.59 8.1,16.28 1.73,9.91";
+}
+.check-box:selected .mark {
+	-fx-background-color: white;
+}
+.check-box:selected .box {
+	-fx-background-color: #05b074;
+	-fx-background-radius: 5;
+}

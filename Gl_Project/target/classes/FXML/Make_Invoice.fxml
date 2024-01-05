@@ -20,23 +20,38 @@
 
 <BorderPane minHeight="666.0" minWidth="1103.0" stylesheets="@../Style/Make_Invoice_Style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Org.Main.Controllers.Make_Invoice_Controler">
    <top>
-      <HBox fx:id="Tabs_HBox" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1103.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="Tabs_HBox" alignment="CENTER_LEFT" maxHeight="45.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="45.0" prefWidth="1103.0" spacing="5.0" BorderPane.alignment="TOP_CENTER">
          <children>
-            <Button fx:id="Facture_Tab" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="186.0" styleClass="Tab-Button-neutral" text="Invoice (01)" textFill="#05b074">
+            <Button fx:id="Facture_Tab" alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="148.0" styleClass="Tab-Button-neutral" text="Invoice (01)" textFill="#05b074">
                <font>
                   <Font name="Segoe UI" size="20.0" />
                </font></Button>
+            <Button fx:id="Close_Tab_Button" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="45.0" prefWidth="45.0" styleClass="Tab-Close-Button" textAlignment="CENTER" textFill="#05b074" HBox.hgrow="NEVER">
+               <font>
+                  <Font name="Segoe UI" size="1.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0">
+                     <image>
+                        <Image url="@../Icons/Exit-Black.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
             <Button alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#addFacture" prefHeight="25.0" prefWidth="25.0" styleClass="Tab-Plus-Button" textAlignment="CENTER" textFill="#05b074">
                <font>
                   <Font name="Segoe UI" size="20.0" />
                </font>
-               <HBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </HBox.margin>
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" rotate="45.0">
                      <image>
-                        <Image url="@../Icons/Exit-Black.png" />
+                        <Image url="@../Icons/Exit-White.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -104,7 +119,6 @@
                         </Button>
                     </items>
                   </ToolBar>
-                  <Button fx:id="Close_Tab_Button" alignment="CENTER" mnemonicParsing="false" onAction="#Close_Tab_Function" prefHeight="54.0" prefWidth="106.0" styleClass="Exit-Facture-Button" text="Close Tab" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" top="10.0" />
@@ -120,7 +134,7 @@
                            <children>
                               <ToolBar prefHeight="55.0" prefWidth="1079.0" styleClass="Product-Table-HBox" HBox.hgrow="ALWAYS">
                                  <items>
-                                    <TextField prefHeight="42.0" prefWidth="192.0" promptText="Bar_Code" styleClass="Product-Table-Text-Field" />
+                                    <TextField fx:id="Bar_Code_Insert_Text_Field" prefHeight="42.0" prefWidth="192.0" promptText="Bar_Code" styleClass="Product-Table-Text-Field" />
                                     <Button fx:id="Add_Product_Button" mnemonicParsing="false" onAction="#Add_Product_Func" styleClass="Product-Table-Button" text="Add Product">
                                        <graphic>
                                           <ImageView fitHeight="25.0" fitWidth="25.0">

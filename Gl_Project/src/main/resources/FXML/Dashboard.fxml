@@ -20,6 +20,29 @@
          <top>
             <HBox alignment="CENTER_RIGHT" maxWidth="1920.0" prefHeight="54.0" prefWidth="1366.0" spacing="10.0" style="-fx-border-width: 0px 0px 1px 0px; -fx-border-color: #b4e7d5;" BorderPane.alignment="TOP_RIGHT">
                <children>
+                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="53.0" prefWidth="1221.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="50.0">
+                           <image>
+                              <Image url="@../Icons/Shitty%20logo%20(2).png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label styleClass="Description-label" stylesheets="@../Style/Login_Styles.css" text="Stock Shaper" textFill="#05b074">
+                           <font>
+                              <Font name="Candara Light Italic" size="23.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
                   <Button mnemonicParsing="false" onAction="#Minimize" prefHeight="35.0" prefWidth="30.0" styleClass="Button-icon" stylesheets="@../Style/Login_Styles.css" HBox.hgrow="ALWAYS">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0">
