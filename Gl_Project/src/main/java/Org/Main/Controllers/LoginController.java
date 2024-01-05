@@ -44,7 +44,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Main_Pane.requestFocus();
+        Sign_in_Button.requestFocus();
         SignIn_Username_Textfield.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 SignIn_Password_TextField.requestFocus();
@@ -55,8 +55,12 @@ public class LoginController implements Initializable {
                 Sign_in_Button.fire();
             }
         });
+        Main_Pane.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER && event.isShiftDown()) {
+                Sign_in_Button.fire();
+            }
+        });
     }
-
     private double xOffset, yOffset;
 
     public void Last_User(String username,String password) {
@@ -66,7 +70,7 @@ public class LoginController implements Initializable {
 
     public void searchLog(String name, String pass){
         String url = "jdbc:sqlite:main.db";
-        try (Connection conn = DriverManager.getConnection(url);) {
+        try (Connection conn = DriverManager.getConnection(url)) {
 
             PreparedStatement quary = conn.prepareStatement("""
                             SELECT * FROM users WHERE username = ? AND password = ? ;

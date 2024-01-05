@@ -1,11 +1,93 @@
 .Add-Product-Top-HBox{
--fx-background-color:linear-gradient(to bottom, #05b074 20%, #0BF6A4);
--fx-text-fill:#FFFFFF;
+-fx-background-color: #b4e7d5;
 -fx-background-radius:10;
+-fx-border-color:#05b074;
+-fx-border-width:1px;
+-fx-border-radius:10;
 }
 .Add-Product-Top-Button{
--fx-background-color:transparent;
--fx-text-fill:#FFFFFF;
+-fx-background-color: #CDEDE2;
+-fx-text-fill:#058357;
 -fx-font-size:20px;
 -fx-font-weight:bold;
+-fx-background-radius:10;
+-fx-cursor: hand;
+-fx-border-color:#058357;
+-fx-border-width:1px;
+-fx-border-radius:10;
+}
+.Add-Product-Top-Button:hover{
+-fx-background-color:#058357;
+-fx-text-fill:white;
+-fx-cursor: hand;
+}
+.Add-Product-Top-Label{
+-fx-background-color:transparent;
+-fx-text-fill:#FFFFFF;
+-fx-font-size:30px;
+-fx-font-weight:bold;
+}
+.Add-Product-Main-Pane{
+-fx-background-color:white;
+-fx-border-color:#b4e7d5;
+-fx-border-width:2px;
+-fx-border-radius:10 10 10 10;
+-fx-background-radius:10 10 10 10;
+}
+.Add-Product-Main-Icon-Pane{
+-fx-background-color:white;
+-fx-border-color:#00000066;
+-fx-border-width:2px;
+-fx-border-style: dashed;
+-fx-border-radius:10;
+}
+.Add-Product-Main-Icon-Button{
+-fx-background-color:transparent;
+-fx-text-fill:#00000096;
+-fx-cursor: hand;
+}
+.Add-Product-Main-Icon-Button-import{
+-fx-background-color:#00000022;
+-fx-text-fill:#00000096;
+-fx-background-radius:5;
+-fx-cursor: hand;
+-fx-font-size:20px;
+}
+.Add-Product-Main-Icon-Button-import:hover{
+-fx-background-color:#00000077;
+}
+.Add-Product-Main-Icon-Button-delete{
+-fx-background-color:#F53F3E;
+-fx-text-fill:white;
+-fx-background-radius:5;
+-fx-cursor: hand;
+-fx-font-size:20px;
+}
+.Add-Product-Main-Icon-Button-delete:hover{
+-fx-background-color:#C33332;
+}
+.Add-Product-Main-Label{
+-fx-text-fill:#000000CC;
+-fx-font-size:25px;
+}
+.Add-Product-Main-Text-Field{
+-fx-background-color:White;
+-fx-background-radius:5;
+-fx-text-fill:#000000CC;
+-fx-font-size:25px;
+-fx-border-color:#00000066;
+-fx-border-width:1px;
+-fx-border-radius:5;
+}
+.Add-Product-Main-Add-Button{
+-fx-background-color: #05b074;
+-fx-text-fill:white;
+-fx-font-size:20px;
+-fx-font-weight:bold;
+-fx-background-radius:10;
+-fx-cursor: hand;
+}
+.Add-Product-Main-Add-Button:hover{
+-fx-background-color: #058357;
+-fx-cursor: hand;
 }

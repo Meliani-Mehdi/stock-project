@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -23,17 +24,22 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
+    private static String name,password;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Make_Order_Button.fire();
+        Main_Pane.requestFocus();
+        Main_Pane.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.L && event.isShiftDown()) {
+                Log_Out_Button.fire();
+            }
+        });
     }
 
     @FXML
@@ -616,18 +622,39 @@ public class DashboardController implements Initializable {
                                 id INTEGER PRIMARY KEY,
                                 username TEXT NOT NULL,
                                 password TEXT NOT NULL,
-                                'last' INTEGER NOT NULL
+                                l INTEGER NOT NULL
                             );""");
+
+            ResultSet result = statement.executeQuery("""
+                                SELECT username, password
+                                FROM users
+                                WHERE l = 1
+                                AND (SELECT COUNT(*) FROM users WHERE l = 1) = 1;
+                            """);
+
+            if (result.next()) {
+                name = result.getString("username");
+                password = result.getString("password");
+            }
+            else {
+                System.out.println("No matching record found.");
+                statement.execute("""
+                            UPDATE users SET l = 0;
+                            """);
+            }
+
             conn.close();
-            conn.isClosed();
         } catch (SQLException e) {
             System.out.println("error");
         }
     }
     public void Log_Out_click() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/Login.fxml")));
+        FXMLLoader loader =new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML/Login.fxml")));
+        Parent root = loader.load();
         Scene scene=new Scene(root);
         createDatabase();
+        LoginController controller =loader.getController();
+        controller.Last_User(name,password);
         root.setOnMousePressed(e -> {
             xOffset = e.getSceneX();
             yOffset = e.getSceneY();
