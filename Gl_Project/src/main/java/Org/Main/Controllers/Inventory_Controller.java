@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.net.URL;
+import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -196,6 +197,27 @@ public class Inventory_Controller implements Initializable {
         String Stock=Product_Stock_Text_Field.getText();
         String Buy_Price=Product_Buy_Price_Text_Field.getText();
         String Sell_Price=Product_Sell_Price_Text_Field.getText();
+        if(
+                !Bar_Code.isBlank() && !Name.isBlank() && !Reference.isBlank() && !Stock.isBlank() && !Buy_Price.isBlank() && !Sell_Price.isBlank()
+        ){
+            String url = "jdbc:sqlite:main.db";
+            try (Connection conn = DriverManager.getConnection(url)) {
+                PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock) VALUES(?, ?, ?, ?, ?, ?);");
+                query.setString(1, Bar_Code);
+                query.setString(2, Reference);
+                query.setString(3, Name);
+                query.setString(4, Buy_Price);
+                query.setString(5, Sell_Price);
+                query.setString(6, Stock);
+                query.execute();
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println("error");
+            }
+            printMat(getProductsMatrix());//printMat is a quick function that i made to print the results of the prod table
+                                          //getProductsMatrix is a function that returns a matrix of the SQL table products
+        }
+        else System.out.println("please enter all values");
     }
     //////////////////////////////////////////////// show products in the table ////////////////////////////////////////
     @FXML
@@ -237,6 +259,53 @@ public class Inventory_Controller implements Initializable {
             emptyLabel.setFont(Font.font("Segoe UI", 18));
             emptyLabel.getStyleClass().add("Product-Table-Label");
             Products_Table.add(emptyLabel, col, Products_Table.getRowConstraints().size() - 1);
+        }
+    }
+
+    ////////////////////////////////////makes the SQL products table into a matrix/////////////////////////////////////////
+    public static String[][] getProductsMatrix() {
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            Statement countQuery = conn.createStatement();
+            ResultSet countResult = countQuery.executeQuery("SELECT COUNT(*) FROM products");
+            countResult.next();
+            int numRows = countResult.getInt(1);
+
+            String[][] ren = new String[numRows][6];
+
+            Statement dataQuery = conn.createStatement();
+            ResultSet resultSet = dataQuery.executeQuery("SELECT bar_code, reference, name, buying_price, selling_price, stock FROM products");
+
+            int row = 0;
+            while (resultSet.next()) {
+                ren[row][0] = resultSet.getString("bar_code");
+                ren[row][1] = resultSet.getString("reference");
+                ren[row][2] = resultSet.getString("name");
+                ren[row][3] = resultSet.getString("buying_price");
+                ren[row][4] = resultSet.getString("selling_price");
+                ren[row][5] = resultSet.getString("stock");
+                row++;
+            }
+
+            return ren;
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
+    }
+    public static void printMat(String[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            System.out.println("Empty matrix");
+            return;
+        }
+
+        for (String[] strings : matrix) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(strings[j] + "\t");
+            }
+            System.out.println();
         }
     }
 }
