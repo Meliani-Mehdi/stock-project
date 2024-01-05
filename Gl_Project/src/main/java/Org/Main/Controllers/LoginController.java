@@ -58,18 +58,39 @@ public class LoginController implements Initializable {
     }
 
     private double xOffset, yOffset;
+
+    public void Last_User(String username,String password) {
+        SignIn_Username_Textfield.setText(username);
+        SignIn_Password_TextField.setText(password);
+    }
+
     public void searchLog(String name, String pass){
         String url = "jdbc:sqlite:main.db";
-        try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement quary = conn.prepareStatement("""
+        try (Connection conn = DriverManager.getConnection(url);) {
+
+            PreparedStatement quary = conn.prepareStatement("""
                             SELECT * FROM users WHERE username = ? AND password = ? ;
-                            """)) {
+                            """);
 
             quary.setString(1,name);
             quary.setString(2,pass);
 
             try (ResultSet resultSet = quary.executeQuery()) {
                 if (resultSet.next()) {
+
+                    PreparedStatement quary2 = conn.prepareStatement("""
+                        UPDATE users SET l =  CASE
+                                      WHEN username != ? THEN 0
+                                      WHEN username = ? THEN 1
+                                      ELSE l
+                                    END;
+                        """);
+
+                    quary2.setString(1,name);
+                    quary2.setString(2,name);
+
+                    quary2.execute();
+
                     showCustomAlert("Welcome "+name);
                 } else {
                     showCustomErrorAlert("Wrong user information");

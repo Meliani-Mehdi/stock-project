@@ -1,5 +1,6 @@
 package Org.Main;
 
+import Org.Main.Controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,20 +9,22 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Objects;
 
 public class Main extends Application {
     private double xOffset, yOffset;
+    public static String name;
+    public static String password;
     @Override
     public void start(Stage stage) throws Exception {
         Font.loadFont(getClass().getResourceAsStream("/Fonts/Quicksand-VariableFont_wght.ttf"), 12);
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/Login.fxml")));
+        FXMLLoader loader =new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML/Login.fxml")));
+        Parent root = loader.load();
         Scene scene=new Scene(root);
         createDatabase();
+        LoginController controller =loader.getController();
+        controller.Last_User(name,password);
         root.setOnMousePressed(e -> {
             xOffset = e.getSceneX();
             yOffset = e.getSceneY();
@@ -142,8 +145,27 @@ public class Main extends Application {
                                 id INTEGER PRIMARY KEY,
                                 username TEXT NOT NULL,
                                 password TEXT NOT NULL,
-                                'last' INTEGER NOT NULL
+                                l INTEGER NOT NULL
                             );""");
+
+            ResultSet result = statement.executeQuery("""
+                                SELECT username, password
+                                FROM users
+                                WHERE l = 1
+                                AND (SELECT COUNT(*) FROM users WHERE l = 1) = 1;
+                            """);
+
+            if (result.next()) {
+                name = result.getString("username");
+                password = result.getString("password");
+            }
+            else {
+                System.out.println("No matching record found.");
+                statement.execute("""
+                            UPDATE users SET l = 0;
+                            """);
+            }
+
             conn.close();
         } catch (SQLException e) {
             System.out.println("error");
