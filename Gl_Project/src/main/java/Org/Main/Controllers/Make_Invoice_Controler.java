@@ -133,10 +133,15 @@ public class Make_Invoice_Controler implements Initializable {
     int i=2;
     public void addFacture(){
         Button clonedButton = ButtonCloner.cloneButton(Facture_Tab);
+        clonedButton.getStyleClass().add("Tab-Button-neutral");
         clonedButton.setText("invoice ("+i+")");
         i++;
         clonedButton.setOnAction(e -> Change_Tab(clonedButton));
+        Button clonedExitButton = ButtonCloner.cloneButton(Close_Tab_Button);
+        clonedExitButton.getStyleClass().add("Tab-Close-Button");
+        clonedExitButton.setOnAction(e -> Close_Tab_Function(clonedExitButton));
         Tabs_HBox.getChildren().add(Tabs_HBox.getChildren().size()-1,clonedButton);
+        Tabs_HBox.getChildren().add(Tabs_HBox.getChildren().size()-1,clonedExitButton);
         clonedButton.fire();
     }
     public void Change_Tab(Button ClickedButton){
@@ -154,28 +159,29 @@ public class Make_Invoice_Controler implements Initializable {
     }
     @FXML
     private Button Close_Tab_Button;
-    public void Close_Tab_Function(){
-        int index=0;
-        for (int j = 0; j <Tabs_HBox.getChildren().size()-1 ; j++) {
-            Button temp=(Button) Tabs_HBox.getChildren().get(j);
-            if (Objects.equals(temp.getStyleClass().getLast(), "Tab-Button-Active")&&Tabs_HBox.getChildren().size()-1>1){
-                Tabs_HBox.getChildren().remove(j);
-                index = j-1;
-            }
+    public void Close_Tab_Function(Button ClickedButton){
+        int index=Tabs_HBox.getChildren().indexOf(ClickedButton);
+        boolean isactive= Objects.equals(Tabs_HBox.getChildren().get(index - 1).getStyleClass().getLast(), "Tab-Button-Active");
+        if (Tabs_HBox.getChildren().size()-2>1){
+            Tabs_HBox.getChildren().remove(index);
+            Tabs_HBox.getChildren().remove(index-1);
         }
-        try {
-            if(!Objects.equals(Tabs_HBox.getChildren().get(index).getStyleClass().getLast(), "Tab-Button-Active")){
-                Tabs_HBox.getChildren().get(index).getStyleClass().add("Tab-Button-Active");
+        if (Tabs_HBox.getChildren().size()==index){
+            if(!Objects.equals(Tabs_HBox.getChildren().get(index-3).getStyleClass().getLast(), "Tab-Button-Active") && isactive){
+                Tabs_HBox.getChildren().get(index-3).getStyleClass().add("Tab-Button-Active");
             }
-        }catch (IndexOutOfBoundsException e){
-            if(!Objects.equals(Tabs_HBox.getChildren().get(index+1).getStyleClass().getLast(), "Tab-Button-Active")){
-                Tabs_HBox.getChildren().get(index+1).getStyleClass().add("Tab-Button-Active");
+        }else {
+            if(!Objects.equals(Tabs_HBox.getChildren().get(index-1).getStyleClass().getLast(), "Tab-Button-Active") && isactive){
+                Tabs_HBox.getChildren().get(index-1).getStyleClass().add("Tab-Button-Active");
             }
         }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Facture_Tab.setOnAction(e -> Change_Tab(Facture_Tab));
+        Close_Tab_Button.setOnAction(e -> Close_Tab_Function(Close_Tab_Button));
         Facture_Tab.fire();
     }
+    @FXML
+    private TextField Bar_Code_Insert_Text_Field;
 }

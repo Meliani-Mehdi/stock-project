@@ -6,16 +6,37 @@
     -fx-background-color:#28B6F655;
     -fx-text-fill:Black;
     -fx-font-size:20px;
+    -fx-cursor: hand;
+}
+.Tab-Button-neutral:hover{
+    -fx-background-color:#28B6F6;
 }
 .Tab-Button-Active{
     -fx-background-color:#05b074;
     -fx-text-fill:White;
     -fx-font-size:20px;
+    -fx-cursor: hand;
+}
+.Tab-Button-Active:hover{
+    -fx-background-color:#058357;
 }
 .Tab-Plus-Button{
-    -fx-background-color:#28B6F6;
+    -fx-background-color:#05b074;
     -fx-text-fill:#05b074;
     -fx-background-radius:50;
+    -fx-cursor: hand;
+}
+.Tab-Plus-Button:hover{
+    -fx-background-color:#058357;
+}
+.Tab-Close-Button{
+    -fx-background-color:transparent;
+    -fx-text-fill:#05b074;
+    -fx-background-radius:5;
+    -fx-cursor: hand;
+}
+.Tab-Close-Button:hover{
+    -fx-background-color:white;
 }
 .tab-HBox{
 -fx-border-width:0px 0px 1px 0px ;
@@ -32,11 +53,19 @@
     -fx-background-radius:10;
     -fx-background-color:#05b074;
     -fx-text-fill:White;
+    -fx-cursor: hand;
+}
+.tools-Button:hover{
+    -fx-background-color:#058357;
 }
 .Product-Table-Button{
     -fx-background-radius:10;
     -fx-background-color:#05b074;
     -fx-text-fill:White;
+    -fx-cursor: hand;
+}
+.Product-Table-Button:hover{
+    -fx-background-color:#058357;
 }
 .Product-Table-Text-Field{
 -fx-background-color:#FFCA2555;
@@ -67,11 +96,13 @@
 -fx-border-color:#05b074;
 -fx-background-color:#E8FFF7;
 -fx-text-fill:#05b074;
+-fx-cursor: text;
 }
 .Product-Table-Label{
 -fx-border-width:0px 1px 1px 0px;
 -fx-border-color:#05b074;
 -fx-background-color:White;
+-fx-cursor: text;
 }
 .Product-Table-First-Label{
 -fx-border-width:1px 1px 1px 1px;
@@ -80,6 +111,7 @@
 -fx-background-color:#E8FFF7;
 -fx-background-radius:10 0 0 0;
 -fx-text-fill:#05b074;
+-fx-cursor: text;
 }
 .Product-Table-First-Row-Last-Col-Label{
 -fx-border-width:1px 1px 1px 0px;
@@ -88,16 +120,19 @@
 -fx-background-color:#E8FFF7;
 -fx-background-radius:0 10 0 0;
 -fx-text-fill:#05b074;
+-fx-cursor: text;
 }
 .Product-Table-Last-Col-Label{
 -fx-border-width:0px 1px 1px 0px;
 -fx-border-color:#05b074;
 -fx-background-color:White;
+-fx-cursor: text;
 }
 .Product-Table-First-Col-Label{
 -fx-border-width:0px 1px 1px 1px;
 -fx-border-color:#05b074;
 -fx-background-color:White;
+-fx-cursor: text;
 }
 .Total-Price-HBox{
 -fx-background-color:#E6E6E644;
@@ -116,9 +151,4 @@
 -fx-font-size:40px;
 -fx-prompt-text-fill:#FFCA25;
 }
-.Exit-Facture-Button{
--fx-background-radius:10;
-    -fx-background-color:#C54242;
-    -fx-text-fill:White;
-    -fx-font-weight:bold;
-}
+

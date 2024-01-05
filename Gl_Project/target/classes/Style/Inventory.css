@@ -2,67 +2,39 @@
     -fx-font-family: "Segoe UI";
     -fx-font-size:18px;
 }
-.Tab-Button-neutral{
-    -fx-background-color:#28B6F655;
-    -fx-text-fill:Black;
-    -fx-font-size:20px;
-    -fx-cursor: hand;
+.top-Button-neutral{
+-fx-background-color:transparent;
+-fx-text-fill:#00000066;
+-fx-font-size:20px;
+-fx-cursor: hand;
 }
-.Tab-Button-neutral:hover{
-    -fx-background-color:#28B6F6;
-}
-.Tab-Button-Active{
-    -fx-background-color:#05b074;
-    -fx-text-fill:White;
-    -fx-font-size:20px;
-    -fx-cursor: hand;
-}
-.Tab-Button-Active:hover{
-    -fx-background-color:#058357;
-}
-.Tab-Plus-Button{
-    -fx-background-color:#05b074;
-    -fx-text-fill:#05b074;
-    -fx-background-radius:50;
-    -fx-cursor: hand;
-}
-.Tab-Plus-Button:hover{
-    -fx-background-color:#058357;
-}
-.Tab-Close-Button{
-    -fx-background-color:transparent;
-    -fx-text-fill:#05b074;
-    -fx-background-radius:5;
-    -fx-cursor: hand;
-}
-.Tab-Close-Button:hover{
-    -fx-background-color:white;
-}
-.tab-HBox{
--fx-border-width:0px 0px 1px 0px ;
--fx-border-color: #b4e7d5;
-}
-.tools-HBox{
--fx-border-width:1px;
+.top-Button-active{
+-fx-background-color:transparent;
 -fx-border-color:#05b074;
--fx-background-color:#CDEDE2;
--fx-background-radius:10;
--fx-border-radius:10;
+-fx-border-width:0px 0px 3px 0px;
+-fx-background-radius: 0 0 5 5;
+-fx-text-fill:#000000;
+-fx-font-size:20px;
+-fx-cursor: hand;
 }
-.tools-Button{
-    -fx-background-radius:10;
-    -fx-background-color:#05b074;
-    -fx-text-fill:White;
-    -fx-cursor: hand;
+.top-Button-hover{
+-fx-background-color:transparent;
+-fx-text-fill:#000000;
+-fx-font-size:20px;
+-fx-cursor: hand;
 }
-.tools-Button:hover{
-    -fx-background-color:#058357;
+.top-HBox{
+-fx-background-color:white;
+-fx-border-color:#b4e7d5;
+-fx-border-width:0px 0px 1px 0px;
 }
+
 .Product-Table-Button{
     -fx-background-radius:10;
     -fx-background-color:#05b074;
     -fx-text-fill:White;
     -fx-cursor: hand;
+    -fx-font-size:20px;
 }
 .Product-Table-Button:hover{
     -fx-background-color:#058357;
@@ -120,7 +92,16 @@
 -fx-background-color:#E8FFF7;
 -fx-background-radius:0 10 0 0;
 -fx-text-fill:#05b074;
--fx-cursor: text;
+-fx-cursor: hand;
+}
+.Product-Table-First-Row-Last-Col-Button{
+-fx-border-width:1px 1px 1px 0px;
+-fx-border-color:#05b074;
+-fx-border-radius:0 10 0 0;
+-fx-background-color:#05b074;
+-fx-background-radius:0 10 0 0;
+-fx-text-fill:white;
+-fx-cursor: hand;
 }
 .Product-Table-Last-Col-Label{
 -fx-border-width:0px 1px 1px 0px;
@@ -134,21 +115,3 @@
 -fx-background-color:White;
 -fx-cursor: text;
 }
-.Total-Price-HBox{
--fx-background-color:#E6E6E644;
--fx-background-radius:0 0 10 10;
--fx-border-color: derive(-fx-background, -10%);
--fx-border-width: 1;
--fx-border-radius: 4;
-}
-.Total-Price-Text-Field_Tools{
--fx-background-color:#FFCA2529;
--fx-background-radius:10;
--fx-border-color:#FFCA25;
--fx-border-radius:10;
--fx-border-width:1px;
--fx-text-fill:Black;
--fx-font-size:40px;
--fx-prompt-text-fill:#FFCA25;
-}
-

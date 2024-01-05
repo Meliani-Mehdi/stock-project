@@ -359,6 +359,17 @@ public class DashboardController implements Initializable {
 
         Image SettingsNeutral = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Icons/settings-neutral.png")));
         Settings_Icon.setImage(SettingsNeutral);
+        ////////////////////////////// center pane change ////////////////////////////////////
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/FXML/Inventory.fxml")));
+        BorderPane content;
+        try {
+            content = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        content.setPrefSize(App_Center_Pane.getWidth(),App_Center_Pane.getHeight());
+        App_Center_Pane.getChildren().clear();
+        App_Center_Pane.getChildren().addFirst(content);
     }
     ////////////////////////////////////////////// Settings_button  //////////////////////////////////////////////////
     public void Settings_click() {
