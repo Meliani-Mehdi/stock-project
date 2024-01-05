@@ -39,6 +39,21 @@ public class DashboardController implements Initializable {
             if (event.getCode() == KeyCode.L && event.isShiftDown()) {
                 Log_Out_Button.fire();
             }
+            if (event.getCode() == KeyCode.I && event.isShiftDown()) {
+                Inventory_Button.fire();
+            }
+            if (event.getCode() == KeyCode.S && event.isShiftDown()) {
+                Sell_Button.fire();
+            }
+            if (event.getCode() == KeyCode.M && event.isShiftDown()) {
+                Make_Order_Button.fire();
+            }
+            if (event.getCode() == KeyCode.G && event.isShiftDown()) {
+                Settings_button.fire();
+            }
+            if (event.getCode() == KeyCode.A && event.isShiftDown()) {
+                Administration_button.fire();
+            }
         });
     }
 

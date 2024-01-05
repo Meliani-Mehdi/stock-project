@@ -181,6 +181,7 @@ public class Make_Invoice_Controler implements Initializable {
         Facture_Tab.setOnAction(e -> Change_Tab(Facture_Tab));
         Close_Tab_Button.setOnAction(e -> Close_Tab_Function(Close_Tab_Button));
         Facture_Tab.fire();
+        Add_Product_Func();
     }
     @FXML
     private TextField Bar_Code_Insert_Text_Field;

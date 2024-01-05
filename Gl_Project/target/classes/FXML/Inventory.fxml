@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
@@ -174,7 +175,7 @@
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <AnchorPane fx:id="Layer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000096;" visible="false" />
+                  <AnchorPane fx:id="Layer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000096; -fx-background-radius: 10 10 10 10;" visible="false" />
                   <VBox fx:id="Add_Product" alignment="CENTER" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" visible="false" StackPane.alignment="CENTER">
                      <children>
                         <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
@@ -257,10 +258,13 @@
                                                 <Font size="38.0" />
                                              </font>
                                              <graphic>
-                                                <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" rotate="180.0">
                                                    <image>
                                                       <Image url="@../Icons/Sell/Bar_Code.png" />
                                                    </image>
+                                                   <rotationAxis>
+                                                      <Point3D y="1.0" />
+                                                   </rotationAxis>
                                                 </ImageView>
                                              </graphic>
                                           </Label>
