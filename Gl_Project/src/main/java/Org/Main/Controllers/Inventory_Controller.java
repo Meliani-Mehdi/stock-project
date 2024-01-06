@@ -421,6 +421,15 @@ public class Inventory_Controller implements Initializable {
     }
     /////////// hnaa khdem l function ta3 delete from database
     public void Delete_Product_From_Database(String Product_Id){
-        System.out.println("Value in the second column: " + Product_Id);
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM products WHERE id = ?");
+            preparedStatement.setString(1,Product_Id);
+            preparedStatement.execute();
+            conn.close();
+            } catch (SQLException x) {
+            System.out.println("error");
+        }
     }
 }
