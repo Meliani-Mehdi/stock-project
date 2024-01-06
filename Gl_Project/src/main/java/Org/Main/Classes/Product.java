@@ -32,14 +32,14 @@ public class Product {
         return Id;
     }
 
-    public Product(Integer id, String reference, String name,Double buying_Price, Double selling_Price, Integer stock, String depots) {
+    public Product(Integer id, String codebar, String reference, String name,Double buying_Price, Double selling_Price, Integer stock) {
         Id = id;
+        this.Codebar = codebar;
         Reference = reference;
         this.name = name;
         Buying_Price=buying_Price;
         Selling_Price = selling_Price;
         Stock = stock;
-        this.depots = depots;
     }
 
     public Product(Integer id, String reference, String name, Double buying_Price, Double selling_Price, Integer stock) {

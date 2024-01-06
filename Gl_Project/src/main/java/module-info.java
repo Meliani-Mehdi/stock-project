@@ -10,4 +10,6 @@ module Org.Main {
     to javafx.fxml;
     opens FXML to javafx.fxml;
     exports Org.Main.Controllers;
+    exports Org.Main.Classes;
+    opens Org.Main.Classes to javafx.fxml;
 }

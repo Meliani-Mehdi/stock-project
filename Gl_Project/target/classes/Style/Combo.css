@@ -1,28 +1,38 @@
+.combo-box{
+-fx-background-color: #CDEDE2;
+-fx-background-radius:5;
+-fx-border-color:#05b074;
+-fx-border-width:1px 1px 1px 0px;
+-fx-border-radius:5;
+}
 .combo-box .list-cell {
--fx-background-color: #0a0a0a;
--fx-background-radius:10;
--fx-text-fill: #0093b9;
--fx-font-size:24px;
+-fx-background-color: #CDEDE2;
+-fx-background-radius:5;
+-fx-text-fill: #05b074;
+-fx-font-size:20px;
 -fx-font-family:"SansSerif";
 -fx-alignment:Center;
 -fx-padding:10px 0px;
+-fx-border-color:#05b074;
+-fx-border-width:0px 0px 0px 1px;
+-fx-border-radius:5 0 0 5;
 }
 .combo-box .arrow {
-    -fx-background-color: #0093b9;
+    -fx-background-color: #05b074;
+
 }
 .combo-box .context-menu .menu-item {
     -fx-background-color: transparent;
 }
-.combo-box-popup .list-view
-{
+.combo-box-popup .list-view{
     -fx-background-color: transparent, transparent;
 }
 .combo-box .scroll-bar:vertical {
-    -fx-background-color: #0a0a0a;
+    -fx-background-color: white;
 }
 
 .combo-box .scroll-bar:vertical .thumb {
-    -fx-background-color: #0093b9;
+    -fx-background-color: #05b074;
 }
 
 .combo-box .scroll-bar:vertical .increment-button,

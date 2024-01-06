@@ -7,17 +7,17 @@
 }
 .Add-Product-Top-Button{
 -fx-background-color: #CDEDE2;
--fx-text-fill:#058357;
+-fx-text-fill:#05b074;
 -fx-font-size:20px;
 -fx-font-weight:bold;
 -fx-background-radius:10;
 -fx-cursor: hand;
--fx-border-color:#058357;
+-fx-border-color:#05b074;
 -fx-border-width:1px;
 -fx-border-radius:10;
 }
 .Add-Product-Top-Button:hover{
--fx-background-color:#058357;
+-fx-background-color:#05b074;
 -fx-text-fill:white;
 -fx-cursor: hand;
 }
