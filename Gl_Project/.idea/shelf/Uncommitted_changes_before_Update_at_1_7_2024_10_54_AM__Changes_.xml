@@ -1,0 +1,9 @@
+<changelist name="Uncommitted_changes_before_Update_at_1_7_2024_10_54_AM_[Changes]" date="1704621249137" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_7_2024_10_54_AM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 1/7/2024 10:54 AM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Org/Main/Controllers/Inventory_Controller.class" />
+    <option name="AFTER_PATH" value="target/classes/Org/Main/Controllers/Inventory_Controller.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_7_2024_10_54_AM_[Changes]/Inventory_Controller.class" />
+  </binary>
+</changelist>

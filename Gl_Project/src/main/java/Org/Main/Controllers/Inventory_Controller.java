@@ -2,6 +2,7 @@ package Org.Main.Controllers;
 
 import Org.Main.Alerts;
 import Org.Main.Classes.Product;
+import Org.Main.getData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -11,10 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
@@ -30,7 +36,7 @@ public class Inventory_Controller implements Initializable {
     public void Only_Numeric(TextField... textFields) {
         for (TextField textField : textFields) {
             textField.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!newValue.matches("-?\\d*(\\.\\d*)?")) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
                     textField.setText(oldValue);
                 }
             });
@@ -189,6 +195,8 @@ public class Inventory_Controller implements Initializable {
         Inventory_Main.getChildren().add(Products);
         Layer.setVisible(false);
         Add_Product.setVisible(false);
+        Image default_image=new Image("file:C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png");
+        Product_Image.setImage(default_image);
     }
     @FXML
     private AnchorPane Layer;
@@ -220,6 +228,29 @@ public class Inventory_Controller implements Initializable {
     private TextField Product_Sell_Price_Text_Field;
     ///// after you make the function try it in the app it's ready it just needs the logique for the database
     // mzl madertch l photo ta3 l product for the moment t9ad tzid ghi hado
+
+    @FXML
+    private ImageView Product_Image;
+    private File file;
+    @FXML
+    private Rectangle Image_Container;
+    public void Import_Image() {
+        FileChooser image=new FileChooser();
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp");
+        image.setTitle("Chose Product image");
+        image.getExtensionFilters().add(imageFilter);
+        image.setInitialDirectory(new File("C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Pictures"));
+        file=image.showOpenDialog(Products.getScene().getWindow());
+        if(file!=null){
+            getData.path=file.getAbsolutePath();
+            Image image1 = new Image(file.toURI().toString(), 160, 150, false, true);
+            Product_Image.setImage(image1);
+        }
+    }
+    public void remove_Image(){
+        Image default_image=new Image("file:C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png");
+        Product_Image.setImage(default_image);
+    }
     public void add_Product_To_Database(){
         String Bar_Code=Product_Barcode_Text_Field.getText();
         String Name=Product_Name_Text_Field.getText();
@@ -227,19 +258,26 @@ public class Inventory_Controller implements Initializable {
         String Stock=Product_Stock_Text_Field.getText();
         String Buy_Price=Product_Buy_Price_Text_Field.getText();
         String Sell_Price=Product_Sell_Price_Text_Field.getText();
-        if(!Bar_Code.isBlank() && !Name.isBlank() && !Reference.isBlank() && !Stock.isBlank() && !Buy_Price.isBlank() && !Sell_Price.isBlank()){
+        String Image_Path;
+        try {
+            Image_Path=file.getAbsolutePath();
+        }catch (NullPointerException e){
+            Image_Path="no image";
+        }
+        if(!Bar_Code.isBlank() && !Name.isBlank() && !Reference.isBlank() && !Stock.isBlank() && !Buy_Price.isBlank() && !Sell_Price.isBlank() && Double.parseDouble(Buy_Price)>=0 && Double.parseDouble(Sell_Price)>=0 && Double.parseDouble(Stock)>=0){
             if (Double.parseDouble(Buy_Price)>Double.parseDouble(Sell_Price)) {
-                AtomicBoolean confirm=alert.showCustomConfirmationAlert("sell is lesser then buy");
+                AtomicBoolean confirm=alert.showCustomConfirmationAlert("You sure about the sell price ??");
                 if (confirm.get()){
                     String url = "jdbc:sqlite:main.db";
                     try (Connection conn = DriverManager.getConnection(url)) {
-                        PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock) VALUES(?, ?, ?, ?, ?, ?);");
+                        PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo) VALUES(?, ?, ?, ?, ?, ?, ?);");
                         query.setString(1, Bar_Code);
                         query.setString(2, Reference);
                         query.setString(3, Name);
                         query.setString(4, Buy_Price);
                         query.setString(5, Sell_Price);
                         query.setString(6, Stock);
+                        query.setString(7, Image_Path);
                         query.execute();
                         conn.close();
                     } catch (SQLException e) {
@@ -247,7 +285,7 @@ public class Inventory_Controller implements Initializable {
                     }
                     removeNonFirstRowChildren(Products_Table);
                     Show_Products_In_The_Table();
-                    Return_To_Products();
+                    alert.showCustomAlert("success");
                 }
             }else{
                 String url = "jdbc:sqlite:main.db";
@@ -266,6 +304,7 @@ public class Inventory_Controller implements Initializable {
                 }
                 removeNonFirstRowChildren(Products_Table);
                 Show_Products_In_The_Table();
+                alert.showCustomAlert("success");
             }
         }
         else alert.showCustomErrorAlert("please enter all values");
@@ -365,19 +404,7 @@ public class Inventory_Controller implements Initializable {
     }
     @FXML
     private CheckBox CheckBoxExample;
-    public void Select_All_Products(){
-        for (Node node : Products_Table.getChildren()) {
-            if (node instanceof HBox) {
-                HBox hBox = (HBox) node;
-                for (Node childNode : hBox.getChildren()) {
-                    if (childNode instanceof CheckBox) {
-                        CheckBox checkBox = (CheckBox) childNode;
-                        checkBox.setSelected(CheckBoxExample.isSelected());
-                    }
-                }
-            }
-        }
-    }
+
     public void Delete_Product() {
         for (int row = 0; row < Products_Table.getRowCount(); row++) {
             int currentRow = row;

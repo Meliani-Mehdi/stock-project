@@ -145,7 +145,7 @@
                                     </Label>
                                     <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" styleClass="Product-Table-First-Label">
                                        <children>
-                                          <CheckBox fx:id="CheckBoxExample" mnemonicParsing="false" onAction="#Select_All_Products" stylesheets="@../Style/check_Box.css" />
+                                          <CheckBox fx:id="CheckBoxExample" mnemonicParsing="false" stylesheets="@../Style/check_Box.css" visible="false" />
                                        </children>
                                     </HBox>
                                     <Label alignment="CENTER" maxWidth="120.0" prefHeight="30.0" prefWidth="128.0" styleClass="Product-Table-First-Row-Label" text="Buying Price" GridPane.columnIndex="6">
@@ -185,15 +185,14 @@
                                     </Button>
                                     <AnchorPane maxWidth="170.0" prefHeight="170.0" prefWidth="170.0" styleClass="Add-Product-Main-Icon-Pane">
                                        <children>
-                                          <ImageView layoutX="20.0" layoutY="9.0" opacity="0.64">
+                                          <ImageView fx:id="Product_Image" fitHeight="170.0" fitWidth="170.0" layoutX="3.0" layoutY="5.0" onMouseClicked="#Import_Image">
                                              <image>
                                                 <Image url="@../Icons/Inventory/upload.png" />
                                              </image>
                                           </ImageView>
-                                          <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="62.0" mnemonicParsing="false" prefHeight="174.0" prefWidth="174.0" styleClass="Add-Product-Main-Icon-Button" text="Upload picture" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
-                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-import" text="Import Pic">
+                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Import_Image" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-import" text="Import Pic">
                                        <graphic>
                                           <ImageView fitHeight="32.0" fitWidth="32.0">
                                              <image>
@@ -202,7 +201,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-delete" text="Delete pic">
+                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#remove_Image" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-delete" text="Delete pic">
                                        <graphic>
                                           <ImageView fitHeight="32.0" fitWidth="32.0">
                                              <image>
