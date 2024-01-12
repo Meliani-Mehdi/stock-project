@@ -613,6 +613,7 @@ public class Inventory_Controller implements Initializable {
             Product[] ren = new Product[numRows];
 
             Statement dataQuery = conn.createStatement();
+            // hna zid where reference = search fel requete sql;
             ResultSet resultSet = dataQuery.executeQuery("SELECT id,bar_code, reference, name, buying_price, selling_price, stock FROM products WHERE");
 
             int row = 0;
