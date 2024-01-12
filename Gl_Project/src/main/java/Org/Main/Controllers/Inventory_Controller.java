@@ -24,6 +24,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -380,35 +381,31 @@ public class Inventory_Controller implements Initializable {
         String url = "jdbc:sqlite:main.db";
 
         try (Connection conn = DriverManager.getConnection(url)) {
-            Statement countQuery = conn.createStatement();
-            ResultSet countResult = countQuery.executeQuery("SELECT COUNT(*) FROM products");
-            countResult.next();
-            int numRows = countResult.getInt(1);
+            ArrayList<Product> productList = new ArrayList<>();
 
-            Product[] ren = new Product[numRows];
+            try (Statement dataQuery = conn.createStatement()) {
+                ResultSet resultSet = dataQuery.executeQuery("SELECT id, bar_code, reference, name, buying_price, selling_price, stock FROM products");
 
-            Statement dataQuery = conn.createStatement();
-            ResultSet resultSet = dataQuery.executeQuery("SELECT id,bar_code, reference, name, buying_price, selling_price, stock FROM products");
-
-            int row = 0;
-            while (resultSet.next()) {
-                ren[row]=new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("bar_code"),
-                        resultSet.getString("reference"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("buying_price"),
-                        resultSet.getDouble("selling_price"),
-                        resultSet.getInt("stock")
-                );
-                row++;
+                while (resultSet.next()) {
+                    productList.add(new Product(
+                            resultSet.getInt("id"),
+                            resultSet.getString("bar_code"),
+                            resultSet.getString("reference"),
+                            resultSet.getString("name"),
+                            resultSet.getDouble("buying_price"),
+                            resultSet.getDouble("selling_price"),
+                            resultSet.getInt("stock")
+                    ));
+                }
             }
-            return ren;
+        conn.close();
+        return productList.toArray(new Product[0]);
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
             return null;
         }
     }
+
     @FXML
     private CheckBox CheckBoxExample;
 
@@ -451,7 +448,6 @@ public class Inventory_Controller implements Initializable {
         }
         return null;
     }
-    /////////// hnaa khdem l function ta3 delete from database
     public void Delete_Product_From_Database(String Product_Id){
         String url = "jdbc:sqlite:main.db";
 
@@ -507,9 +503,23 @@ public class Inventory_Controller implements Initializable {
         Edited_Product_Buy_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+6)).getText());
         Edited_Product_Sell_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+7)).getText());
     }
-    public void getProduct_Image(int id){
-        Image_Path="C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png";
-        Image default_image=new Image("file:"+Image_Path);
+    public void getProduct_Image(int id) {
+
+        String search = Search_Products_Text_Field.getText();
+        String url = "jdbc:sqlite:main.db";
+
+        String img = null;
+        try (Connection conn = DriverManager.getConnection(url)) {
+            Statement countQuery = conn.createStatement();
+            ResultSet countResult = countQuery.executeQuery("SELECT photo FROM products WHERE id = " + id);
+            countResult.next();
+            img = countResult.getString(1);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        Image_Path = img;
+        Image default_image = new Image("file:" + Image_Path);
         Edited_Product_Image.setImage(default_image);
     }
     private String Image_Path;
@@ -600,36 +610,37 @@ public class Inventory_Controller implements Initializable {
     }
     /////////////// ida t9ad zid hnaya search by reference
     ////////////// ida l9a reference y affichiha ida mal9ahach dirah yeprinti mal9ahach
+
     public Product[] SearchProductMatrix() {
         String search=Search_Products_Text_Field.getText();
+        if (search.isBlank()) return getProductsMatrix();
+
         String url = "jdbc:sqlite:main.db";
 
         try (Connection conn = DriverManager.getConnection(url)) {
-            Statement countQuery = conn.createStatement();
-            ResultSet countResult = countQuery.executeQuery("SELECT COUNT(*) FROM products");
-            countResult.next();
-            int numRows = countResult.getInt(1);
+            ArrayList<Product> productList = new ArrayList<>();
 
-            Product[] ren = new Product[numRows];
+            try (PreparedStatement countQuery = conn.prepareStatement("SELECT id, bar_code, reference, name, buying_price, selling_price, stock FROM products WHERE name LIKE ? OR reference LIKE ?")) {
+                countQuery.setString(1, "%" + search + "%");
+                countQuery.setString(2, "%" + search + "%");
 
-            Statement dataQuery = conn.createStatement();
-            // hna zid where reference = search fel requete sql;
-            ResultSet resultSet = dataQuery.executeQuery("SELECT id,bar_code, reference, name, buying_price, selling_price, stock FROM products WHERE");
-
-            int row = 0;
-            while (resultSet.next()) {
-                ren[row]=new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("bar_code"),
-                        resultSet.getString("reference"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("buying_price"),
-                        resultSet.getDouble("selling_price"),
-                        resultSet.getInt("stock")
-                );
-                row++;
+                try (ResultSet resultSet = countQuery.executeQuery()) {
+                    while (resultSet.next()) {
+                        productList.add(new Product(
+                                resultSet.getInt("id"),
+                                resultSet.getString("bar_code"),
+                                resultSet.getString("reference"),
+                                resultSet.getString("name"),
+                                resultSet.getDouble("buying_price"),
+                                resultSet.getDouble("selling_price"),
+                                resultSet.getInt("stock")
+                        ));
+                    }
+                }
             }
-            return ren;
+            conn.close();
+            return productList.toArray(new Product[0]);
+
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
             return null;
