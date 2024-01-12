@@ -471,7 +471,7 @@ public class Inventory_Controller implements Initializable {
         Layer.setVisible(true);
         Edit_Product.setVisible(true);
         get_Product_Info_To_Edit(Products_Table,itemIndex);
-        getProduct_Image();
+        getProduct_Image(Integer.parseInt(((Label)Products_Table.getChildren().get(itemIndex+1)).getText()));
     }
     public void Return_To_Products_From_Edit(){
         Inventory_Main.getChildren().clear();
@@ -507,7 +507,7 @@ public class Inventory_Controller implements Initializable {
         Edited_Product_Buy_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+6)).getText());
         Edited_Product_Sell_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+7)).getText());
     }
-    public void getProduct_Image(){
+    public void getProduct_Image(int id){
         Image_Path="here insert the image Url from the database";
         Image default_image=new Image("file:"+Image_Path);
         Edited_Product_Image.setImage(default_image);
