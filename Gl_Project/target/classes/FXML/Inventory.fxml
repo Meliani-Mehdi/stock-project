@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="666.0" minWidth="1103.0" stylesheets="@../Style/Inventory.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Org.Main.Controllers.Inventory_Controller">
+<BorderPane minHeight="666.0" minWidth="1103.0" stylesheets="@../Style/Inventory.css" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Org.Main.Controllers.Inventory_Controller">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="1103.0" styleClass="top-HBox" BorderPane.alignment="CENTER">
          <children>
@@ -168,7 +168,7 @@
                      </children>
                   </VBox>
                   <AnchorPane fx:id="Layer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000096; -fx-background-radius: 10 10 10 10;" visible="false" />
-                  <VBox fx:id="Add_Product" alignment="CENTER" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" visible="false" StackPane.alignment="CENTER">
+                  <VBox fx:id="Add_Product" alignment="CENTER" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" StackPane.alignment="CENTER">
                      <children>
                         <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
                            <children>
@@ -358,7 +358,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox fx:id="Edit_Product" alignment="CENTER" layoutX="10.0" layoutY="26.0" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" visible="false">
+                  <VBox fx:id="Edit_Product" alignment="CENTER" layoutX="10.0" layoutY="26.0" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css">
                      <children>
                         <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
                            <children>
@@ -528,7 +528,7 @@
                                           </HBox>
                                        </children>
                                     </GridPane>
-                                    <Button alignment="CENTER" graphicTextGap="10.0" maxHeight="50.0" maxWidth="185.0" mnemonicParsing="false" onAction="#edit_Product" prefHeight="50.0" prefWidth="185.0" styleClass="Add-Product-Main-Add-Button" text="Edit Product">
+                                    <Button fx:id="but57" alignment="CENTER" graphicTextGap="10.0" maxHeight="50.0" maxWidth="185.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="185.0" styleClass="Add-Product-Main-Add-Button" text="Edit Product">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0">
                                              <image>

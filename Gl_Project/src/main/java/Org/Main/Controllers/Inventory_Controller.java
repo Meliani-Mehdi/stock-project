@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -50,12 +51,12 @@ public class Inventory_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Products_Top_Button_Active();
         Only_Numeric(Product_Barcode_Text_Field,Product_Stock_Text_Field,Product_Buy_Price_Text_Field,Product_Sell_Price_Text_Field);
-        Product_Sell_Price_Text_Field.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
+        Product_Sell_Price_Text_Field.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 add_Product_To_Database();
             }
         });
-        Add_Product.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
+        Add_Product.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 Return_To_Products_Button.fire();
             }
@@ -461,6 +462,7 @@ public class Inventory_Controller implements Initializable {
         }
     }
     @FXML
+
     private VBox Edit_Product;
     public void Go_Edit_Product(int itemIndex){
         Inventory_Main.getChildren().addAll(Layer,Edit_Product);
@@ -523,14 +525,62 @@ public class Inventory_Controller implements Initializable {
         Edited_Product_Image.setImage(default_image);
     }
     private String Image_Path;
-    public void edit_Product(){
-        String Bar_code=Edited_Product_Barcode_Text_Field.getText();
-        String Product_Name=Edited_Product_Name_Text_Field.getText();
-        String Reference=Edited_Product_Reference_Text_Field.getText();
-        String Stock=Edited_Product_Stock_Text_Field.getText();
-        String Buy_Price=Edited_Product_Buy_Price_Text_Field.getText();
-        String Sell_Price=Edited_Product_Sell_Price_Text_Field.getText();
-        System.out.println(Image_Path);
+    public void edit_Product(int id){
+        String Bar_Code=Product_Barcode_Text_Field.getText();
+        String Name=Product_Name_Text_Field.getText();
+        String Reference=Product_Reference_Text_Field.getText();
+        String Stock=Product_Stock_Text_Field.getText();
+        String Buy_Price=Product_Buy_Price_Text_Field.getText();
+        String Sell_Price=Product_Sell_Price_Text_Field.getText();
+
+        if(!Bar_Code.isBlank() && !Name.isBlank() && !Reference.isBlank() && !Stock.isBlank() && !Buy_Price.isBlank() && !Sell_Price.isBlank() && Double.parseDouble(Buy_Price)>=0 && Double.parseDouble(Sell_Price)>=0 && Double.parseDouble(Stock)>=0){
+            if (Double.parseDouble(Buy_Price)>Double.parseDouble(Sell_Price)) {
+                AtomicBoolean confirm=alert.showCustomConfirmationAlert("You sure about the sell price ??");
+                if (confirm.get()){
+                    String url = "jdbc:sqlite:main.db";
+                    try (Connection conn = DriverManager.getConnection(url)) {
+                        PreparedStatement query = conn.prepareStatement("UPDATE products set bar_code = ?, reference = ?, name = ?, buying_price = ?, selling_price = ?, stock = ?, photo = ? WHERE id = ?;");
+                        query.setString(1, Bar_Code);
+                        query.setString(2, Reference);
+                        query.setString(3, Name);
+                        query.setString(4, Buy_Price);
+                        query.setString(5, Sell_Price);
+                        query.setString(6, Stock);
+                        query.setString(7, Image_Path);
+                        query.setInt(8, id);
+                        query.execute();
+                        conn.close();
+                    } catch (SQLException e) {
+                        alert.showCustomErrorAlert("error");
+                    }
+                    removeNonFirstRowChildren(Products_Table);
+                    Show_Products_In_The_Table();
+                    alert.showCustomAlert("success");
+                }
+            }else{
+                String url = "jdbc:sqlite:main.db";
+                try (Connection conn = DriverManager.getConnection(url)) {
+                    PreparedStatement query = conn.prepareStatement("UPDATE products set bar_code = ?, reference = ?, name = ?, buying_price = ?, selling_price = ?, stock = ?, photo = ? WHERE id = ?;");
+                    query.setString(1, Bar_Code);
+                    query.setString(2, Reference);
+                    query.setString(3, Name);
+                    query.setString(4, Buy_Price);
+                    query.setString(5, Sell_Price);
+                    query.setString(6, Stock);
+                    query.setString(7, Image_Path);
+                    query.setInt(8, id);
+                    query.execute();
+                    conn.close();
+                } catch (SQLException e) {
+                    alert.showCustomErrorAlert("error");
+                }
+                removeNonFirstRowChildren(Products_Table);
+                Show_Products_In_The_Table();
+                alert.showCustomAlert("success");
+            }
+        }
+        else alert.showCustomErrorAlert("please enter all values");
+
     }
     public void Edit_Product_Import_Image() {
         FileChooser image=new FileChooser();
