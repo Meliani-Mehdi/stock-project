@@ -145,7 +145,7 @@
                                     </Label>
                                     <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" styleClass="Product-Table-First-Label">
                                        <children>
-                                          <CheckBox fx:id="CheckBoxExample" mnemonicParsing="false" onAction="#Select_All_Products" stylesheets="@../Style/check_Box.css" />
+                                          <CheckBox fx:id="CheckBoxExample" mnemonicParsing="false" stylesheets="@../Style/check_Box.css" visible="false" />
                                        </children>
                                     </HBox>
                                     <Label alignment="CENTER" maxWidth="120.0" prefHeight="30.0" prefWidth="128.0" styleClass="Product-Table-First-Row-Label" text="Buying Price" GridPane.columnIndex="6">
@@ -185,15 +185,14 @@
                                     </Button>
                                     <AnchorPane maxWidth="170.0" prefHeight="170.0" prefWidth="170.0" styleClass="Add-Product-Main-Icon-Pane">
                                        <children>
-                                          <ImageView layoutX="20.0" layoutY="9.0" opacity="0.64">
+                                          <ImageView fx:id="Product_Image" fitHeight="170.0" fitWidth="170.0" layoutX="3.0" layoutY="5.0" onMouseClicked="#Import_Image">
                                              <image>
                                                 <Image url="@../Icons/Inventory/upload.png" />
                                              </image>
                                           </ImageView>
-                                          <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="62.0" mnemonicParsing="false" prefHeight="174.0" prefWidth="174.0" styleClass="Add-Product-Main-Icon-Button" text="Upload picture" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
-                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-import" text="Import Pic">
+                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Import_Image" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-import" text="Import Pic">
                                        <graphic>
                                           <ImageView fitHeight="32.0" fitWidth="32.0">
                                              <image>
@@ -202,7 +201,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-delete" text="Delete pic">
+                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#remove_Image" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-delete" text="Delete pic">
                                        <graphic>
                                           <ImageView fitHeight="32.0" fitWidth="32.0">
                                              <image>
@@ -223,7 +222,14 @@
                               </VBox>
                               <VBox alignment="BOTTOM_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="486.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <HBox prefHeight="137.0" prefWidth="799.0" />
+                                    <HBox maxHeight="-Infinity" prefHeight="50.0" prefWidth="799.0">
+                                       <children>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="195.0" styleClass="Add-Product-Main-Title-Label" text="Product Info :">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                          </Label>
+                                       </children></HBox>
                                     <GridPane prefHeight="478.0" prefWidth="607.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.0" minWidth="10.0" prefWidth="221.0" />
@@ -234,6 +240,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
@@ -242,8 +249,8 @@
                                           <TextField fx:id="Product_Name_Text_Field" promptText="Enter product name" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <TextField fx:id="Product_Reference_Text_Field" promptText="Enter product reference" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <TextField fx:id="Product_Stock_Text_Field" promptText="Enter the number of products in stock" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <TextField fx:id="Product_Buy_Price_Text_Field" promptText="Enter the buying price of the product" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <TextField fx:id="Product_Sell_Price_Text_Field" promptText="Enter the selling price of the product" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="Product_Buy_Price_Text_Field" promptText="Enter the buying price of the product" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="Product_Sell_Price_Text_Field" promptText="Enter the selling price of the product" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                           <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" styleClass="Add-Product-Main-Label" text="Bar_code :">
                                              <font>
                                                 <Font size="38.0" />
@@ -283,7 +290,7 @@
                                                 </ImageView>
                                              </graphic>
                                           </Label>
-                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="Add-Product-Main-Label" text="stock :" GridPane.rowIndex="3">
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="Add-Product-Main-Label" text="Amount :" GridPane.rowIndex="3">
                                              <font>
                                                 <Font size="38.0" />
                                              </font>
@@ -295,7 +302,7 @@
                                                 </ImageView>
                                              </graphic>
                                           </Label>
-                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="169.0" styleClass="Add-Product-Main-Label" text="Buy price :" GridPane.rowIndex="4">
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="169.0" styleClass="Add-Product-Main-Label" text="Buy price :" GridPane.rowIndex="5">
                                              <font>
                                                 <Font size="38.0" />
                                              </font>
@@ -307,7 +314,7 @@
                                                 </ImageView>
                                              </graphic>
                                           </Label>
-                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="154.0" styleClass="Add-Product-Main-Label" text="Sell price :" GridPane.rowIndex="5">
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="154.0" styleClass="Add-Product-Main-Label" text="Sell price :" GridPane.rowIndex="6">
                                              <font>
                                                 <Font size="38.0" />
                                              </font>
@@ -319,9 +326,209 @@
                                                 </ImageView>
                                              </graphic>
                                           </Label>
+                                          <HBox prefHeight="137.0" prefWidth="799.0" GridPane.rowIndex="4">
+                                             <children>
+                                                <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" styleClass="Add-Product-Main-Title-Label" text="Price Info :">
+                                                   <font>
+                                                      <Font size="38.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </GridPane>
                                     <Button alignment="CENTER" graphicTextGap="10.0" maxHeight="50.0" maxWidth="185.0" mnemonicParsing="false" onAction="#add_Product_To_Database" prefHeight="50.0" prefWidth="185.0" styleClass="Add-Product-Main-Add-Button" text="Add Product">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0">
+                                             <image>
+                                                <Image url="@../Icons/plus-active.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox fx:id="Edit_Product" alignment="CENTER" layoutX="10.0" layoutY="26.0" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" visible="false">
+                     <children>
+                        <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox alignment="TOP_CENTER" maxHeight="-Infinity" prefHeight="511.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: white;" HBox.hgrow="NEVER">
+                                 <children>
+                                    <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="70.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Return_To_Products_From_Edit" prefHeight="50.0" prefWidth="146.0" styleClass="Add-Product-Top-Button" text="Close" VBox.vgrow="NEVER">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" rotate="180.0">
+                                             <image>
+                                                <Image url="@../Icons/Exit.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <AnchorPane maxWidth="170.0" prefHeight="170.0" prefWidth="170.0" styleClass="Add-Product-Main-Icon-Pane">
+                                       <children>
+                                          <ImageView fx:id="Edited_Product_Image" fitHeight="170.0" fitWidth="170.0" layoutX="3.0" layoutY="5.0" onMouseClicked="#Edit_Product_Import_Image">
+                                             <image>
+                                                <Image url="@../Icons/Inventory/upload.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
+                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Edit_Product_Import_Image" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-import" text="Import Pic">
+                                       <graphic>
+                                          <ImageView fitHeight="32.0" fitWidth="32.0">
+                                             <image>
+                                                <Image url="@../Icons/Inventory/open-folder.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button alignment="BASELINE_LEFT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Edit_Product_remove_Image" prefWidth="150.0" styleClass="Add-Product-Main-Icon-Button-delete" text="Delete pic">
+                                       <graphic>
+                                          <ImageView fitHeight="32.0" fitWidth="32.0">
+                                             <image>
+                                                <Image url="@../Icons/Inventory/delete.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Deposit" stylesheets="@../Style/Combo.css" />
+                                    <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Categorie" stylesheets="@../Style/Combo.css" />
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets right="40.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="BOTTOM_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="486.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox maxHeight="-Infinity" prefHeight="50.0" prefWidth="799.0">
+                                       <children>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="195.0" styleClass="Add-Product-Main-Title-Label" text="Product Info :">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <GridPane prefHeight="478.0" prefWidth="607.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.0" minWidth="10.0" prefWidth="221.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="378.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TextField fx:id="Edited_Product_Barcode_Text_Field" promptText="Enter bar code" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" />
+                                          <TextField fx:id="Edited_Product_Name_Text_Field" promptText="Enter product name" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="Edited_Product_Reference_Text_Field" promptText="Enter product reference" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="Edited_Product_Stock_Text_Field" promptText="Enter the number of products in stock" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="Edited_Product_Buy_Price_Text_Field" promptText="Enter the buying price of the product" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="Edited_Product_Sell_Price_Text_Field" promptText="Enter the selling price of the product" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" styleClass="Add-Product-Main-Label" text="Bar_code :">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" rotate="180.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Sell/Bar_Code.png" />
+                                                   </image>
+                                                   <rotationAxis>
+                                                      <Point3D y="1.0" />
+                                                   </rotationAxis>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="213.0" styleClass="Add-Product-Main-Label" text="Product_name :" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="31.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Sell/new-product.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="176.0" styleClass="Add-Product-Main-Label" text="Reference :" GridPane.rowIndex="2">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Inventory/reference.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="Add-Product-Main-Label" text="Amount :" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Inventory/warehouse.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="169.0" styleClass="Add-Product-Main-Label" text="Buy price :" GridPane.rowIndex="5">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Inventory/buy.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="154.0" styleClass="Add-Product-Main-Label" text="Sell price :" GridPane.rowIndex="6">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Inventory/sell.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <HBox prefHeight="137.0" prefWidth="799.0" GridPane.rowIndex="4">
+                                             <children>
+                                                <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="195.0" styleClass="Add-Product-Main-Title-Label" text="Price Info :">
+                                                   <font>
+                                                      <Font size="38.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </GridPane>
+                                    <Button alignment="CENTER" graphicTextGap="10.0" maxHeight="50.0" maxWidth="185.0" mnemonicParsing="false" onAction="#edit_Product" prefHeight="50.0" prefWidth="185.0" styleClass="Add-Product-Main-Add-Button" text="Edit Product">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0">
                                              <image>

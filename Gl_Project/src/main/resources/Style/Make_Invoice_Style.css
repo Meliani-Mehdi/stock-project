@@ -120,13 +120,11 @@
 -fx-background-color:#E8FFF7;
 -fx-background-radius:0 10 0 0;
 -fx-text-fill:#05b074;
--fx-cursor: text;
 }
 .Product-Table-Last-Col-Label{
 -fx-border-width:0px 1px 1px 0px;
 -fx-border-color:#05b074;
 -fx-background-color:White;
--fx-cursor: text;
 }
 .Product-Table-First-Col-Label{
 -fx-border-width:0px 1px 1px 1px;

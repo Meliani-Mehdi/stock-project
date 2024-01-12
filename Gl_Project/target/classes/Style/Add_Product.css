@@ -39,7 +39,7 @@
 -fx-border-color:#00000066;
 -fx-border-width:2px;
 -fx-border-style: dashed;
--fx-border-radius:10;
+-fx-border-radius:5;
 }
 .Add-Product-Main-Icon-Button{
 -fx-background-color:transparent;
@@ -69,6 +69,10 @@
 .Add-Product-Main-Label{
 -fx-text-fill:#000000CC;
 -fx-font-size:25px;
+}
+.Add-Product-Main-Title-Label{
+-fx-text-fill:#000000;
+-fx-font-size:30px;
 }
 .Add-Product-Main-Text-Field{
 -fx-background-color:White;

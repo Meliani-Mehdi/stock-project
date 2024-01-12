@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -231,7 +232,7 @@ public class Inventory_Controller implements Initializable {
 
     @FXML
     private ImageView Product_Image;
-    private File file;
+    private File New_Product_file;
     @FXML
     private Rectangle Image_Container;
     public void Import_Image() {
@@ -240,10 +241,10 @@ public class Inventory_Controller implements Initializable {
         image.setTitle("Chose Product image");
         image.getExtensionFilters().add(imageFilter);
         image.setInitialDirectory(new File("C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Pictures"));
-        file=image.showOpenDialog(Products.getScene().getWindow());
-        if(file!=null){
-            getData.path=file.getAbsolutePath();
-            Image image1 = new Image(file.toURI().toString(), 160, 150, false, true);
+        New_Product_file=image.showOpenDialog(Products.getScene().getWindow());
+        if(New_Product_file!=null){
+            getData.path=New_Product_file.getAbsolutePath();
+            Image image1 = new Image(New_Product_file.toURI().toString(), 160, 150, false, true);
             Product_Image.setImage(image1);
         }
     }
@@ -260,9 +261,9 @@ public class Inventory_Controller implements Initializable {
         String Sell_Price=Product_Sell_Price_Text_Field.getText();
         String Image_Path;
         try {
-            Image_Path=file.getAbsolutePath();
+            Image_Path=New_Product_file.getAbsolutePath();
         }catch (NullPointerException e){
-            Image_Path="no image";
+            Image_Path="C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png";
         }
         if(!Bar_Code.isBlank() && !Name.isBlank() && !Reference.isBlank() && !Stock.isBlank() && !Buy_Price.isBlank() && !Sell_Price.isBlank() && Double.parseDouble(Buy_Price)>=0 && Double.parseDouble(Sell_Price)>=0 && Double.parseDouble(Stock)>=0){
             if (Double.parseDouble(Buy_Price)>Double.parseDouble(Sell_Price)) {
@@ -290,13 +291,14 @@ public class Inventory_Controller implements Initializable {
             }else{
                 String url = "jdbc:sqlite:main.db";
                 try (Connection conn = DriverManager.getConnection(url)) {
-                    PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock) VALUES(?, ?, ?, ?, ?, ?);");
+                    PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo) VALUES(?, ?, ?, ?, ?, ?, ?);");
                     query.setString(1, Bar_Code);
                     query.setString(2, Reference);
                     query.setString(3, Name);
                     query.setString(4, Buy_Price);
                     query.setString(5, Sell_Price);
                     query.setString(6, Stock);
+                    query.setString(7, Image_Path);
                     query.execute();
                     conn.close();
                 } catch (SQLException e) {
@@ -337,9 +339,14 @@ public class Inventory_Controller implements Initializable {
             Products_Table.add(hbox, 0, Products_Table.getRowConstraints().size() - 1);
 
             Button temp = new Button("edit");
+            temp.setOnMouseClicked(event -> {
+                int itemIndex = Products_Table.getChildren().indexOf(temp);
+                Go_Edit_Product(itemIndex);
+            });
             temp.getStyleClass().add("Product-Table-Last-Col-Label");
             temp.setFont(Font.font("Segoe UI", 18));
             temp.setPrefWidth(110);
+            temp.setCursor(Cursor.HAND);
             temp.setMaxWidth(temp.getPrefWidth());
             temp.setPrefHeight(hbox.getPrefHeight());
             temp.setMaxHeight(hbox.getPrefHeight());
@@ -418,9 +425,7 @@ public class Inventory_Controller implements Initializable {
                         if (GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == 1
                                 && node instanceof Label) {
                             String value = ((Label) node).getText();
-
                             Delete_Product_From_Database(value);
-
                         }
                         return true;
                     }
@@ -458,5 +463,83 @@ public class Inventory_Controller implements Initializable {
             } catch (SQLException x) {
             System.out.println("error");
         }
+    }
+    @FXML
+    private VBox Edit_Product;
+    public void Go_Edit_Product(int itemIndex){
+        Inventory_Main.getChildren().addAll(Layer,Edit_Product);
+        Layer.setVisible(true);
+        Edit_Product.setVisible(true);
+        get_Product_Info_To_Edit(Products_Table,itemIndex);
+        getProduct_Image();
+    }
+    public void Return_To_Products_From_Edit(){
+        Inventory_Main.getChildren().clear();
+        Inventory_Main.getChildren().add(Products);
+        Layer.setVisible(false);
+        Edit_Product.setVisible(false);
+    }
+    @FXML
+    private ImageView Edited_Product_Image;
+
+    @FXML
+    private TextField Edited_Product_Barcode_Text_Field;
+
+    @FXML
+    private TextField Edited_Product_Name_Text_Field;
+
+    @FXML
+    private TextField Edited_Product_Reference_Text_Field;
+
+    @FXML
+    private TextField Edited_Product_Stock_Text_Field;
+
+    @FXML
+    private TextField Edited_Product_Buy_Price_Text_Field;
+
+    @FXML
+    private TextField Edited_Product_Sell_Price_Text_Field;
+    public void get_Product_Info_To_Edit(GridPane gridPane,int itemIndex){
+        Edited_Product_Reference_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+2)).getText());
+        Edited_Product_Barcode_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+3)).getText());
+        Edited_Product_Name_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+4)).getText());
+        Edited_Product_Stock_Text_Field.setText(((Label)gridPane.getChildren().get((itemIndex+5))).getText());
+        Edited_Product_Buy_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+6)).getText());
+        Edited_Product_Sell_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+7)).getText());
+    }
+    public void getProduct_Image(){
+        Image_Path="here insert the image Url from the database";
+        Image default_image=new Image("file:"+Image_Path);
+        Edited_Product_Image.setImage(default_image);
+    }
+    private String Image_Path;
+    public void edit_Product(){
+        String Bar_code=Edited_Product_Barcode_Text_Field.getText();
+        String Product_Name=Edited_Product_Name_Text_Field.getText();
+        String Reference=Edited_Product_Reference_Text_Field.getText();
+        String Stock=Edited_Product_Stock_Text_Field.getText();
+        String Buy_Price=Edited_Product_Buy_Price_Text_Field.getText();
+        String Sell_Price=Edited_Product_Sell_Price_Text_Field.getText();
+        System.out.println(Image_Path);
+    }
+    public void Edit_Product_Import_Image() {
+        FileChooser image=new FileChooser();
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp");
+        image.setTitle("Chose Product image");
+        image.getExtensionFilters().add(imageFilter);
+        image.setInitialDirectory(new File("C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Pictures"));
+        File file=image.showOpenDialog(Products.getScene().getWindow());
+        if(file!=null){
+            getData.path=file.getAbsolutePath();
+            Image_Path=file.getAbsolutePath();
+            System.out.println(Image_Path);
+            Image image1 = new Image(file.toURI().toString(), 160, 150, false, true);
+            Edited_Product_Image.setImage(image1);
+        }
+    }
+    public void Edit_Product_remove_Image(){
+        Image_Path="C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png";
+        Image default_image=new Image("file:C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png");
+        Edited_Product_Image.setImage(default_image);
     }
 }
