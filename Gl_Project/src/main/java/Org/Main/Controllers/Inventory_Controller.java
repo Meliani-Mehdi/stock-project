@@ -508,7 +508,7 @@ public class Inventory_Controller implements Initializable {
         Edited_Product_Sell_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+7)).getText());
     }
     public void getProduct_Image(int id){
-        Image_Path="here insert the image Url from the database";
+        Image_Path="C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png";
         Image default_image=new Image("file:"+Image_Path);
         Edited_Product_Image.setImage(default_image);
     }
@@ -541,5 +541,97 @@ public class Inventory_Controller implements Initializable {
         Image_Path="C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png";
         Image default_image=new Image("file:C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png");
         Edited_Product_Image.setImage(default_image);
+    }
+    @FXML
+    private TextField Search_Products_Text_Field;
+    public void Search_Product(){
+        removeNonFirstRowChildren(Products_Table);
+        Product[] product_list=SearchProductMatrix();
+        assert product_list != null;
+        int list_size=product_list.length;
+        for (Product value : product_list) {
+            RowConstraints con = new RowConstraints();
+            Products_Table.getRowConstraints().add(con);
+
+            CheckBox checkBox = new CheckBox();
+            checkBox.setText("");
+            checkBox.getStylesheets().addAll(CheckBoxExample.getStylesheets());
+
+            HBox hbox = new HBox(checkBox);
+            hbox.getStyleClass().add("Product-Table-First-Col-Label");
+            hbox.setAlignment(Pos.CENTER);
+            Products_Table.add(hbox, 0, Products_Table.getRowConstraints().size() - 1);
+
+            Button temp = new Button("edit");
+            temp.setOnMouseClicked(event -> {
+                int itemIndex = Products_Table.getChildren().indexOf(temp);
+                Go_Edit_Product(itemIndex);
+            });
+            temp.getStyleClass().add("Product-Table-Last-Col-Label");
+            temp.setFont(Font.font("Segoe UI", 18));
+            temp.setPrefWidth(110);
+            temp.setCursor(Cursor.HAND);
+            temp.setMaxWidth(temp.getPrefWidth());
+            temp.setPrefHeight(hbox.getPrefHeight());
+            temp.setMaxHeight(hbox.getPrefHeight());
+            Products_Table.add(temp, 9, Products_Table.getRowConstraints().size() - 1);
+
+            String[] product = {String.valueOf(value.getId()),
+                    String.valueOf(value.getReference()),
+                    String.valueOf(value.getCodebar()),
+                    String.valueOf(value.getName()),
+                    String.valueOf(value.getStock()),
+                    String.valueOf(value.getBuying_Price()),
+                    String.valueOf(value.getSelling_Price()),
+                    "Local Shop"
+            };
+            for (int col = 1; col < 9; col++) {
+                ColumnConstraints cell = Products_Table.getColumnConstraints().get(col);
+                Label emptyLabel = new Label(product[col - 1]);
+                emptyLabel.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabel.setPrefWidth(cell.getMaxWidth());
+                emptyLabel.setPrefHeight(40);
+                emptyLabel.setMinHeight(40);
+                emptyLabel.setFont(Font.font("Segoe UI", 18));
+                emptyLabel.getStyleClass().add("Product-Table-Label");
+                Products_Table.add(emptyLabel, col, Products_Table.getRowConstraints().size() - 1);
+            }
+        }
+    }
+    /////////////// ida t9ad zid hnaya search by reference
+    ////////////// ida l9a reference y affichiha ida mal9ahach dirah yeprinti mal9ahach
+    public Product[] SearchProductMatrix() {
+        String search=Search_Products_Text_Field.getText();
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            Statement countQuery = conn.createStatement();
+            ResultSet countResult = countQuery.executeQuery("SELECT COUNT(*) FROM products");
+            countResult.next();
+            int numRows = countResult.getInt(1);
+
+            Product[] ren = new Product[numRows];
+
+            Statement dataQuery = conn.createStatement();
+            ResultSet resultSet = dataQuery.executeQuery("SELECT id,bar_code, reference, name, buying_price, selling_price, stock FROM products WHERE");
+
+            int row = 0;
+            while (resultSet.next()) {
+                ren[row]=new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("bar_code"),
+                        resultSet.getString("reference"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("buying_price"),
+                        resultSet.getDouble("selling_price"),
+                        resultSet.getInt("stock")
+                );
+                row++;
+            }
+            return ren;
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
     }
 }
