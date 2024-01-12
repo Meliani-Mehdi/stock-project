@@ -96,9 +96,9 @@ public class Main extends Application {
 
             statement.execute("""
                             CREATE TABLE IF NOT EXISTS products (
-                                id INTEGER PRIMARY KEY,
-                                bar_code VARCHAR NOT NULL,
-                                reference VARCHAR,
+                                id INTEGER PRIMARY KEY UNIQUE,
+                                bar_code VARCHAR NOT NULL UNIQUE,
+                                reference VARCHAR UNIQUE,
                                 name VARCHAR NOT NULL,
                                 buying_price REAL,
                                 selling_price REAL,
