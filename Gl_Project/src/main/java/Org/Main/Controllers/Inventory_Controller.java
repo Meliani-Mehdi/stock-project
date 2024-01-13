@@ -772,37 +772,23 @@ public class Inventory_Controller implements Initializable {
         String Adresse=Add_Client_Adresse.getText();
         String Credit_Limit=Add_Client_Credit_Limit.getText();
         if(!Name.isBlank() && !Phone_Num.isBlank() && !Adresse.isBlank()){
-            if (Credit_Limit==null) {
-                String url = "jdbc:sqlite:main.db";
-                try (Connection conn = DriverManager.getConnection(url)) {
-                    PreparedStatement query = conn.prepareStatement("INSERT INTO clients (adresse, name, phone_num, sold_total, reste, paid) VALUES(?, ?, ?, 0, 0, 0);");
-                    query.setString(1, Adresse);
-                    query.setString(2, Name);
-                    query.setString(3, Phone_Num);
-                    query.execute();
-                    conn.close();
-                } catch (SQLException e) {
-                    alert.showCustomErrorAlert("error");
-                }
-                removeNonFirstRowChildren(Clients_Table);
-                Show_Clients_In_The_Table();
-                alert.showCustomAlert("success");
-            }else{
-                String url = "jdbc:sqlite:main.db";
-                try (Connection conn = DriverManager.getConnection(url)) {
-                    PreparedStatement query = conn.prepareStatement("INSERT INTO clients (adresse, name, phone_num, sold_total, reste, paid) VALUES(?, ?, ?, 0, 0, 0);");
-                    query.setString(1, Adresse);
-                    query.setString(2, Name);
-                    query.setString(3, Phone_Num);
-                    query.execute();
-                    conn.close();
-                } catch (SQLException e) {
-                    alert.showCustomErrorAlert("error");
-                }
-                removeNonFirstRowChildren(Clients_Table);
-                Show_Clients_In_The_Table();
-                alert.showCustomAlert("success");
+            String url = "jdbc:sqlite:main.db";
+            try (Connection conn = DriverManager.getConnection(url)) {
+                PreparedStatement query = conn.prepareStatement("INSERT INTO clients (adresse, name, phone_num, sold_total, reste, paid, credit) VALUES(?, ?, ?, 0, 0, 0, ?);");
+                query.setString(1, Adresse);
+                query.setString(2, Name);
+                query.setString(3, Phone_Num);
+                if(Credit_Limit.isBlank())query.setString(4, "0");
+                else query.setString(4, Credit_Limit);
+                query.execute();
+                conn.close();
+            } catch (SQLException e) {
+                alert.showCustomErrorAlert("error");
             }
+            removeNonFirstRowChildren(Clients_Table);
+            Show_Clients_In_The_Table();
+            alert.showCustomAlert("success");
+
         }
         else alert.showCustomErrorAlert("please enter all values");
     }

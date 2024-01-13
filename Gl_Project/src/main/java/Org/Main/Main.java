@@ -54,7 +54,8 @@ public class Main extends Application {
                                 phone_num TEXT,
                                 sold_total REAL,
                                 reste REAL,
-                                paid REAL
+                                paid REAL,
+                                credit REAL
                             );""");
 
             statement.execute("""
@@ -127,17 +128,6 @@ public class Main extends Application {
                                 id_client INTEGER,
                                 id_user INTEGER,
                                 id_provider INTEGER
-                            );""");
-
-            statement.execute("""
-                            CREATE TABLE IF NOT EXISTS providers (
-                                id INTEGER PRIMARY KEY,
-                                name TEXT NOT NULL,
-                                adresse TEXT,
-                                phone_num TEXT,
-                                sold_total REAL,
-                                reste REAL,
-                                paid REAL
                             );""");
 
             statement.execute("""
