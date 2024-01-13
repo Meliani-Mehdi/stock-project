@@ -47,7 +47,7 @@ public class Main extends Application {
              Statement statement = conn.createStatement()) {
 
             statement.execute("""
-                    CREATE TABLE "clients" (
+                    CREATE TABLE IF NOT EXISTS "clients" (
                     	"id"	INTEGER,
                     	"name"	TEXT NOT NULL,
                     	"adresse"	TEXT,
@@ -60,14 +60,14 @@ public class Main extends Application {
                     );""");
 
             statement.execute("""
-                    CREATE TABLE "deposits" (
+                    CREATE TABLE IF NOT EXISTS "deposits" (
                     	"id"	INTEGER,
                     	"name"	TEXT NOT NULL UNIQUE,
                     	PRIMARY KEY("id")
                     );""");
 
             statement.execute("""
-                    CREATE TABLE "factures" (
+                    CREATE TABLE IF NOT EXISTS "factures" (
                     	"id"	INTEGER,
                     	"date"	DATE NOT NULL,
                     	"update_date"	DATE,
@@ -82,14 +82,14 @@ public class Main extends Application {
                     );""");
 
             statement.execute("""
-                    CREATE TABLE "groupes" (
+                    CREATE TABLE IF NOT EXISTS "groupes" (
                     	"id"	INTEGER,
                     	"name"	TEXT NOT NULL,
                     	PRIMARY KEY("id")
                     );""");
 
             statement.execute("""
-                    CREATE TABLE "products" (
+                    CREATE TABLE IF NOT EXISTS "products" (
                     	"id"	INTEGER UNIQUE,
                     	"bar_code"	VARCHAR NOT NULL UNIQUE,
                     	"reference"	VARCHAR UNIQUE,
@@ -104,7 +104,7 @@ public class Main extends Application {
                     );""");
 
             statement.execute("""
-                    CREATE TABLE "product_facts" (
+                    CREATE TABLE IF NOT EXISTS "product_facts" (
                     	"id_fact"	INTEGER,
                     	"id_prod"	INTEGER,
                     	"product_price"	REAL,
@@ -114,7 +114,7 @@ public class Main extends Application {
                     );""");
 
             statement.execute("""
-                    CREATE TABLE "bon_de_livraisons" (
+                    CREATE TABLE IF NOT EXISTS "bon_de_livraisons" (
                     	"id"	INTEGER,
                     	"date"	DATE NOT NULL,
                     	"old_reste"	REAL,
@@ -126,7 +126,7 @@ public class Main extends Application {
                     );""");
 
             statement.execute("""
-                    CREATE TABLE "users" (
+                    CREATE TABLE IF NOT EXISTS "users" (
                     	"id"	INTEGER,
                     	"username"	TEXT NOT NULL,
                     	"password"	TEXT NOT NULL,
