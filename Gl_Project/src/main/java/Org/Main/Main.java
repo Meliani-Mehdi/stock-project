@@ -47,96 +47,92 @@ public class Main extends Application {
              Statement statement = conn.createStatement()) {
 
             statement.execute("""
-                            CREATE TABLE IF NOT EXISTS clients (
-                                id INTEGER PRIMARY KEY,
-                                name TEXT NOT NULL,
-                                adresse TEXT,
-                                phone_num TEXT,
-                                sold_total REAL,
-                                reste REAL,
-                                paid REAL,
-                                credit REAL
-                            );""");
+                    CREATE TABLE "clients" (
+                    	"id"	INTEGER,
+                    	"name"	TEXT NOT NULL,
+                    	"adresse"	TEXT,
+                    	"phone_num"	TEXT,
+                    	"sold_total"	REAL,
+                    	"reste"	REAL,
+                    	"paid"	REAL,
+                    	"credit"	REAL,
+                    	PRIMARY KEY("id")
+                    );""");
 
             statement.execute("""
-                            CREATE TABLE IF NOT EXISTS deposits (
-                                id INTEGER PRIMARY KEY,
-                                name TEXT NOT NULL,
-                                solde REAL,
-                                reste REAL,
-                                payment REAL,
-                                id_provider INTEGER,
-                                id_client INTEGER,
-                                id_seller INTEGER,
-                                type TEXT,
-                                payment_status TEXT
-                            );""");
+                    CREATE TABLE "deposits" (
+                    	"id"	INTEGER,
+                    	"name"	TEXT NOT NULL UNIQUE,
+                    	PRIMARY KEY("id")
+                    );""");
 
             statement.execute("""
-                            CREATE TABLE IF NOT EXISTS factures (
-                                id INTEGER PRIMARY KEY,
-                                date DATE NOT NULL,
-                                update_date DATE,
-                                update_time TIMESTAMP,
-                                solde REAL,
-                                reste REAL,
-                                payment REAL,
-                                id_provider INTEGER,
-                                id_client INTEGER,
-                                id_seller INTEGER,
-                                type TEXT,
-                                payment_status TEXT
-                            );""");
+                    CREATE TABLE "factures" (
+                    	"id"	INTEGER,
+                    	"date"	DATE NOT NULL,
+                    	"update_date"	DATE,
+                    	"update_time"	TIMESTAMP,
+                    	"solde"	REAL,
+                    	"reste"	REAL,
+                    	"payment"	REAL,
+                    	"id_client"	INTEGER,
+                    	"id_seller"	INTEGER,
+                    	"type"	TEXT,
+                    	PRIMARY KEY("id")
+                    );""");
 
             statement.execute("""
-                            CREATE TABLE IF NOT EXISTS groupes (
-                                id INTEGER PRIMARY KEY,
-                                name TEXT NOT NULL,
-                                marge REAL
-                            );""");
+                    CREATE TABLE "groupes" (
+                    	"id"	INTEGER,
+                    	"name"	TEXT NOT NULL,
+                    	PRIMARY KEY("id")
+                    );""");
 
             statement.execute("""
-                            CREATE TABLE IF NOT EXISTS products (
-                                id INTEGER PRIMARY KEY UNIQUE,
-                                bar_code VARCHAR NOT NULL UNIQUE,
-                                reference VARCHAR UNIQUE,
-                                name VARCHAR NOT NULL,
-                                buying_price REAL,
-                                selling_price REAL,
-                                stock INTEGER,
-                                photo VARCHAR,
-                                id_groupe INTEGER
-                            );""");
+                    CREATE TABLE "products" (
+                    	"id"	INTEGER UNIQUE,
+                    	"bar_code"	VARCHAR NOT NULL UNIQUE,
+                    	"reference"	VARCHAR UNIQUE,
+                    	"name"	VARCHAR NOT NULL,
+                    	"buying_price"	REAL,
+                    	"selling_price"	REAL,
+                    	"stock"	INTEGER,
+                    	"photo"	VARCHAR,
+                    	"id_groupe"	INTEGER,
+                    	"id_deposite"	INTEGER,
+                    	PRIMARY KEY("id")
+                    );""");
 
             statement.execute("""
-                            CREATE TABLE IF NOT EXISTS product_facts (
-                                id INTEGER PRIMARY KEY,
-                                id_fact INTEGER,
-                                id_prod INTEGER,
-                                product_price REAL,
-                                product_qte INTEGER,
-                                tva REAL
-                            );""");
+                    CREATE TABLE "product_facts" (
+                    	"id_fact"	INTEGER,
+                    	"id_prod"	INTEGER,
+                    	"product_price"	REAL,
+                    	"product_qte"	INTEGER,
+                    	"tva"	REAL,
+                    	PRIMARY KEY("id_fact","id_prod")
+                    );""");
 
             statement.execute("""
-                            CREATE TABLE IF NOT EXISTS bon_de_livraisons (
-                                id INTEGER PRIMARY KEY,
-                                date DATE NOT NULL,
-                                old_reste REAL,
-                                reste REAL,
-                                payment REAL,
-                                id_client INTEGER,
-                                id_user INTEGER,
-                                id_provider INTEGER
-                            );""");
+                    CREATE TABLE "bon_de_livraisons" (
+                    	"id"	INTEGER,
+                    	"date"	DATE NOT NULL,
+                    	"old_reste"	REAL,
+                    	"reste"	REAL,
+                    	"payment"	REAL,
+                    	"id_client"	INTEGER,
+                    	"id_user"	INTEGER,
+                    	PRIMARY KEY("id")
+                    );""");
 
             statement.execute("""
-                            CREATE TABLE IF NOT EXISTS users (
-                                id INTEGER PRIMARY KEY,
-                                username TEXT NOT NULL,
-                                password TEXT NOT NULL,
-                                l INTEGER NOT NULL
-                            );""");
+                    CREATE TABLE "users" (
+                    	"id"	INTEGER,
+                    	"username"	TEXT NOT NULL,
+                    	"password"	TEXT NOT NULL,
+                    	"l"	INTEGER NOT NULL,
+                    	PRIMARY KEY("id")
+                    );""");
 
             ResultSet result = statement.executeQuery("""
                                 SELECT username, password
