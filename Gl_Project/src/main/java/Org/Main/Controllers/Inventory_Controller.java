@@ -1,6 +1,7 @@
 package Org.Main.Controllers;
 
 import Org.Main.Alerts;
+import Org.Main.Classes.Client;
 import Org.Main.Classes.Product;
 import Org.Main.getData;
 import javafx.collections.FXCollections;
@@ -117,6 +118,9 @@ public class Inventory_Controller implements Initializable {
         Inventory_Main.getChildren().clear();
         Inventory_Main.getChildren().add(Clients);
         Clients.setVisible(true);
+        ////////////////////////////////////// show clients /////////////////////////////////////////////////
+        removeNonFirstRowChildren(Clients_Table);
+        Show_Clients_In_The_Table();
     }
     public void Categories_Top_Button_Active(){
         Categories_Top_Button.getStyleClass().removeLast();
@@ -747,5 +751,138 @@ public class Inventory_Controller implements Initializable {
         Inventory_Main.getChildren().add(Clients);
         Layer.setVisible(false);
         Add_Client.setVisible(false);
+    }
+    @FXML
+    private TextField Add_Client_Adresse;
+
+    @FXML
+    private TextField Add_Client_Credit_Limit;
+
+    @FXML
+    private TextField Add_Client_Name;
+
+    @FXML
+    private TextField Add_Client_Phone_Num;
+
+    @FXML
+    private GridPane Clients_Table;
+    public void add_Client_To_Database(){
+        String Name=Add_Client_Name.getText();
+        String Phone_Num=Add_Client_Phone_Num.getText();
+        String Adresse=Add_Client_Adresse.getText();
+        String Credit_Limit=Add_Client_Credit_Limit.getText();
+        if(!Name.isBlank() && !Phone_Num.isBlank() && !Adresse.isBlank()){
+            if (Credit_Limit==null) {
+                String url = "jdbc:sqlite:main.db";
+                try (Connection conn = DriverManager.getConnection(url)) {
+                    PreparedStatement query = conn.prepareStatement("INSERT INTO clients (adresse, name, phone_num, sold_total, reste, paid) VALUES(?, ?, ?, 0, 0, 0);");
+                    query.setString(1, Adresse);
+                    query.setString(2, Name);
+                    query.setString(3, Phone_Num);
+                    query.execute();
+                    conn.close();
+                } catch (SQLException e) {
+                    alert.showCustomErrorAlert("error");
+                }
+                removeNonFirstRowChildren(Clients_Table);
+                Show_Clients_In_The_Table();
+                alert.showCustomAlert("success");
+            }else{
+                String url = "jdbc:sqlite:main.db";
+                try (Connection conn = DriverManager.getConnection(url)) {
+                    PreparedStatement query = conn.prepareStatement("INSERT INTO clients (adresse, name, phone_num, sold_total, reste, paid) VALUES(?, ?, ?, 0, 0, 0);");
+                    query.setString(1, Adresse);
+                    query.setString(2, Name);
+                    query.setString(3, Phone_Num);
+                    query.execute();
+                    conn.close();
+                } catch (SQLException e) {
+                    alert.showCustomErrorAlert("error");
+                }
+                removeNonFirstRowChildren(Clients_Table);
+                Show_Clients_In_The_Table();
+                alert.showCustomAlert("success");
+            }
+        }
+        else alert.showCustomErrorAlert("please enter all values");
+    }
+    public void Show_Clients_In_The_Table(){
+        Client[] client_list=getClientsMatrix();
+        assert client_list != null;
+        int list_size=client_list.length;
+        for (Client value : client_list) {
+            RowConstraints con = new RowConstraints();
+            Clients_Table.getRowConstraints().add(con);
+
+            CheckBox checkBox = new CheckBox();
+            checkBox.setText("");
+            checkBox.getStylesheets().addAll(CheckBoxExample.getStylesheets());
+
+            HBox hbox = new HBox(checkBox);
+            hbox.getStyleClass().add("Product-Table-First-Col-Label");
+            hbox.setAlignment(Pos.CENTER);
+            Clients_Table.add(hbox, 0, Clients_Table.getRowConstraints().size() - 1);
+
+            Button temp = new Button("Stats");
+            temp.getStyleClass().add("Product-Table-Last-Col-Label");
+            temp.setStyle("-fx-text-fill:#05b074;");
+            temp.setFont(Font.font("Segoe UI", 18));
+            temp.setPrefWidth(110);
+            temp.setCursor(Cursor.HAND);
+            temp.setMaxWidth(temp.getPrefWidth());
+            temp.setPrefHeight(hbox.getPrefHeight());
+            temp.setMaxHeight(hbox.getPrefHeight());
+            Clients_Table.add(temp, 8, Clients_Table.getRowConstraints().size() - 1);
+
+            String[] client = {String.valueOf(value.getId()),
+                    String.valueOf(value.getAdresse()),
+                    String.valueOf(value.getPhone_Num()),
+                    String.valueOf(value.getName()),
+                    String.valueOf(value.getSolde()),
+                    String.valueOf(value.getRest()),
+                    String.valueOf(value.getpaid())
+            };
+            for (int col = 1; col < 8; col++) {
+                ColumnConstraints cell = Clients_Table.getColumnConstraints().get(col);
+                Label emptyLabel = new Label(client[col - 1]);
+                emptyLabel.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabel.setPrefWidth(cell.getMaxWidth());
+                emptyLabel.setPrefHeight(40);
+                emptyLabel.setMinHeight(40);
+                emptyLabel.setFont(Font.font("Segoe UI", 18));
+                emptyLabel.getStyleClass().add("Product-Table-Label");
+                Clients_Table.add(emptyLabel, col, Clients_Table.getRowConstraints().size() - 1);
+            }
+        }
+    }
+
+    ////////////////////////////////////makes the SQL products table into a matrix/////////////////////////////////////////
+    public Client[] getClientsMatrix() {
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            ArrayList<Client> clientList = new ArrayList<>();
+
+            try (Statement dataQuery = conn.createStatement()) {
+                ResultSet resultSet = dataQuery.executeQuery("SELECT id, adresse, name, phone_num FROM clients");
+
+                while (resultSet.next()) {
+                    clientList.add(new Client(
+                            resultSet.getInt("id"),
+                            resultSet.getString("adresse"),
+                            resultSet.getString("name"),
+                            resultSet.getString("phone_num"),
+                            (double)0,
+                            (double)0,
+                            (double)0
+                    ));
+                }
+            }
+            conn.close();
+            return clientList.toArray(new Client[0]);
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("Error");
+            return null;
+        }
     }
 }
