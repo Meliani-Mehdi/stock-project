@@ -86,7 +86,7 @@
             </HBox>
          </top>
          <left>
-            <VBox alignment="TOP_CENTER" prefHeight="666.0" prefWidth="263.0" style="-fx-border-width: 0px 1px 0px 0px; -fx-border-color: #b4e7d5;" BorderPane.alignment="TOP_CENTER">
+            <VBox alignment="TOP_CENTER" prefHeight="666.0" prefWidth="263.0" style="-fx-border-width: 0px 1px 0px 0px; -fx-border-color: #b4e7d5; -fx-background-color: white;" BorderPane.alignment="TOP_CENTER">
                <padding>
                   <Insets bottom="20.0" top="20.0" />
                </padding>
