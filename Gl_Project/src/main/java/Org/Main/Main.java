@@ -151,10 +151,11 @@ public class Main extends Application {
                             UPDATE users SET l = 0;
                             """);
             }
-
             conn.close();
         } catch (SQLException e) {
-            System.out.println("error");
+            Alerts alert=new Alerts();
+            alert.showCustomErrorAlert("Oops something went wrong!!");
+            System.exit(0);
         }
     }
 

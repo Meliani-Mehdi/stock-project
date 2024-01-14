@@ -1,0 +1,39 @@
+.Client-Top-Button{
+-fx-background-color: #E8FFF7;
+-fx-text-fill:#05b074;
+-fx-font-size:20px;
+-fx-background-radius:5;
+-fx-cursor: hand;
+-fx-border-color:#05b074;
+-fx-border-width:1px;
+-fx-border-radius:5;
+}
+.Client-Top-Button:hover{
+-fx-background-color:#CDEDE2;
+-fx-cursor: hand;
+}
+.Client-Edit-Button{
+-fx-background-color:#05b074AA;
+-fx-text-fill:#ffffff;
+-fx-font-size:18px;
+-fx-background-radius:5;
+-fx-cursor: hand;
+}
+.Client-Edit-Button:hover{
+-fx-background-color:#05b074;
+-fx-cursor: hand;
+}
+.Client-left-Text-Field{
+-fx-background-color: transparent;
+-fx-text-fill:#000000;
+-fx-font-size:25px;
+-fx-background-radius:5;
+-fx-border-color:transparent;
+-fx-border-width:0px;
+}
+.Client_Stats-VBox{
+-fx-background-color:white;
+-fx-border-color:#b4e7d5;
+-fx-border-width:0px 1px 0px 0px;
+-fx-border-radius:10 0 0 10;
+}

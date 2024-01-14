@@ -46,6 +46,9 @@ public class Inventory_Controller implements Initializable {
     }
     @FXML
     private Button Return_To_Products_Button;
+    @FXML
+    private ComboBox<String> Client_Filter_Combo_Box;
+    private ObservableList<String> Client_Filter_List=FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Products_Top_Button_Active();
@@ -60,9 +63,13 @@ public class Inventory_Controller implements Initializable {
                 Return_To_Products_Button.fire();
             }
         });
-        Product_Filter_List.addAll("Categorie","Deposit","Reference","Name");
+        Product_Filter_List.addAll("Reference","Name");
         Product_Filter_Combo_Box.getItems().addAll(Product_Filter_List);
-        Product_Filter_Combo_Box.setValue(Product_Filter_List.get(2));
+        Product_Filter_Combo_Box.setValue(Product_Filter_List.getFirst());
+
+        Client_Filter_List.addAll("Name","adress");
+        Client_Filter_Combo_Box.getItems().addAll(Client_Filter_List);
+        Client_Filter_Combo_Box.setValue(Client_Filter_List .getFirst());
     }
     ////////////////////////////////////////// Top buttons Active /////////////////////////////////////////////////////
     private boolean Products_active = false;
@@ -600,7 +607,6 @@ public class Inventory_Controller implements Initializable {
             }
         }
         else alert.showCustomErrorAlert("please enter all values");
-
     }
     public void Edit_Product_Import_Image(){
         FileChooser image=new FileChooser();
@@ -693,8 +699,6 @@ public class Inventory_Controller implements Initializable {
             }
         }
     }
-    /////////////// ida t9ad zid hnaya search by reference
-    ////////////// ida l9a reference y affichiha ida mal9ahach dirah yeprinti mal9ahach
     @FXML
     private ComboBox<String> Product_Filter_Combo_Box;
     private ObservableList<String> Product_Filter_List= FXCollections.observableArrayList();
@@ -790,7 +794,7 @@ public class Inventory_Controller implements Initializable {
             alert.showCustomAlert("success");
 
         }
-        else alert.showCustomErrorAlert("please enter all values");
+        else alert.showCustomErrorAlert("please enter all Info");
     }
     public void Show_Clients_In_The_Table(){
         Client[] client_list=getClientsMatrix();
@@ -816,6 +820,10 @@ public class Inventory_Controller implements Initializable {
             temp.setPrefWidth(110);
             temp.setCursor(Cursor.HAND);
             temp.setMaxWidth(temp.getPrefWidth());
+            temp.setOnAction(event -> {
+                int itemIndex = Clients_Table.getChildren().indexOf(temp);
+                Go_Stats_Client(itemIndex);
+            });
             temp.setPrefHeight(hbox.getPrefHeight());
             temp.setMaxHeight(hbox.getPrefHeight());
             Clients_Table.add(temp, 8, Clients_Table.getRowConstraints().size() - 1);
@@ -870,5 +878,110 @@ public class Inventory_Controller implements Initializable {
             alert.showCustomErrorAlert("Error");
             return null;
         }
+    }
+    public void Delete_Client() {
+        AtomicBoolean confirm=alert.showCustomConfirmationAlert("You sure want to delete this ??");
+        if (confirm.get()){
+            for (int row = 0; row < Clients_Table.getRowCount(); row++) {
+                int currentRow = row;
+                CheckBox checkBox = getCheckBoxInRow(Clients_Table, currentRow);
+
+                if (checkBox != null && checkBox.isSelected()) {
+                    Clients_Table.getChildren().removeIf(node -> {
+                        Integer rowIndex = GridPane.getRowIndex(node);
+
+                        if (rowIndex != null && rowIndex == currentRow) {
+                            if (GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == 1
+                                    && node instanceof Label) {
+                                String value = ((Label) node).getText();
+                                Delete_Client_From_Database(value);
+                            }
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+            }
+        }
+    }
+
+    public void Delete_Client_From_Database(String Client_Id){
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM clients WHERE id = ?");
+            preparedStatement.setString(1,Client_Id);
+            preparedStatement.execute();
+            conn.close();
+        } catch (SQLException x) {
+            alert.showCustomErrorAlert("Error");
+        }
+    }
+    @FXML
+    private VBox Client_Stats;
+    @FXML
+    private Button but571;
+    public void Go_Stats_Client(int itemIndex){
+        Inventory_Main.getChildren().addAll(Layer,Client_Stats);
+        Layer.setVisible(true);
+        Client_Stats.setVisible(true);
+        get_Client_Info_To_Stats(Clients_Table,itemIndex);
+        but571.setOnAction(event -> Edit_Client(Integer.parseInt(((Label)Clients_Table.getChildren().get(itemIndex+1)).getText())));
+    }
+    public void Return_To_Client_From_Stats(){
+        Inventory_Main.getChildren().clear();
+        Inventory_Main.getChildren().add(Clients);
+        Layer.setVisible(false);
+        Client_Stats.setVisible(false);
+    }
+    @FXML
+    private TextArea Stats_Client_Adresse;
+
+    @FXML
+    private TextField Stats_Client_Credit_Limit;
+
+    @FXML
+    private TextField Stats_Client_Name;
+
+    @FXML
+    private TextField Stats_Client_Phone;
+
+    @FXML
+    private TextField Stats_Client_Rest;
+
+    @FXML
+    private TextField Stats_Client_Sold;
+
+    @FXML
+    private TextField Stats_Client_Paid;
+    public void get_Client_Info_To_Stats(GridPane gridPane,int itemIndex){
+        Stats_Client_Name.setText(((Label)gridPane.getChildren().get(itemIndex+2)).getText());
+        Stats_Client_Phone.setText(((Label)gridPane.getChildren().get(itemIndex+3)).getText());
+        Stats_Client_Adresse.setText(((Label)gridPane.getChildren().get(itemIndex+4)).getText());
+        Stats_Client_Sold.setText(((Label)gridPane.getChildren().get((itemIndex+5))).getText());
+        Stats_Client_Rest.setText(((Label)gridPane.getChildren().get(itemIndex+6)).getText());
+        Stats_Client_Paid.setText(((Label)gridPane.getChildren().get(itemIndex+7)).getText());
+
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+
+            try (Statement dataQuery = conn.createStatement()) {
+                PreparedStatement query = conn.prepareStatement("SELECT credit FROM clients WHERE id = ?");
+                query.setString(1, ((Label)gridPane.getChildren().get(itemIndex+1)).getText());
+                ResultSet resultSet = query.executeQuery();
+                while (resultSet.next()) {
+                    Stats_Client_Credit_Limit.setText(String.valueOf(resultSet.getDouble("credit")));
+                }
+            }
+            conn.close();
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("Error");
+        }
+    }
+    public void Edit_Client(int id) {
+        String Name = Stats_Client_Name.getText();
+        String Adress = Stats_Client_Adresse.getText();
+        String Phone = Stats_Client_Phone.getText();
+        String Credit_Limit = Stats_Client_Credit_Limit.getText();
     }
 }

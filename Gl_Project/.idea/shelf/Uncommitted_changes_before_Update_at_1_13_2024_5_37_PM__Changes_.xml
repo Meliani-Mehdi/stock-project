@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_1_13_2024_5_37_PM_[Changes]" date="1705163910630" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_13_2024_5_37_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 1/13/2024 5:37 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Org/Main/Controllers/Inventory_Controller.class" />
+    <option name="AFTER_PATH" value="target/classes/Org/Main/Controllers/Inventory_Controller.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_13_2024_5_37_PM_[Changes]/Inventory_Controller.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Org/Main/Classes/Client.class" />
+    <option name="AFTER_PATH" value="target/classes/Org/Main/Classes/Client.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_13_2024_5_37_PM_[Changes]/Client.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Org/Main/Classes/Personne.class" />
+    <option name="AFTER_PATH" value="target/classes/Org/Main/Classes/Personne.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_1_13_2024_5_37_PM_[Changes]/Personne.class" />
+  </binary>
+</changelist>

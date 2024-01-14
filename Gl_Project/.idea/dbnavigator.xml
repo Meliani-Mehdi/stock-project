@@ -26,6 +26,8 @@
     <connection id="2fdfe332-3bc0-4f2a-b113-3023ad4fdf9f" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="2fdfe332-3bc0-4f2a-b113-3023ad4fdf9f" dataset="your-database-name.clients" active-filter-id="" />
+    <filter-actions connection-id="2fdfe332-3bc0-4f2a-b113-3023ad4fdf9f" dataset="your-database-name.deposits" active-filter-id="" />
     <filter-actions connection-id="2fdfe332-3bc0-4f2a-b113-3023ad4fdf9f" dataset="your-database-name.products" active-filter-id="">
       <filter id="274c8b29-0543-4138-87bb-8c4c9e64cdfe" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
@@ -86,7 +88,7 @@
           <session-management value="true" />
           <ddl-file-binding value="true" />
           <database-logging value="true" />
-          <connect-automatically value="true" />
+          <connect-automatically value="false" />
           <restore-workspace value="true" />
           <restore-workspace-deep value="false" />
           <environment-type value="default" />
