@@ -983,5 +983,19 @@ public class Inventory_Controller implements Initializable {
         String Adress = Stats_Client_Adresse.getText();
         String Phone = Stats_Client_Phone.getText();
         String Credit_Limit = Stats_Client_Credit_Limit.getText();
+
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement query = conn.prepareStatement("UPDATE clients set name = ?, adresse = ?, phone_num = ?, credit = ? WHERE id = ?;");
+            query.setString(1, Name);
+            query.setString(2, Adress);
+            query.setString(3, Phone);
+            query.setString(4, Credit_Limit);
+            query.setInt(5, id);
+            query.execute();
+            conn.close();
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("ll");
+        }
     }
 }
