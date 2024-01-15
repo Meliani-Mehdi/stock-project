@@ -994,8 +994,11 @@ public class Inventory_Controller implements Initializable {
             query.setInt(5, id);
             query.execute();
             conn.close();
+            removeNonFirstRowChildren(Clients_Table);
+            Show_Clients_In_The_Table();
+            alert.showCustomAlert("Success");
         } catch (SQLException e) {
-            alert.showCustomErrorAlert("ll");
+            alert.showCustomErrorAlert("Error");
         }
     }
 }

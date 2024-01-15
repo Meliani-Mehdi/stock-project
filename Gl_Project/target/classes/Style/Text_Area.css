@@ -1,0 +1,23 @@
+.text-area {
+    -fx-control-inner-background: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-size:25px;
+}
+
+.text-area .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 2px;
+    -fx-background-radius: 4px;
+}
+.text-area .increment-button,
+.text-area .decrement-button {
+    -fx-background-color: transparent;
+    -fx-shape: null;
+}
+
+.text-area .increment-arrow,
+.text-area .decrement-arrow {
+    -fx-background-color: transparent;
+    -fx-shape: null;
+}
