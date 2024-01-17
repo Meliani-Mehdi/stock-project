@@ -1001,4 +1001,11 @@ public class Inventory_Controller implements Initializable {
             alert.showCustomErrorAlert("Error");
         }
     }
+    @FXML
+    private TextField Client_Search;
+    //////////////////////////////////// add the client search function here in the same way we created product search
+    public void Search_Client(){
+        removeNonFirstRowChildren(Clients_Table);
+        String Filter=Client_Filter_Combo_Box.getValue();
+    }
 }
