@@ -1001,11 +1001,66 @@ public class Inventory_Controller implements Initializable {
             alert.showCustomErrorAlert("Error");
         }
     }
+
+    public void Search_Client(){
+        removeNonFirstRowChildren(Clients_Table);
+        Client[] client_list=SearchClientMatrix();
+        assert client_list != null;
+        int list_size=client_list.length;
+        for (Client value : client_list) {
+            RowConstraints con = new RowConstraints();
+            Clients_Table.getRowConstraints().add(con);
+
+            CheckBox checkBox = new CheckBox();
+            checkBox.setText("");
+            checkBox.getStylesheets().addAll(CheckBoxExample.getStylesheets());
+
+            HBox hbox = new HBox(checkBox);
+            hbox.getStyleClass().add("Product-Table-First-Col-Label");
+            hbox.setAlignment(Pos.CENTER);
+            Clients_Table.add(hbox, 0, Clients_Table.getRowConstraints().size() - 1);
+
+            Button temp = new Button("Stats");
+            temp.getStyleClass().add("Product-Table-Last-Col-Label");
+            temp.setStyle("-fx-text-fill:#05b074;");
+            temp.setFont(Font.font("Segoe UI", 18));
+            temp.setPrefWidth(110);
+            temp.setCursor(Cursor.HAND);
+            temp.setMaxWidth(temp.getPrefWidth());
+            temp.setOnAction(event -> {
+                int itemIndex = Clients_Table.getChildren().indexOf(temp);
+                Go_Stats_Client(itemIndex);
+            });
+            temp.setPrefHeight(hbox.getPrefHeight());
+            temp.setMaxHeight(hbox.getPrefHeight());
+            Clients_Table.add(temp, 8, Clients_Table.getRowConstraints().size() - 1);
+
+            String[] client = {String.valueOf(value.getId()),
+                    String.valueOf(value.getAdresse()),
+                    String.valueOf(value.getPhone_Num()),
+                    String.valueOf(value.getName()),
+                    String.valueOf(value.getSolde()),
+                    String.valueOf(value.getRest()),
+                    String.valueOf(value.getpaid())
+            };
+            for (int col = 1; col < 8; col++) {
+                ColumnConstraints cell = Clients_Table.getColumnConstraints().get(col);
+                Label emptyLabel = new Label(client[col - 1]);
+                emptyLabel.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabel.setPrefWidth(cell.getMaxWidth());
+                emptyLabel.setPrefHeight(40);
+                emptyLabel.setMinHeight(40);
+                emptyLabel.setFont(Font.font("Segoe UI", 18));
+                emptyLabel.getStyleClass().add("Product-Table-Label");
+                Clients_Table.add(emptyLabel, col, Clients_Table.getRowConstraints().size() - 1);
+            }
+        }
+    }
+
     @FXML
     private TextField Client_Search;
     //////////////////////////////////// add the client search function here in the same way we created product search
-    public Client[] Search_Client(){
-        removeNonFirstRowChildren(Clients_Table);
+    public Client[] SearchClientMatrix(){
         String Filter=Client_Filter_Combo_Box.getValue();
         Filter = Filter.toLowerCase();
         String search = Client_Search.getText();
