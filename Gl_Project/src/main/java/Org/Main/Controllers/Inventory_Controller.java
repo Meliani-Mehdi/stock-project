@@ -67,7 +67,7 @@ public class Inventory_Controller implements Initializable {
         Product_Filter_Combo_Box.getItems().addAll(Product_Filter_List);
         Product_Filter_Combo_Box.setValue(Product_Filter_List.getFirst());
 
-        Client_Filter_List.addAll("Name","adress");
+        Client_Filter_List.addAll("Name","adresse");
         Client_Filter_Combo_Box.getItems().addAll(Client_Filter_List);
         Client_Filter_Combo_Box.setValue(Client_Filter_List .getFirst());
     }
@@ -346,7 +346,6 @@ public class Inventory_Controller implements Initializable {
     public void Show_Products_In_The_Table(){
         Product[] product_list=getProductsMatrix();
         assert product_list != null;
-        int list_size=product_list.length;
         for (Product value : product_list) {
             RowConstraints con = new RowConstraints();
             Products_Table.getRowConstraints().add(con);
@@ -649,7 +648,6 @@ public class Inventory_Controller implements Initializable {
         removeNonFirstRowChildren(Products_Table);
         Product[] product_list=SearchProductMatrix();
         assert product_list != null;
-        int list_size=product_list.length;
         for (Product value : product_list) {
             RowConstraints con = new RowConstraints();
             Products_Table.getRowConstraints().add(con);
@@ -799,7 +797,6 @@ public class Inventory_Controller implements Initializable {
     public void Show_Clients_In_The_Table(){
         Client[] client_list=getClientsMatrix();
         assert client_list != null;
-        int list_size=client_list.length;
         for (Client value : client_list) {
             RowConstraints con = new RowConstraints();
             Clients_Table.getRowConstraints().add(con);
@@ -1006,7 +1003,6 @@ public class Inventory_Controller implements Initializable {
         removeNonFirstRowChildren(Clients_Table);
         Client[] client_list=SearchClientMatrix();
         assert client_list != null;
-        int list_size=client_list.length;
         for (Client value : client_list) {
             RowConstraints con = new RowConstraints();
             Clients_Table.getRowConstraints().add(con);
