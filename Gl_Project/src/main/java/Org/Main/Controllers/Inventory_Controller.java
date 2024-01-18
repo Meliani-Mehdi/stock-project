@@ -1004,8 +1004,41 @@ public class Inventory_Controller implements Initializable {
     @FXML
     private TextField Client_Search;
     //////////////////////////////////// add the client search function here in the same way we created product search
-    public void Search_Client(){
+    public Client[] Search_Client(){
         removeNonFirstRowChildren(Clients_Table);
         String Filter=Client_Filter_Combo_Box.getValue();
+        Filter = Filter.toLowerCase();
+        String search = Client_Search.getText();
+        if (search.isBlank()) return getClientsMatrix();
+
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            ArrayList<Client> clientList = new ArrayList<>();
+
+            try (PreparedStatement countQuery = conn.prepareStatement("SELECT id, adresse, name, phone_num FROM clients WHERE "+Filter+" LIKE ? ")) {
+                countQuery.setString(1, "%" + search + "%");
+
+                try (ResultSet resultSet = countQuery.executeQuery()) {
+                    while (resultSet.next()) {
+                        clientList.add(new Client(
+                                resultSet.getInt("id"),
+                                resultSet.getString("adresse"),
+                                resultSet.getString("name"),
+                                resultSet.getString("phone_num"),
+                                (double)0,
+                                (double)0,
+                                (double)0
+                        ));
+                    }
+                }
+            }
+            conn.close();
+            return clientList.toArray(new Client[0]);
+
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("Error");
+            return null;
+        }
     }
 }
