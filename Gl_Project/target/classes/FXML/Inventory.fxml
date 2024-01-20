@@ -46,7 +46,7 @@
          <children>
             <StackPane fx:id="Inventory_Main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="1083.0" HBox.hgrow="ALWAYS">
                <children>
-                  <VBox fx:id="Products" prefHeight="560.0" prefWidth="1101.0" style="-fx-background-color: white;" styleClass="Product-Table-VBox" visible="false">
+                  <VBox fx:id="Products" prefHeight="560.0" prefWidth="1101.0" style="-fx-background-color: white;" styleClass="Product-Table-VBox">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="1079.0" spacing="10.0" styleClass="Product-Table-HBox" VBox.vgrow="NEVER">
                            <padding>
@@ -173,7 +173,7 @@
                      </children>
                   </VBox>
                   <AnchorPane fx:id="Layer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000096; -fx-background-radius: 10 10 10 10;" visible="false" />
-                  <VBox fx:id="Add_Product" alignment="CENTER" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" visible="false" StackPane.alignment="CENTER">
+                  <VBox fx:id="Add_Product" alignment="CENTER" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" StackPane.alignment="CENTER">
                      <children>
                         <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
                            <children>
@@ -215,8 +215,8 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Deposit" stylesheets="@../Style/Combo.css" />
-                                    <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Categorie" stylesheets="@../Style/Combo.css" />
+                                    <ComboBox fx:id="Product_Deposit_List" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Deposit" stylesheets="@../Style/Combo.css" />
+                                    <ComboBox fx:id="Product_Categorie_List" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Categorie" stylesheets="@../Style/Combo.css" />
                                  </children>
                                  <padding>
                                     <Insets left="10.0" right="10.0" top="10.0" />
@@ -405,8 +405,8 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Deposit" stylesheets="@../Style/Combo.css" />
-                                    <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Categorie" stylesheets="@../Style/Combo.css" />
+                                    <ComboBox fx:id="Product_Deposit" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Deposit" stylesheets="@../Style/Combo.css" />
+                                    <ComboBox fx:id="Product_Categorie" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="Categorie" stylesheets="@../Style/Combo.css" />
                                  </children>
                                  <padding>
                                     <Insets left="10.0" right="10.0" top="10.0" />
@@ -1037,7 +1037,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox fx:id="Categories" layoutX="10.0" layoutY="10.0" prefHeight="560.0" prefWidth="1101.0" style="-fx-background-color: white;" styleClass="Product-Table-VBox">
+                  <VBox fx:id="Categories" layoutX="10.0" layoutY="10.0" prefHeight="560.0" prefWidth="1101.0" style="-fx-background-color: white;" styleClass="Product-Table-VBox" visible="false">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="1079.0" spacing="10.0" styleClass="Product-Table-HBox" VBox.vgrow="NEVER">
                            <padding>
@@ -1344,7 +1344,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox fx:id="Categorie_Info" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="580.0" maxWidth="1101.0" prefHeight="580.0" prefWidth="1083.0" spacing="10.0">
+                  <VBox fx:id="Categorie_Info" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="580.0" maxWidth="1101.0" prefHeight="580.0" prefWidth="1083.0" spacing="10.0" visible="false">
                      <children>
                         <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
                            <children>

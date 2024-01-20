@@ -28,7 +28,7 @@
     -fx-background-color: transparent, transparent;
 }
 .combo-box .scroll-bar:vertical {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
 }
 
 .combo-box .scroll-bar:vertical .thumb {

@@ -24,6 +24,17 @@ public class Product {
         this.Groupe=Groupe;
     }
 
+    public Product(Integer id, String codebar, String reference, String name, Double buying_Price, Double selling_Price, Integer stock, String depots) {
+        Id = id;
+        Codebar = codebar;
+        Reference = reference;
+        this.name = name;
+        Buying_Price = buying_Price;
+        Selling_Price = selling_Price;
+        Stock = stock;
+        this.depots = depots;
+    }
+
     public Product() {
 
     }

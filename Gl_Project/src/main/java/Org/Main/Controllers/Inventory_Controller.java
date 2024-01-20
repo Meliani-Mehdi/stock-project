@@ -256,7 +256,25 @@ public class Inventory_Controller implements Initializable {
             query.setString(1, deposit);
             ResultSet resultSet=query.executeQuery();
             if(resultSet.next()) {
-                resultSet.getInt("id");
+                id=resultSet.getInt("id");
+                System.out.println();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("error");
+        }
+        return id;
+    }
+    public int get_Categorie_Id(){
+        String Categorie=Product_Categorie_List.getValue();
+        int id=0;
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM groupes WHERE name = ?");
+            query.setString(1, Categorie);
+            ResultSet resultSet=query.executeQuery();
+            if(resultSet.next()) {
+                id=resultSet.getInt("id");
             }
             conn.close();
         } catch (SQLException e) {
@@ -272,6 +290,7 @@ public class Inventory_Controller implements Initializable {
         String Buy_Price=Product_Buy_Price_Text_Field.getText();
         String Sell_Price=Product_Sell_Price_Text_Field.getText();
         int deposit_id=get_Deposit_Id();
+        int categorie_id=get_Categorie_Id();
         String Image_Path;
         try {
             Image_Path=New_Product_file.getAbsolutePath();
@@ -284,7 +303,7 @@ public class Inventory_Controller implements Initializable {
                 if (confirm.get()){
                     String url = "jdbc:sqlite:main.db";
                     try (Connection conn = DriverManager.getConnection(url)) {
-                        PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo, id_deposite) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+                        PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo, id_deposite, id_groupe) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
                         query.setString(1, Bar_Code);
                         query.setString(2, Reference);
                         query.setString(3, Name);
@@ -293,6 +312,7 @@ public class Inventory_Controller implements Initializable {
                         query.setString(6, Stock);
                         query.setString(7, Image_Path);
                         query.setInt(8, deposit_id);
+                        query.setInt(9, categorie_id);
                         query.execute();
                         conn.close();
                     } catch (SQLException e) {
@@ -305,7 +325,7 @@ public class Inventory_Controller implements Initializable {
             }else{
                 String url = "jdbc:sqlite:main.db";
                 try (Connection conn = DriverManager.getConnection(url)) {
-                    PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo, id_deposite) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+                    PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo, id_deposite, id_groupe) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
                     query.setString(1, Bar_Code);
                     query.setString(2, Reference);
                     query.setString(3, Name);
@@ -314,6 +334,7 @@ public class Inventory_Controller implements Initializable {
                     query.setString(6, Stock);
                     query.setString(7, Image_Path);
                     query.setInt(8, deposit_id);
+                    query.setInt(9, categorie_id);
                     query.execute();
                     conn.close();
                 } catch (SQLException e) {
@@ -374,7 +395,7 @@ public class Inventory_Controller implements Initializable {
                     String.valueOf(value.getStock()),
                     String.valueOf(value.getBuying_Price()),
                     String.valueOf(value.getSelling_Price()),
-                    "Local Shop"
+                    String.valueOf(value.getDepots())
             };
             for (int col = 1; col < 9; col++) {
                 ColumnConstraints cell = Products_Table.getColumnConstraints().get(col);
@@ -390,6 +411,37 @@ public class Inventory_Controller implements Initializable {
         }
     }
 
+    public String get_Deposit_Name(int id){
+        String name="Local Host";
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement query = conn.prepareStatement("SELECT name FROM deposits WHERE id = ?");
+            query.setInt(1, id);
+            ResultSet resultSet = query.executeQuery();
+            if(resultSet.next()) {
+                name=resultSet.getString("name");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("error");
+        }
+        return name;
+    }
+    public String get_Categorie_Name(int id){
+        String name="No Categorie";
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement query = conn.prepareStatement("SELECT name FROM groupes WHERE id = " + id);
+            ResultSet resultSet = query.executeQuery();
+            if(resultSet.next()) {
+                name=resultSet.getString("name");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("error");
+        }
+        return name;
+    }
     ////////////////////////////////////makes the SQL products table into a matrix/////////////////////////////////////////
     public Product[] getProductsMatrix() {
         String url = "jdbc:sqlite:main.db";
@@ -398,7 +450,7 @@ public class Inventory_Controller implements Initializable {
             ArrayList<Product> productList = new ArrayList<>();
 
             try (Statement dataQuery = conn.createStatement()) {
-                ResultSet resultSet = dataQuery.executeQuery("SELECT id, bar_code, reference, name, buying_price, selling_price, stock FROM products");
+                ResultSet resultSet = dataQuery.executeQuery("SELECT id, bar_code, reference, name, buying_price, selling_price, id_deposite, stock FROM products");
 
                 while (resultSet.next()) {
                     productList.add(new Product(
@@ -408,7 +460,8 @@ public class Inventory_Controller implements Initializable {
                             resultSet.getString("name"),
                             resultSet.getDouble("buying_price"),
                             resultSet.getDouble("selling_price"),
-                            resultSet.getInt("stock")
+                            resultSet.getInt("stock"),
+                            get_Deposit_Name(resultSet.getInt("id_deposite"))
                     ));
                 }
             }
@@ -519,6 +572,19 @@ public class Inventory_Controller implements Initializable {
 
     @FXML
     private TextField Edited_Product_Sell_Price_Text_Field;
+    public int get_Product_Categorie(int id){
+        String url = "jdbc:sqlite:main.db";
+        int categorie_id = 0;
+        try (Connection conn = DriverManager.getConnection(url)) {
+            Statement countQuery = conn.createStatement();
+            ResultSet countResult = countQuery.executeQuery("SELECT id_groupe FROM products WHERE id = " + id);
+            countResult.next();
+            categorie_id = countResult.getInt("id_groupe");
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("Error");
+        }
+        return categorie_id;
+    }
     public void get_Product_Info_To_Edit(GridPane gridPane,int itemIndex){
         Edited_Product_Reference_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+2)).getText());
         Edited_Product_Barcode_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+3)).getText());
@@ -526,9 +592,10 @@ public class Inventory_Controller implements Initializable {
         Edited_Product_Stock_Text_Field.setText(((Label)gridPane.getChildren().get((itemIndex+5))).getText());
         Edited_Product_Buy_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+6)).getText());
         Edited_Product_Sell_Price_Text_Field.setText(((Label)gridPane.getChildren().get(itemIndex+7)).getText());
+        Product_Deposit.setValue(((Label)gridPane.getChildren().get(itemIndex+8)).getText());
+        Product_Categorie.setValue(get_Categorie_Name(get_Product_Categorie(Integer.parseInt(((Label)gridPane.getChildren().get(itemIndex+1)).getText()))));
     }
     public void getProduct_Image(int id) {
-        String search = Search_Products_Text_Field.getText();
         String url = "jdbc:sqlite:main.db";
         String img = null;
         try (Connection conn = DriverManager.getConnection(url)) {
@@ -679,7 +746,7 @@ public class Inventory_Controller implements Initializable {
                     String.valueOf(value.getStock()),
                     String.valueOf(value.getBuying_Price()),
                     String.valueOf(value.getSelling_Price()),
-                    "Local Shop"
+                    String.valueOf(value.getDepots())
             };
             for (int col = 1; col < 9; col++) {
                 ColumnConstraints cell = Products_Table.getColumnConstraints().get(col);
@@ -709,8 +776,9 @@ public class Inventory_Controller implements Initializable {
         try (Connection conn = DriverManager.getConnection(url)) {
             ArrayList<Product> productList = new ArrayList<>();
 
-            try (PreparedStatement countQuery = conn.prepareStatement("SELECT id, bar_code, reference, name, buying_price, selling_price, stock FROM products WHERE "+filter+" LIKE ? ")) {
+            try (PreparedStatement countQuery = conn.prepareStatement("SELECT id, bar_code, reference, name, buying_price, selling_price, id_deposite, stock FROM products WHERE "+filter+" LIKE ? ")) {
                 countQuery.setString(1, "%" + search + "%");
+
 
                 try (ResultSet resultSet = countQuery.executeQuery()) {
                     while (resultSet.next()) {
@@ -721,7 +789,8 @@ public class Inventory_Controller implements Initializable {
                                 resultSet.getString("name"),
                                 resultSet.getDouble("buying_price"),
                                 resultSet.getDouble("selling_price"),
-                                resultSet.getInt("stock")
+                                resultSet.getInt("stock"),
+                                get_Deposit_Name(resultSet.getInt("id_deposite"))
                         ));
                     }
                 }
@@ -1441,8 +1510,14 @@ public class Inventory_Controller implements Initializable {
         for (Deposit value : Deposit_List) {
             Product_Deposit_List.getItems().add(value.getName());
         }
+        for (Deposit value : Deposit_List) {
+            Product_Deposit.getItems().add(value.getName());
+        }
         for (Groupe value : Groupe_List) {
             Product_Categorie_List.getItems().add(value.getName());
+        }
+        for (Groupe value : Groupe_List) {
+            Product_Categorie.getItems().add(value.getName());
         }
     }
 }
