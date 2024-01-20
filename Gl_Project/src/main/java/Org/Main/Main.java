@@ -128,6 +128,7 @@ public class Main extends Application {
             statement.execute("""
                     CREATE TABLE IF NOT EXISTS "users" (
                     	"id"	INTEGER,
+                    	"type" TEXT NOT NULL,
                     	"username"	TEXT NOT NULL,
                     	"password"	TEXT NOT NULL,
                     	"l"	INTEGER NOT NULL,
