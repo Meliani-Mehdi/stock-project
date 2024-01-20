@@ -48,6 +48,7 @@ public class Inventory_Controller implements Initializable {
     }
     @FXML
     private Button Return_To_Products_Button;
+
     @FXML
     private ComboBox<String> Client_Filter_Combo_Box;
     private ObservableList<String> Client_Filter_List=FXCollections.observableArrayList();
@@ -101,7 +102,7 @@ public class Inventory_Controller implements Initializable {
         ////////////////////////////////////// show products //////////////////////////////////////////////
         removeNonFirstRowChildren(Products_Table);
         Show_Products_In_The_Table();
-
+        fill_Deposit_Categorie_Combo_Box();
     }
     public void Clients_Top_Button_Active(){
         Clients_Top_Button.getStyleClass().removeLast();
@@ -246,6 +247,23 @@ public class Inventory_Controller implements Initializable {
         Image default_image=new Image("file:C:\\Users\\user\\OneDrive\\Documents\\GitHub\\stock-project\\Gl_Project\\src\\main\\resources\\Icons\\Inventory\\upload.png");
         Product_Image.setImage(default_image);
     }
+    public int get_Deposit_Id(){
+        String deposit=Product_Deposit_List.getValue();
+        int id=0;
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM deposits WHERE name = ?");
+            query.setString(1, deposit);
+            ResultSet resultSet=query.executeQuery();
+            if(resultSet.next()) {
+                resultSet.getInt("id");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("error");
+        }
+        return id;
+    }
     public void add_Product_To_Database(){
         String Bar_Code=Product_Barcode_Text_Field.getText();
         String Name=Product_Name_Text_Field.getText();
@@ -253,6 +271,7 @@ public class Inventory_Controller implements Initializable {
         String Stock=Product_Stock_Text_Field.getText();
         String Buy_Price=Product_Buy_Price_Text_Field.getText();
         String Sell_Price=Product_Sell_Price_Text_Field.getText();
+        int deposit_id=get_Deposit_Id();
         String Image_Path;
         try {
             Image_Path=New_Product_file.getAbsolutePath();
@@ -265,7 +284,7 @@ public class Inventory_Controller implements Initializable {
                 if (confirm.get()){
                     String url = "jdbc:sqlite:main.db";
                     try (Connection conn = DriverManager.getConnection(url)) {
-                        PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo) VALUES(?, ?, ?, ?, ?, ?, ?);");
+                        PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo, id_deposite) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
                         query.setString(1, Bar_Code);
                         query.setString(2, Reference);
                         query.setString(3, Name);
@@ -273,6 +292,7 @@ public class Inventory_Controller implements Initializable {
                         query.setString(5, Sell_Price);
                         query.setString(6, Stock);
                         query.setString(7, Image_Path);
+                        query.setInt(8, deposit_id);
                         query.execute();
                         conn.close();
                     } catch (SQLException e) {
@@ -285,7 +305,7 @@ public class Inventory_Controller implements Initializable {
             }else{
                 String url = "jdbc:sqlite:main.db";
                 try (Connection conn = DriverManager.getConnection(url)) {
-                    PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo) VALUES(?, ?, ?, ?, ?, ?, ?);");
+                    PreparedStatement query = conn.prepareStatement("INSERT INTO products (bar_code, reference, name, buying_price, selling_price, stock, photo, id_deposite) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
                     query.setString(1, Bar_Code);
                     query.setString(2, Reference);
                     query.setString(3, Name);
@@ -293,6 +313,7 @@ public class Inventory_Controller implements Initializable {
                     query.setString(5, Sell_Price);
                     query.setString(6, Stock);
                     query.setString(7, Image_Path);
+                    query.setInt(8, deposit_id);
                     query.execute();
                     conn.close();
                 } catch (SQLException e) {
@@ -523,6 +544,10 @@ public class Inventory_Controller implements Initializable {
         Edited_Product_Image.setImage(default_image);
     }
     private String Image_Path;
+    @FXML
+    private ComboBox<String> Product_Deposit;
+    @FXML
+    private ComboBox<String> Product_Categorie;
     public void edit_Product(int id){
         String Bar_Code=Edited_Product_Barcode_Text_Field.getText();
         String Name=Edited_Product_Name_Text_Field.getText();
@@ -1403,6 +1428,21 @@ public class Inventory_Controller implements Initializable {
             conn.close();
         } catch (SQLException x) {
             alert.showCustomErrorAlert("Error");
+        }
+    }
+    @FXML
+    private ComboBox<String> Product_Categorie_List;
+
+    @FXML
+    private ComboBox<String> Product_Deposit_List;
+    public void fill_Deposit_Categorie_Combo_Box(){
+        Deposit[] Deposit_List = getDepositsMatrix();
+        Groupe[] Groupe_List =getCategoriesMatrix();
+        for (Deposit value : Deposit_List) {
+            Product_Deposit_List.getItems().add(value.getName());
+        }
+        for (Groupe value : Groupe_List) {
+            Product_Categorie_List.getItems().add(value.getName());
         }
     }
 }
