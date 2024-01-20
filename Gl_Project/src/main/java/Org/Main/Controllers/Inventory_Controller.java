@@ -412,7 +412,7 @@ public class Inventory_Controller implements Initializable {
     }
 
     public String get_Deposit_Name(int id){
-        String name="Local Host";
+        String name="Local Shop";
         String url = "jdbc:sqlite:main.db";
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement query = conn.prepareStatement("SELECT name FROM deposits WHERE id = ?");
@@ -450,7 +450,7 @@ public class Inventory_Controller implements Initializable {
             ArrayList<Product> productList = new ArrayList<>();
 
             try (Statement dataQuery = conn.createStatement()) {
-                ResultSet resultSet = dataQuery.executeQuery("SELECT id, bar_code, reference, name, buying_price, selling_price, id_deposite, stock FROM products");
+                ResultSet resultSet = dataQuery.executeQuery("SELECT id, bar_code, reference, name, buying_price, selling_price, id_deposite, id_groupe, stock FROM products");
 
                 while (resultSet.next()) {
                     productList.add(new Product(
@@ -461,7 +461,8 @@ public class Inventory_Controller implements Initializable {
                             resultSet.getDouble("buying_price"),
                             resultSet.getDouble("selling_price"),
                             resultSet.getInt("stock"),
-                            get_Deposit_Name(resultSet.getInt("id_deposite"))
+                            get_Deposit_Name(resultSet.getInt("id_deposite")),
+                            get_Categorie_Name(resultSet.getInt("id_groupe"))
                     ));
                 }
             }
@@ -615,6 +616,39 @@ public class Inventory_Controller implements Initializable {
     private ComboBox<String> Product_Deposit;
     @FXML
     private ComboBox<String> Product_Categorie;
+    public int get_ProductDeposit_Id(String deposit){
+        int id=0;
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM deposits WHERE name = ?");
+            query.setString(1, deposit);
+            ResultSet resultSet=query.executeQuery();
+            if(resultSet.next()) {
+                id=resultSet.getInt("id");
+                System.out.println();
+            }
+            conn.close();
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("error");
+        }
+        return id;
+    }
+    public int get_ProductCategorie_Id(String Categorie){
+        int id=0;
+        String url = "jdbc:sqlite:main.db";
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement query = conn.prepareStatement("SELECT id FROM groupes WHERE name = ?");
+            query.setString(1, Categorie);
+            ResultSet resultSet=query.executeQuery();
+            if(resultSet.next()) {
+                id=resultSet.getInt("id");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("error");
+        }
+        return id;
+    }
     public void edit_Product(int id){
         String Bar_Code=Edited_Product_Barcode_Text_Field.getText();
         String Name=Edited_Product_Name_Text_Field.getText();
@@ -629,7 +663,7 @@ public class Inventory_Controller implements Initializable {
                 if (confirm.get()){
                     String url = "jdbc:sqlite:main.db";
                     try (Connection conn = DriverManager.getConnection(url)) {
-                        PreparedStatement query = conn.prepareStatement("UPDATE products set bar_code = ?, reference = ?, name = ?, buying_price = ?, selling_price = ?, stock = ?, photo = ? WHERE id = ?;");
+                        PreparedStatement query = conn.prepareStatement("UPDATE products set bar_code = ?, reference = ?, name = ?, buying_price = ?, selling_price = ?, stock = ?, photo = ? , id_groupe = ? , id_deposite = ? WHERE id = ?;");
                         query.setString(1, Bar_Code);
                         query.setString(2, Reference);
                         query.setString(3, Name);
@@ -637,7 +671,9 @@ public class Inventory_Controller implements Initializable {
                         query.setString(5, Sell_Price);
                         query.setString(6, Stock);
                         query.setString(7, Image_Path);
-                        query.setInt(8, id);
+                        query.setInt(8, get_ProductCategorie_Id(Product_Categorie.getValue()));
+                        query.setInt(9, get_ProductDeposit_Id(Product_Deposit.getValue()));
+                        query.setInt(10, id);
                         query.execute();
                         conn.close();
                     } catch (SQLException e) {
@@ -650,7 +686,7 @@ public class Inventory_Controller implements Initializable {
             }else{
                 String url = "jdbc:sqlite:main.db";
                 try (Connection conn = DriverManager.getConnection(url)) {
-                    PreparedStatement query = conn.prepareStatement("UPDATE products set bar_code = ?, reference = ?, name = ?, buying_price = ?, selling_price = ?, stock = ?, photo = ? WHERE id = ?;");
+                    PreparedStatement query = conn.prepareStatement("UPDATE products set bar_code = ?, reference = ?, name = ?, buying_price = ?, selling_price = ?, stock = ?, photo = ? , id_groupe = ? , id_deposite = ? WHERE id = ?;");
                     query.setString(1, Bar_Code);
                     query.setString(2, Reference);
                     query.setString(3, Name);
@@ -658,15 +694,17 @@ public class Inventory_Controller implements Initializable {
                     query.setString(5, Sell_Price);
                     query.setString(6, Stock);
                     query.setString(7, Image_Path);
-                    query.setInt(8, id);
+                    query.setInt(8, get_ProductCategorie_Id(Product_Categorie.getValue()));
+                    query.setInt(9, get_ProductDeposit_Id(Product_Deposit.getValue()));
+                    query.setInt(10, id);
                     query.execute();
                     conn.close();
+                    alert.showCustomAlert("success");
                 } catch (SQLException e) {
                     alert.showCustomErrorAlert("error");
                 }
                 removeNonFirstRowChildren(Products_Table);
                 Show_Products_In_The_Table();
-                alert.showCustomAlert("success");
             }
         }
         else alert.showCustomErrorAlert("please enter all values");
@@ -1241,7 +1279,7 @@ public class Inventory_Controller implements Initializable {
 
             String[] Categorie = {String.valueOf(value.getId()),
                     String.valueOf(value.getName()),
-                    String.valueOf(0)
+                    String.valueOf(get_Product_Count_From_Categories(value.getId()))
             };
             for (int col = 1; col < 4; col++) {
                 ColumnConstraints cell = Categories_Table.getColumnConstraints().get(col);
@@ -1328,6 +1366,7 @@ public class Inventory_Controller implements Initializable {
         Layer.setVisible(true);
         Categorie_Info.setVisible(true);
         get_Categorie_Name_To_info(Categories_Table,itemIndex);
+
     }
     public void Return_To_Categorie_From_Info(){
         Inventory_Main.getChildren().clear();
@@ -1339,8 +1378,61 @@ public class Inventory_Controller implements Initializable {
     private TextField Info_Categorie_Name;
     public void get_Categorie_Name_To_info(GridPane gridPane,int itemIndex){
         Info_Categorie_Name.setText(((Label)gridPane.getChildren().get(itemIndex+2)).getText());
+        show_Products_From_Categorie(((Label)gridPane.getChildren().get(itemIndex+2)).getText());
     }
+    @FXML
+    private GridPane Categorie_Product_Table;
+    public void show_Products_From_Categorie(String categorie){
+        removeNonFirstRowChildren(Categorie_Product_Table);
+        Product[] product_list=getProductsMatrix();
+        assert product_list != null;
+        for (Product value : product_list) {
+            if (Objects.equals(value.getGroupe(), categorie)){
+                RowConstraints con = new RowConstraints();
+                Categorie_Product_Table.getRowConstraints().add(con);
 
+                String[] product = {String.valueOf(value.getId()),
+                        String.valueOf(value.getReference()),
+                        String.valueOf(value.getName()),
+                        String.valueOf(value.getBuying_Price()),
+                        String.valueOf(value.getSelling_Price()),
+                        String.valueOf(value.getStock())
+                };
+                ColumnConstraints cell0 = Categorie_Product_Table.getColumnConstraints().getFirst();
+                Label emptyLabelFirst = new Label(product[0]);
+                emptyLabelFirst.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabelFirst.setPrefWidth(cell0.getMaxWidth());
+                emptyLabelFirst.setPrefHeight(40);
+                emptyLabelFirst.setMinHeight(40);
+                emptyLabelFirst.setFont(Font.font("Segoe UI", 18));
+                emptyLabelFirst.getStyleClass().add("Product-Table-First-Col-Label");
+                Categorie_Product_Table.add(emptyLabelFirst, 0, Categorie_Product_Table.getRowConstraints().size() - 1);
+
+                ColumnConstraints cellLast = Categorie_Product_Table.getColumnConstraints().getLast();
+                Label emptyLabelast = new Label(product[5]);
+                emptyLabelast.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabelast.setPrefWidth(cellLast.getMaxWidth());
+                emptyLabelast.setPrefHeight(40);
+                emptyLabelast.setMinHeight(40);
+                emptyLabelast.setFont(Font.font("Segoe UI", 18));
+                emptyLabelast.getStyleClass().add("Product-Table-Last-Col-Label");
+                Categorie_Product_Table.add(emptyLabelast, 5, Categorie_Product_Table.getRowConstraints().size() - 1);
+
+                for (int col = 1; col < 5; col++) {
+                    ColumnConstraints cell = Categorie_Product_Table.getColumnConstraints().get(col);
+                    Label emptyLabel = new Label(product[col]);
+                    emptyLabel.setPadding(new Insets(0, 0, 0, 5));
+                    emptyLabel.setPrefWidth(cell.getMaxWidth());
+                    emptyLabel.setPrefHeight(40);
+                    emptyLabel.setMinHeight(40);
+                    emptyLabel.setFont(Font.font("Segoe UI", 18));
+                    emptyLabel.getStyleClass().add("Product-Table-Label");
+                    Categorie_Product_Table.add(emptyLabel, col, Categorie_Product_Table.getRowConstraints().size() - 1);
+                }
+            }
+        }
+
+    }
     @FXML
     private VBox Add_Deposit;
     public void Go_To_Add_Deposit(){
@@ -1414,6 +1506,7 @@ public class Inventory_Controller implements Initializable {
             temp.setMaxWidth(temp.getPrefWidth());
             temp.setOnAction(event -> {
                 int itemIndex = Deposits_Table.getChildren().indexOf(temp);
+                Go_To_Deposit_Info(itemIndex);
             });
             temp.setPrefHeight(hbox.getPrefHeight());
             temp.setMaxHeight(hbox.getPrefHeight());
@@ -1421,7 +1514,7 @@ public class Inventory_Controller implements Initializable {
 
             String[] Deposit = {String.valueOf(value.getId()),
                     String.valueOf(value.getName()),
-                    String.valueOf(0)
+                    String.valueOf(get_Product_Count_From_Deposits(value.getId()))
             };
             for (int col = 1; col < 4; col++) {
                 ColumnConstraints cell = Deposits_Table.getColumnConstraints().get(col);
@@ -1438,6 +1531,48 @@ public class Inventory_Controller implements Initializable {
     }
 
     ////////////////////////////////////makes the SQL products table into a matrix/////////////////////////////////////////
+    public int get_Product_Count_From_Categories(int id) {
+        String url = "jdbc:sqlite:main.db";
+        int products_Count = 0;
+        try (Connection conn = DriverManager.getConnection(url)) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT COUNT(name) as count FROM products WHERE id_groupe = ?")) {
+                preparedStatement.setInt(1, id);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        products_Count = resultSet.getInt("count");
+                    }
+                }
+                conn.close();
+            } catch (SQLException e) {
+                alert.showCustomErrorAlert("Error");
+            }
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("Error");
+        }
+        return products_Count;
+    }
+        public int get_Product_Count_From_Deposits(int id){
+        String url = "jdbc:sqlite:main.db";
+        int products_Count=0;
+            try (Connection conn = DriverManager.getConnection(url)) {
+                try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT COUNT(name) as count FROM products WHERE id_deposite = ?")) {
+                    preparedStatement.setInt(1, id);
+
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            products_Count = resultSet.getInt("count");
+                        }
+                    }
+                    conn.close();
+                } catch (SQLException e) {
+                    alert.showCustomErrorAlert("Error");
+                }
+            } catch (SQLException e) {
+                alert.showCustomErrorAlert("Error");
+            }
+        return products_Count;
+    }
     public Deposit[] getDepositsMatrix() {
         String url = "jdbc:sqlite:main.db";
 
@@ -1499,6 +1634,93 @@ public class Inventory_Controller implements Initializable {
             alert.showCustomErrorAlert("Error");
         }
     }
+
+    @FXML
+    private VBox Deposit_Info;
+    @FXML
+    private Button but57111;
+    public void Go_To_Deposit_Info(int itemIndex){
+        Inventory_Main.getChildren().addAll(Layer,Deposit_Info);
+        Layer.setVisible(true);
+        Deposit_Info.setVisible(true);
+        get_Deposit_Name_To_info(Deposits_Table,itemIndex);
+    }
+    public void Return_To_Categorie_From_Deposit(){
+        Inventory_Main.getChildren().clear();
+        Inventory_Main.getChildren().add(Categories);
+        Layer.setVisible(false);
+        Deposit_Info.setVisible(false);
+    }
+    @FXML
+    private TextField Info_Deposit_Name;
+    public void get_Deposit_Name_To_info(GridPane gridPane,int itemIndex){
+        Info_Deposit_Name.setText(((Label)gridPane.getChildren().get(itemIndex+2)).getText());
+        show_Products_From_Deposit(((Label)gridPane.getChildren().get(itemIndex+2)).getText());
+    }
+    @FXML
+    private GridPane Deposit_Product_Table;
+    public void show_Products_From_Deposit(String Deposit){
+        removeNonFirstRowChildren(Deposit_Product_Table);
+        Product[] product_list=getProductsMatrix();
+        assert product_list != null;
+        for (Product value : product_list) {
+            if (Objects.equals(value.getDepots(), Deposit)){
+                RowConstraints con = new RowConstraints();
+                Deposit_Product_Table.getRowConstraints().add(con);
+
+                String[] product = {String.valueOf(value.getId()),
+                        String.valueOf(value.getReference()),
+                        String.valueOf(value.getName()),
+                        String.valueOf(value.getBuying_Price()),
+                        String.valueOf(value.getSelling_Price()),
+                        String.valueOf(value.getStock())
+                };
+                ColumnConstraints cell0 = Deposit_Product_Table.getColumnConstraints().getFirst();
+                Label emptyLabelFirst = new Label(product[0]);
+                emptyLabelFirst.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabelFirst.setPrefWidth(cell0.getMaxWidth());
+                emptyLabelFirst.setPrefHeight(40);
+                emptyLabelFirst.setMinHeight(40);
+                emptyLabelFirst.setFont(Font.font("Segoe UI", 18));
+                emptyLabelFirst.getStyleClass().add("Product-Table-First-Col-Label");
+                Deposit_Product_Table.add(emptyLabelFirst, 0, Deposit_Product_Table.getRowConstraints().size() - 1);
+
+                ColumnConstraints cellLast = Deposit_Product_Table.getColumnConstraints().getLast();
+                Label emptyLabelast = new Label(product[5]);
+                emptyLabelast.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabelast.setPrefWidth(cellLast.getMaxWidth());
+                emptyLabelast.setPrefHeight(40);
+                emptyLabelast.setMinHeight(40);
+                emptyLabelast.setFont(Font.font("Segoe UI", 18));
+                emptyLabelast.getStyleClass().add("Product-Table-Last-Col-Label");
+                Deposit_Product_Table.add(emptyLabelast, 5, Deposit_Product_Table.getRowConstraints().size() - 1);
+
+                for (int col = 1; col < 5; col++) {
+                    ColumnConstraints cell = Deposit_Product_Table.getColumnConstraints().get(col);
+                    Label emptyLabel = new Label(product[col]);
+                    emptyLabel.setPadding(new Insets(0, 0, 0, 5));
+                    emptyLabel.setPrefWidth(cell.getMaxWidth());
+                    emptyLabel.setPrefHeight(40);
+                    emptyLabel.setMinHeight(40);
+                    emptyLabel.setFont(Font.font("Segoe UI", 18));
+                    emptyLabel.getStyleClass().add("Product-Table-Label");
+                    Deposit_Product_Table.add(emptyLabel, col, Deposit_Product_Table.getRowConstraints().size() - 1);
+                }
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     @FXML
     private ComboBox<String> Product_Categorie_List;
 
@@ -1520,4 +1742,5 @@ public class Inventory_Controller implements Initializable {
             Product_Categorie.getItems().add(value.getName());
         }
     }
+
 }
