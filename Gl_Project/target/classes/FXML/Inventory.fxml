@@ -29,7 +29,6 @@
             <Button fx:id="Products_Top_Button" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#Products_Top_Button_Active" onMouseEntered="#Products_Top_Button_On_Mouse_Enter" onMouseExited="#Products_Top_Button_On_Mouse_Exit" prefHeight="55.0" styleClass="top-Button-active" text="Products" />
             <Button fx:id="Clients_Top_Button" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#Clients_Top_Button_Active" onMouseEntered="#Clients_Top_Button_On_Mouse_Enter" onMouseExited="#Clients_Top_Button_On_Mouse_Exit" prefHeight="55.0" styleClass="top-Button-neutral" text="Clients" />
             <Button fx:id="Categories_Top_Button" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#Categories_Top_Button_Active" onMouseEntered="#Categories_Top_Button_On_Mouse_Enter" onMouseExited="#Categories_Top_Button_On_Mouse_Exit" prefHeight="55.0" styleClass="top-Button-neutral" text="Categories" />
-            <Button fx:id="Deposits_Top_Button" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#Deposits_Top_Button_Active" onMouseEntered="#Deposits_Top_Button_On_Mouse_Enter" onMouseExited="#Deposits_Top_Button_On_Mouse_Exit" prefHeight="55.0" styleClass="top-Button-neutral" text="Deposits" />
          </children>
          <padding>
             <Insets left="10.0" />
@@ -555,17 +554,17 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox fx:id="Clients" layoutX="10.0" layoutY="10.0" prefHeight="560.0" prefWidth="1101.0" style="-fx-background-color: white;" styleClass="Product-Table-VBox">
+                  <VBox fx:id="Clients" layoutX="10.0" layoutY="10.0" prefHeight="560.0" prefWidth="1101.0" style="-fx-background-color: white;" styleClass="Product-Table-VBox" visible="false">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="1079.0" spacing="10.0" styleClass="Product-Table-HBox" VBox.vgrow="NEVER">
                            <padding>
                               <Insets bottom="5.0" left="10.0" right="5.0" top="10.0" />
                            </padding>
                            <children>
-                              <TextField fx:id="Client_Search" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="218.0" promptText="Search" styleClass="Product-Table-Text-Field" />
+                              <TextField fx:id="Client_Search" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#Search_Client" onInputMethodTextChanged="#Search_Client" onKeyReleased="#Search_Client" prefHeight="40.0" prefWidth="218.0" promptText="Search" styleClass="Product-Table-Text-Field" />
                               <AnchorPane prefWidth="128.0">
                                  <children>
-                                    <ComboBox fx:id="Client_Filter_Combo_Box" layoutY="1.0" maxWidth="1.7976931348623157E308" prefHeight="39.0" prefWidth="172.0" promptText="Filter" stylesheets="@../Style/Filter.css" />
+                                    <ComboBox fx:id="Client_Filter_Combo_Box" layoutY="1.0" maxWidth="1.7976931348623157E308" onAction="#Search_Client" prefHeight="39.0" prefWidth="172.0" promptText="Filter" stylesheets="@../Style/Filter.css" />
                                     <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="6.0" layoutY="10.0">
                                        <image>
                                           <Image url="@../Icons/Inventory/filter.png" />
@@ -1006,6 +1005,445 @@
                                                    </font>
                                                 </Label>
                                                 <Label alignment="CENTER" maxWidth="-Infinity" prefHeight="30.0" prefWidth="110.0" styleClass="Product-Table-First-Row-Last-Col-Label" text="more" GridPane.columnIndex="5">
+                                                   <font>
+                                                      <Font name="Segoe UI" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" maxWidth="60.0" prefHeight="30.0" prefWidth="93.0" styleClass="Product-Table-First-Label" text="N°">
+                                                   <font>
+                                                      <Font name="Segoe UI" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </GridPane>
+                                       </content>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <stylesheets>
+                        <URL value="@../Style/Add_Product.css" />
+                        <URL value="@../Style/Client_Stats.css" />
+                     </stylesheets>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox fx:id="Categories" layoutX="10.0" layoutY="10.0" prefHeight="560.0" prefWidth="1101.0" style="-fx-background-color: white;" styleClass="Product-Table-VBox">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="1079.0" spacing="10.0" styleClass="Product-Table-HBox" VBox.vgrow="NEVER">
+                           <padding>
+                              <Insets bottom="5.0" left="10.0" right="5.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onInputMethodTextChanged="#Search_Client" onKeyReleased="#Search_Client" prefHeight="40.0" prefWidth="218.0" promptText="Search" styleClass="Product-Table-Text-Field" />
+                              <Button mnemonicParsing="false" onAction="#Delete_Categorie" styleClass="Product-Table-Button" text="Delete">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0">
+                                       <image>
+                                          <Image url="@../Icons/Sell/delete.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="381.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Button maxWidth="192.0" minWidth="166.0" mnemonicParsing="false" onAction="#Go_To_Add_Categorie" prefHeight="39.0" prefWidth="192.0" styleClass="Product-Table-Button" text="Add Categorie">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0">
+                                             <image>
+                                                <Image url="@../Icons/Inventory/add-Product.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="386.0" prefWidth="1079.0" stylesheets="@../Style/Scroll_Pane.css" VBox.vgrow="ALWAYS">
+                           <content>
+                              <GridPane fx:id="Categories_Table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="1049.0" styleClass="Product-Table">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="40.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="60.0" minWidth="10.0" prefWidth="40.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="210.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="120.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="110.0" minWidth="10.0" prefWidth="146.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="93.0" styleClass="Product-Table-First-Row-Label" text="Categorie Name" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="Segoe UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="127.0" styleClass="Product-Table-First-Row-Label" text="Number Of products" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="Segoe UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" maxWidth="60.0" prefHeight="30.0" prefWidth="93.0" styleClass="Product-Table-First-Row-Label" text="N°" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font name="Segoe UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" styleClass="Product-Table-First-Label">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" stylesheets="@../Style/check_Box.css" visible="false" />
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" maxWidth="-Infinity" prefHeight="30.0" prefWidth="110.0" styleClass="Product-Table-First-Row-Last-Col-Label" text="more" GridPane.columnIndex="4">
+                                       <font>
+                                          <Font name="Segoe UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                           </content>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </ScrollPane>
+                        <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="1079.0" spacing="10.0" styleClass="Product-Table-HBox">
+                           <padding>
+                              <Insets bottom="5.0" left="10.0" right="5.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onInputMethodTextChanged="#Search_Client" onKeyReleased="#Search_Client" prefHeight="40.0" prefWidth="218.0" promptText="Search" styleClass="Product-Table-Text-Field" />
+                              <Button mnemonicParsing="false" onAction="#Delete_Deposit" styleClass="Product-Table-Button" text="Delete">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0">
+                                       <image>
+                                          <Image url="@../Icons/Sell/delete.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="381.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Button maxWidth="192.0" minWidth="166.0" mnemonicParsing="false" onAction="#Go_To_Add_Deposit" prefWidth="192.0" styleClass="Product-Table-Button" text="Add Deposit">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0">
+                                             <image>
+                                                <Image url="@../Icons/Inventory/add-Product.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="386.0" prefWidth="1079.0" stylesheets="@../Style/Scroll_Pane.css">
+                           <content>
+                              <GridPane fx:id="Deposits_Table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="1049.0" styleClass="Product-Table">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="40.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="60.0" minWidth="10.0" prefWidth="40.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="210.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="120.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="110.0" minWidth="10.0" prefWidth="146.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="93.0" styleClass="Product-Table-First-Row-Label" text="Deposit Name" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="Segoe UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="127.0" styleClass="Product-Table-First-Row-Label" text="Number Of products" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="Segoe UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" maxWidth="60.0" prefHeight="30.0" prefWidth="93.0" styleClass="Product-Table-First-Row-Label" text="N°" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font name="Segoe UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" styleClass="Product-Table-First-Label">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" stylesheets="@../Style/check_Box.css" visible="false" />
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" maxWidth="-Infinity" prefHeight="30.0" prefWidth="110.0" styleClass="Product-Table-First-Row-Last-Col-Label" text="more" GridPane.columnIndex="4">
+                                       <font>
+                                          <Font name="Segoe UI" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                           </content>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="Add_Categorie" alignment="CENTER" layoutX="10.0" layoutY="34.0" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" visible="false">
+                     <children>
+                        <HBox maxHeight="-Infinity" maxWidth="760.0" prefHeight="264.0" prefWidth="760.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox maxHeight="-Infinity" maxWidth="740.0" prefHeight="248.0" prefWidth="740.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox maxHeight="-Infinity" prefHeight="53.0" prefWidth="756.0">
+                                       <children>
+                                          <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="70.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Return_To_Categories" prefHeight="41.0" prefWidth="185.0" styleClass="Add-Product-Top-Button" text="Close">
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" rotate="180.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Exit.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <GridPane maxWidth="-Infinity" prefHeight="173.0" prefWidth="740.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="250.0" minWidth="10.0" prefWidth="240.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="500.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TextField fx:id="Categorie_Name" prefHeight="50.0" prefWidth="497.0" promptText="Enter Categorie name" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="213.0" styleClass="Add-Product-Main-Label" text="Categorie Name :" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="31.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Inventory/Categories/categories.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="57.0" prefWidth="221.0" styleClass="Add-Product-Main-Title-Label" text="Categorie Info :">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                          </Label>
+                                          <Button alignment="CENTER" graphicTextGap="10.0" maxHeight="50.0" maxWidth="210.0" mnemonicParsing="false" onAction="#add_Categorie_To_Database" prefHeight="50.0" prefWidth="210.0" styleClass="Add-Product-Main-Add-Button" text="Add Categorie" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                             <graphic>
+                                                <ImageView fitHeight="20.0" fitWidth="20.0">
+                                                   <image>
+                                                      <Image url="@../Icons/plus-active.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox fx:id="Add_Deposit" alignment="CENTER" layoutX="10.0" layoutY="34.0" maxHeight="560.0" maxWidth="1101.0" prefHeight="560.0" prefWidth="1101.0" spacing="10.0" stylesheets="@../Style/Add_Product.css" visible="false">
+                     <children>
+                        <HBox maxHeight="-Infinity" maxWidth="760.0" prefHeight="264.0" prefWidth="760.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox maxHeight="-Infinity" maxWidth="740.0" prefHeight="248.0" prefWidth="740.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox maxHeight="-Infinity" prefHeight="53.0" prefWidth="756.0">
+                                       <children>
+                                          <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="70.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Return_To_categori" prefHeight="41.0" prefWidth="185.0" styleClass="Add-Product-Top-Button" text="Close">
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" rotate="180.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Exit.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <GridPane maxWidth="-Infinity" prefHeight="173.0" prefWidth="740.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="250.0" minWidth="10.0" prefWidth="240.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="500.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TextField fx:id="Deposit_Name" prefHeight="50.0" prefWidth="497.0" promptText="Enter Categorie name" styleClass="Add-Product-Main-Text-Field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="213.0" styleClass="Add-Product-Main-Label" text="Categorie Name :" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="31.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                   <image>
+                                                      <Image url="@../Icons/Inventory/Categories/categories.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Label>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="57.0" prefWidth="221.0" styleClass="Add-Product-Main-Title-Label" text="Categorie Info :">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                          </Label>
+                                          <Button alignment="CENTER" graphicTextGap="10.0" maxHeight="50.0" maxWidth="210.0" mnemonicParsing="false" onAction="#add_Deposit_To_Database" prefHeight="50.0" prefWidth="210.0" styleClass="Add-Product-Main-Add-Button" text="Add Categorie" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                             <graphic>
+                                                <ImageView fitHeight="20.0" fitWidth="20.0">
+                                                   <image>
+                                                      <Image url="@../Icons/plus-active.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox fx:id="Categorie_Info" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="580.0" maxWidth="1101.0" prefHeight="580.0" prefWidth="1083.0" spacing="10.0">
+                     <children>
+                        <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="Add-Product-Main-Pane" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox maxHeight="-Infinity" prefHeight="602.0" prefWidth="352.0" spacing="10.0" styleClass="Client_Stats-VBox" HBox.hgrow="NEVER">
+                                 <children>
+                                    <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#Return_To_Categorie_From_Info" prefHeight="41.0" prefWidth="81.0" styleClass="Add-Product-Top-Button" text="Close" VBox.vgrow="NEVER">
+                                       <VBox.margin>
+                                          <Insets right="200.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="300.0" styleClass="Add-Product-Main-Title-Label" text="Categorie Info :">
+                                       <font>
+                                          <Font size="38.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox prefHeight="136.0" prefWidth="300.0" spacing="5.0">
+                                       <children>
+                                          <HBox prefHeight="32.0" prefWidth="254.0">
+                                             <children>
+                                                <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="140.0" styleClass="Add-Product-Main-Label" text="Name : ">
+                                                   <font>
+                                                      <Font size="31.0" />
+                                                   </font>
+                                                   <graphic>
+                                                      <ImageView fitHeight="32.0" fitWidth="32.0">
+                                                         <image>
+                                                            <Image url="@../Icons/Inventory/Categories/categories.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Label>
+                                                <TextField fx:id="Info_Categorie_Name" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="197.0" styleClass="Client-left-Text-Field" />
+                                             </children>
+                                          </HBox>
+                                          <Button fx:id="but5711" alignment="BASELINE_LEFT" contentDisplay="RIGHT" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" prefWidth="132.0" styleClass="Client-Edit-Button" text="Edit Categorie">
+                                             <VBox.margin>
+                                                <Insets left="193.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets right="40.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox maxWidth="1.7976931348623157E308" prefHeight="603.0" prefWidth="651.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox maxHeight="-Infinity" prefHeight="30.0" prefWidth="799.0" spacing="5.0">
+                                       <padding>
+                                          <Insets left="10.0" top="10.0" />
+                                       </padding>
+                                       <children>
+                                          <Label graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="300.0" styleClass="Add-Product-Main-Title-Label" text="Product_List :">
+                                             <font>
+                                                <Font size="38.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="477.0" prefWidth="679.0" stylesheets="@../Style/Scroll_Pane.css">
+                                       <content>
+                                          <GridPane fx:id="Clients_Table11" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="480.0" prefWidth="649.0" styleClass="Product-Table">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="60.0" minWidth="10.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="140.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="140.0" minWidth="10.0" prefWidth="117.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="140.0" minWidth="10.0" prefWidth="121.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="140.0" minWidth="10.0" prefWidth="133.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="110.0" minWidth="10.0" prefWidth="146.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="127.0" styleClass="Product-Table-First-Row-Label" text="Reference" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                                                   <font>
+                                                      <Font name="Segoe UI" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" maxWidth="140.0" prefHeight="30.0" prefWidth="140.0" styleClass="Product-Table-First-Row-Label" text="Buy_price" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                                                   <font>
+                                                      <Font name="Segoe UI" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" maxWidth="140.0" prefHeight="30.0" prefWidth="140.0" styleClass="Product-Table-First-Row-Label" text="Sell_price" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                                                   <font>
+                                                      <Font name="Segoe UI" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" styleClass="Product-Table-First-Row-Label" text="Name" GridPane.columnIndex="2">
+                                                   <font>
+                                                      <Font name="Segoe UI" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label alignment="CENTER" maxWidth="-Infinity" prefHeight="30.0" prefWidth="110.0" styleClass="Product-Table-First-Row-Last-Col-Label" text="Qte" GridPane.columnIndex="5">
                                                    <font>
                                                       <Font name="Segoe UI" size="18.0" />
                                                    </font>

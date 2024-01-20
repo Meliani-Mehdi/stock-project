@@ -2,6 +2,8 @@ package Org.Main.Controllers;
 
 import Org.Main.Alerts;
 import Org.Main.Classes.Client;
+import Org.Main.Classes.Deposit;
+import Org.Main.Classes.Groupe;
 import Org.Main.Classes.Product;
 import Org.Main.getData;
 import javafx.collections.FXCollections;
@@ -75,15 +77,12 @@ public class Inventory_Controller implements Initializable {
     private boolean Products_active = false;
     private boolean Clients_active = false;
     private boolean Categories_active = false;
-    private boolean Deposits_active = false;
     @FXML
     private Button Products_Top_Button;
     @FXML
     private Button Clients_Top_Button;
     @FXML
     private Button Categories_Top_Button;
-    @FXML
-    private Button Deposits_Top_Button;
     public void Products_Top_Button_Active(){
         Products_Top_Button.getStyleClass().removeLast();
         Products_Top_Button.getStyleClass().add("top-Button-active");
@@ -91,13 +90,10 @@ public class Inventory_Controller implements Initializable {
         Clients_Top_Button.getStyleClass().add("top-Button-neutral");
         Categories_Top_Button.getStyleClass().removeLast();
         Categories_Top_Button.getStyleClass().add("top-Button-neutral");
-        Deposits_Top_Button.getStyleClass().removeLast();
-        Deposits_Top_Button.getStyleClass().add("top-Button-neutral");
         ////////////////////////////////////////// Boolean /////////////////////////////////////////////////////
         Products_active=true;
         Clients_active=false;
         Categories_active=false;
-        Deposits_active=false;
         /////////////////////////////////////// change the main section ////////////////////////////////////////
         Inventory_Main.getChildren().clear();
         Inventory_Main.getChildren().add(Products);
@@ -114,13 +110,10 @@ public class Inventory_Controller implements Initializable {
         Products_Top_Button.getStyleClass().add("top-Button-neutral");
         Categories_Top_Button.getStyleClass().removeLast();
         Categories_Top_Button.getStyleClass().add("top-Button-neutral");
-        Deposits_Top_Button.getStyleClass().removeLast();
-        Deposits_Top_Button.getStyleClass().add("top-Button-neutral");
         ////////////////////////////////////////// Boolean /////////////////////////////////////////////////////
         Products_active=false;
         Clients_active=true;
         Categories_active=false;
-        Deposits_active=false;
         /////////////////////////////////////// change the main section ////////////////////////////////////////
         Inventory_Main.getChildren().clear();
         Inventory_Main.getChildren().add(Clients);
@@ -136,28 +129,19 @@ public class Inventory_Controller implements Initializable {
         Products_Top_Button.getStyleClass().add("top-Button-neutral");
         Clients_Top_Button.getStyleClass().removeLast();
         Clients_Top_Button.getStyleClass().add("top-Button-neutral");
-        Deposits_Top_Button.getStyleClass().removeLast();
-        Deposits_Top_Button.getStyleClass().add("top-Button-neutral");
         ////////////////////////////////////////// Boolean /////////////////////////////////////////////////////
         Products_active=false;
         Clients_active=false;
         Categories_active=true;
-        Deposits_active=false;
-    }
-    public void Deposits_Top_Button_Active(){
-        Deposits_Top_Button.getStyleClass().removeLast();
-        Deposits_Top_Button.getStyleClass().add("top-Button-active");
-        Products_Top_Button.getStyleClass().removeLast();
-        Products_Top_Button.getStyleClass().add("top-Button-neutral");
-        Clients_Top_Button.getStyleClass().removeLast();
-        Clients_Top_Button.getStyleClass().add("top-Button-neutral");
-        Categories_Top_Button.getStyleClass().removeLast();
-        Categories_Top_Button.getStyleClass().add("top-Button-neutral");
-        ////////////////////////////////////////// Boolean /////////////////////////////////////////////////////
-        Products_active=false;
-        Clients_active=false;
-        Categories_active=false;
-        Deposits_active=true;
+        /////////////////////////////////////// change the main section ////////////////////////////////////////
+        Inventory_Main.getChildren().clear();
+        Inventory_Main.getChildren().add(Categories);
+        Categories.setVisible(true);
+        ////////////////////////////////////// show clients /////////////////////////////////////////////////
+        removeNonFirstRowChildren(Categories_Table);
+        Show_Categories_In_The_Table();
+        removeNonFirstRowChildren(Deposits_Table);
+        Show_Deposits_In_The_Table();
     }
     ////////////////////////////////////////// Top buttons Active /////////////////////////////////////////////////////
     public void Products_Top_Button_On_Mouse_Enter(){
@@ -178,12 +162,6 @@ public class Inventory_Controller implements Initializable {
             Categories_Top_Button.getStyleClass().add("top-Button-hover");
         }
     }
-    public void Deposits_Top_Button_On_Mouse_Enter(){
-        if (!Objects.equals(Deposits_Top_Button.getStyleClass().getLast(), "top-Button-active")){
-            Deposits_Top_Button.getStyleClass().removeLast();
-            Deposits_Top_Button.getStyleClass().add("top-Button-hover");
-        }
-    }
     /////////////////////////////////////////// Top Button mouse exit  ////////////////////////////////////////////////////
     public void Products_Top_Button_On_Mouse_Exit() {
         if (!Products_active){
@@ -201,12 +179,6 @@ public class Inventory_Controller implements Initializable {
         if (!Categories_active){
             Categories_Top_Button.getStyleClass().removeLast();
             Categories_Top_Button.getStyleClass().add("top-Button-neutral");
-        }
-    }
-    public void Deposits_Top_Button_On_Mouse_Exit() {
-        if (!Deposits_active){
-            Deposits_Top_Button.getStyleClass().removeLast();
-            Deposits_Top_Button.getStyleClass().add("top-Button-neutral");
         }
     }
     /////////////////////////////////////////////////////////////  Products  ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -790,7 +762,6 @@ public class Inventory_Controller implements Initializable {
             removeNonFirstRowChildren(Clients_Table);
             Show_Clients_In_The_Table();
             alert.showCustomAlert("success");
-
         }
         else alert.showCustomErrorAlert("please enter all Info");
     }
@@ -1090,6 +1061,348 @@ public class Inventory_Controller implements Initializable {
         } catch (SQLException e) {
             alert.showCustomErrorAlert("Error");
             return null;
+        }
+    }
+    /////////////////////////////////////// Categories and deposits ///////////////////////////////////////////////
+    @FXML
+    private VBox Categories;
+    @FXML
+    private VBox Add_Categorie;
+    public void Go_To_Add_Categorie(){
+        Inventory_Main.getChildren().addAll(Layer,Add_Categorie);
+        Layer.setVisible(true);
+        Add_Categorie.setVisible(true);
+        Add_Categorie.requestFocus();
+        Categorie_Name.setOnKeyPressed( event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                add_Categorie_To_Database();
+            }
+        });
+        Add_Categorie.setOnKeyPressed( event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                Return_To_Categories();
+            }
+        });
+    }
+    public void Return_To_Categories(){
+        Inventory_Main.getChildren().remove(Add_Categorie);
+        Inventory_Main.getChildren().clear();
+        Inventory_Main.getChildren().add(Categories);
+        Layer.setVisible(false);
+        Add_Categorie.setVisible(false);
+    }
+    @FXML
+    private TextField Categorie_Name;
+    @FXML
+    private GridPane Categories_Table;
+    public void add_Categorie_To_Database(){
+        String Name=Categorie_Name.getText();
+        if(!Name.isBlank()){
+            String url = "jdbc:sqlite:main.db";
+            try (Connection conn = DriverManager.getConnection(url)) {
+                PreparedStatement query = conn.prepareStatement("INSERT INTO groupes (name) VALUES(?);");
+                query.setString(1, Name);
+                query.execute();
+                conn.close();
+            } catch (SQLException e) {
+                alert.showCustomErrorAlert("error");
+            }
+            removeNonFirstRowChildren(Categories_Table);
+            Show_Categories_In_The_Table();
+            alert.showCustomAlert("success");
+            Categorie_Name.clear();
+        }
+        else alert.showCustomErrorAlert("please enter all Info");
+    }
+    public void Show_Categories_In_The_Table(){
+        Groupe[] Categorie_List=getCategoriesMatrix();
+        assert Categorie_List != null;
+        for (Groupe value : Categorie_List) {
+            RowConstraints con = new RowConstraints();
+            Categories_Table.getRowConstraints().add(con);
+
+            CheckBox checkBox = new CheckBox();
+            checkBox.setText("");
+            checkBox.getStylesheets().addAll(CheckBoxExample.getStylesheets());
+
+            HBox hbox = new HBox(checkBox);
+            hbox.getStyleClass().add("Product-Table-First-Col-Label");
+            hbox.setAlignment(Pos.CENTER);
+            Categories_Table.add(hbox, 0, Categories_Table.getRowConstraints().size() - 1);
+
+            Button temp = new Button("Info");
+            temp.getStyleClass().add("Product-Table-Last-Col-Label");
+            temp.setStyle("-fx-text-fill:#05b074;");
+            temp.setFont(Font.font("Segoe UI", 18));
+            temp.setPrefWidth(110);
+            temp.setCursor(Cursor.HAND);
+            temp.setMaxWidth(temp.getPrefWidth());
+            temp.setOnAction(event -> {
+                int itemIndex = Categories_Table.getChildren().indexOf(temp);
+                Go_To_Categorie_Info(itemIndex);
+            });
+            temp.setPrefHeight(hbox.getPrefHeight());
+            temp.setMaxHeight(hbox.getPrefHeight());
+            Categories_Table.add(temp, 4, Categories_Table.getRowConstraints().size() - 1);
+
+            String[] Categorie = {String.valueOf(value.getId()),
+                    String.valueOf(value.getName()),
+                    String.valueOf(0)
+            };
+            for (int col = 1; col < 4; col++) {
+                ColumnConstraints cell = Categories_Table.getColumnConstraints().get(col);
+                Label emptyLabel = new Label(Categorie[col - 1]);
+                emptyLabel.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabel.setPrefWidth(cell.getMaxWidth());
+                emptyLabel.setPrefHeight(40);
+                emptyLabel.setMinHeight(40);
+                emptyLabel.setFont(Font.font("Segoe UI", 18));
+                emptyLabel.getStyleClass().add("Product-Table-Label");
+                Categories_Table.add(emptyLabel, col, Categories_Table.getRowConstraints().size() - 1);
+            }
+        }
+    }
+
+    ////////////////////////////////////makes the SQL products table into a matrix/////////////////////////////////////////
+    public Groupe[] getCategoriesMatrix() {
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            ArrayList<Groupe> CategorieList = new ArrayList<>();
+
+            try (Statement dataQuery = conn.createStatement()) {
+                ResultSet resultSet = dataQuery.executeQuery("SELECT id,name FROM groupes");
+
+                while (resultSet.next()) {
+                    CategorieList.add(new Groupe(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name")
+                    ));
+                }
+            }
+            conn.close();
+            return CategorieList.toArray(new Groupe[0]);
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("Error");
+            return null;
+        }
+    }
+    public void Delete_Categorie() {
+        AtomicBoolean confirm=alert.showCustomConfirmationAlert("You sure want to delete this ??");
+        if (confirm.get()){
+            for (int row = 0; row < Categories_Table.getRowCount(); row++) {
+                int currentRow = row;
+                CheckBox checkBox = getCheckBoxInRow(Categories_Table, currentRow);
+
+                if (checkBox != null && checkBox.isSelected()) {
+                    Categories_Table.getChildren().removeIf(node -> {
+                        Integer rowIndex = GridPane.getRowIndex(node);
+
+                        if (rowIndex != null && rowIndex == currentRow) {
+                            if (GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == 1
+                                    && node instanceof Label) {
+                                String value = ((Label) node).getText();
+                                Delete_Categorie_From_Database(value);
+                            }
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+            }
+        }
+    }
+
+    public void Delete_Categorie_From_Database(String Categorie_Id){
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM groupes WHERE id = ?");
+            preparedStatement.setString(1,Categorie_Id);
+            preparedStatement.execute();
+            conn.close();
+        } catch (SQLException x) {
+            alert.showCustomErrorAlert("Error");
+        }
+    }
+    @FXML
+    private VBox Categorie_Info;
+    @FXML
+    private Button but5711;
+    public void Go_To_Categorie_Info(int itemIndex){
+        Inventory_Main.getChildren().addAll(Layer,Categorie_Info);
+        Layer.setVisible(true);
+        Categorie_Info.setVisible(true);
+        get_Categorie_Name_To_info(Categories_Table,itemIndex);
+    }
+    public void Return_To_Categorie_From_Info(){
+        Inventory_Main.getChildren().clear();
+        Inventory_Main.getChildren().add(Categories);
+        Layer.setVisible(false);
+        Categorie_Info.setVisible(false);
+    }
+    @FXML
+    private TextField Info_Categorie_Name;
+    public void get_Categorie_Name_To_info(GridPane gridPane,int itemIndex){
+        Info_Categorie_Name.setText(((Label)gridPane.getChildren().get(itemIndex+2)).getText());
+    }
+
+    @FXML
+    private VBox Add_Deposit;
+    public void Go_To_Add_Deposit(){
+        Inventory_Main.getChildren().addAll(Layer,Add_Deposit);
+        Layer.setVisible(true);
+        Add_Deposit.setVisible(true);
+        Add_Deposit.requestFocus();
+        Deposit_Name.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                add_Deposit_To_Database();
+            }
+        });
+        Add_Deposit.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                Return_To_categori();
+            }
+        });
+    }
+    public void Return_To_categori(){
+        Inventory_Main.getChildren().remove(Add_Deposit);
+        Inventory_Main.getChildren().clear();
+        Inventory_Main.getChildren().add(Categories);
+        Layer.setVisible(false);
+        Add_Deposit.setVisible(false);
+    }
+    @FXML
+    private TextField Deposit_Name;
+    @FXML
+    private GridPane Deposits_Table;
+    public void add_Deposit_To_Database(){
+        String Name=Deposit_Name.getText();
+        if(!Name.isBlank()){
+            String url = "jdbc:sqlite:main.db";
+            try (Connection conn = DriverManager.getConnection(url)) {
+                PreparedStatement query = conn.prepareStatement("INSERT INTO deposits (name) VALUES(?);");
+                query.setString(1, Name);
+                query.execute();
+                conn.close();
+            } catch (SQLException e) {
+                alert.showCustomErrorAlert("error");
+            }
+            removeNonFirstRowChildren(Deposits_Table);
+            Show_Deposits_In_The_Table();
+            alert.showCustomAlert("success");
+            Deposit_Name.clear();
+        }
+        else alert.showCustomErrorAlert("please enter all Info");
+    }
+    public void Show_Deposits_In_The_Table(){
+        Deposit[] Deposit_List=getDepositsMatrix();
+        assert Deposit_List != null;
+        for (Deposit value : Deposit_List) {
+            RowConstraints con = new RowConstraints();
+            Deposits_Table.getRowConstraints().add(con);
+
+            CheckBox checkBox = new CheckBox();
+            checkBox.setText("");
+            checkBox.getStylesheets().addAll(CheckBoxExample.getStylesheets());
+
+            HBox hbox = new HBox(checkBox);
+            hbox.getStyleClass().add("Product-Table-First-Col-Label");
+            hbox.setAlignment(Pos.CENTER);
+            Deposits_Table.add(hbox, 0, Deposits_Table.getRowConstraints().size() - 1);
+
+            Button temp = new Button("Info");
+            temp.getStyleClass().add("Product-Table-Last-Col-Label");
+            temp.setStyle("-fx-text-fill:#05b074;");
+            temp.setFont(Font.font("Segoe UI", 18));
+            temp.setPrefWidth(110);
+            temp.setCursor(Cursor.HAND);
+            temp.setMaxWidth(temp.getPrefWidth());
+            temp.setOnAction(event -> {
+                int itemIndex = Deposits_Table.getChildren().indexOf(temp);
+            });
+            temp.setPrefHeight(hbox.getPrefHeight());
+            temp.setMaxHeight(hbox.getPrefHeight());
+            Deposits_Table.add(temp, 4, Deposits_Table.getRowConstraints().size() - 1);
+
+            String[] Deposit = {String.valueOf(value.getId()),
+                    String.valueOf(value.getName()),
+                    String.valueOf(0)
+            };
+            for (int col = 1; col < 4; col++) {
+                ColumnConstraints cell = Deposits_Table.getColumnConstraints().get(col);
+                Label emptyLabel = new Label(Deposit[col - 1]);
+                emptyLabel.setPadding(new Insets(0, 0, 0, 5));
+                emptyLabel.setPrefWidth(cell.getMaxWidth());
+                emptyLabel.setPrefHeight(40);
+                emptyLabel.setMinHeight(40);
+                emptyLabel.setFont(Font.font("Segoe UI", 18));
+                emptyLabel.getStyleClass().add("Product-Table-Label");
+                Deposits_Table.add(emptyLabel, col, Deposits_Table.getRowConstraints().size() - 1);
+            }
+        }
+    }
+
+    ////////////////////////////////////makes the SQL products table into a matrix/////////////////////////////////////////
+    public Deposit[] getDepositsMatrix() {
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            ArrayList<Deposit> DepositList = new ArrayList<>();
+
+            try (Statement dataQuery = conn.createStatement()) {
+                ResultSet resultSet = dataQuery.executeQuery("SELECT id,name FROM deposits");
+
+                while (resultSet.next()) {
+                    DepositList.add(new Deposit(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name")
+                    ));
+                }
+            }
+            conn.close();
+            return DepositList.toArray(new Deposit[0]);
+        } catch (SQLException e) {
+            alert.showCustomErrorAlert("Error");
+            return null;
+        }
+    }
+    public void Delete_Deposit() {
+        AtomicBoolean confirm=alert.showCustomConfirmationAlert("You sure want to delete this ??");
+        if (confirm.get()){
+            for (int row = 0; row < Deposits_Table.getRowCount(); row++) {
+                int currentRow = row;
+                CheckBox checkBox = getCheckBoxInRow(Deposits_Table, currentRow);
+
+                if (checkBox != null && checkBox.isSelected()) {
+                    Deposits_Table.getChildren().removeIf(node -> {
+                        Integer rowIndex = GridPane.getRowIndex(node);
+
+                        if (rowIndex != null && rowIndex == currentRow) {
+                            if (GridPane.getColumnIndex(node) != null && GridPane.getColumnIndex(node) == 1
+                                    && node instanceof Label) {
+                                String value = ((Label) node).getText();
+                                Delete_Deposit_From_Database(value);
+                            }
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+            }
+        }
+    }
+
+    public void Delete_Deposit_From_Database(String Deposit_Id){
+        String url = "jdbc:sqlite:main.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM deposits WHERE id = ?");
+            preparedStatement.setString(1,Deposit_Id);
+            preparedStatement.execute();
+            conn.close();
+        } catch (SQLException x) {
+            alert.showCustomErrorAlert("Error");
         }
     }
 }
